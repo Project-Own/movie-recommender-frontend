@@ -13,6 +13,9 @@ export default function TestGrid() {
       <Grid item xs>
         <Paper>xs</Paper>
       </Grid>
+       <Grid item xs>
+        <Paper>xs</Paper>
+      </Grid>
     </Grid>
   );
 }
