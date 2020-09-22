@@ -11,10 +11,10 @@ export default function Layout() {
           <TopNavBar />
         </Grid>
         <Grid item>
-            <MovieSearch />
+            <MovieSearch />s
         </Grid>
         <Grid item>
-          <TestGrid />
+          <Typography>PlaceHolder</Typography>
         </Grid>
 
         <Grid container spacing={4}>
