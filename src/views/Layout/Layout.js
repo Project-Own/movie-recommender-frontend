@@ -10,26 +10,16 @@ export default function Layout() {
         <Grid item>
           <TopNavBar />
         </Grid>
-        <Grid item>
-            <MovieSearch />s
-        </Grid>
-        <Grid item>
-          <Typography>PlaceHolder</Typography>
-        </Grid>
 
-        <Grid container spacing={4}>
-          <Grid item xs={8}>
-            <Paper>
-              <Typography>Sah</Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={4}>
-            <Paper>
-              <Typography>Sah</Typography>
-            </Paper>
-          </Grid>
+        <Grid container direction="row" spacing ={4}>
+            <Grid item sm = {8}>
+
+            </Grid>
+            <Grid item sm={4}>
+            <MovieSearch />
+             </Grid>
         </Grid>
-      </Grid>
+    </Grid>
     </Container>
   );
 }
