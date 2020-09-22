@@ -1,7 +1,5 @@
 import React from "react";
-
-import ComplexGrid from "../Section/Grid";
-import TestGrid from "../Section/Test";
+import MovieSearch from '../../components/SearchComponent/MovieSearch';
 import TopNavBar from "../../components/AppBar/TopNavBar";
 import { Container, Typography, Grid, Paper } from "@material-ui/core";
 
@@ -13,7 +11,7 @@ export default function Layout() {
           <TopNavBar />
         </Grid>
         <Grid item>
-          <ComplexGrid />
+            <MovieSearch />
         </Grid>
         <Grid item>
           <TestGrid />
