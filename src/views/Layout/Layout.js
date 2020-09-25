@@ -1,7 +1,8 @@
 import React from "react";
-import MovieSearch from '../../components/SearchComponent/MovieSearch';
+import MovieSearch from "../../components/SearchComponent/MovieSearch";
 import TopNavBar from "../../components/AppBar/TopNavBar";
-import { Container, Typography, Grid, Paper } from "@material-ui/core";
+import { Container, Grid } from "@material-ui/core";
+import FadeInAnimation from "../../components/FadeIn/FadeIn";
 
 export default function Layout() {
   return (
@@ -11,15 +12,28 @@ export default function Layout() {
           <TopNavBar />
         </Grid>
 
-        <Grid container direction="row" spacing ={4}>
-            <Grid item sm = {8}>
-
-            </Grid>
+        <Grid item container>
+          <Grid item container direction="row" spacing={4}>
+            <Grid item sm={8}></Grid>
             <Grid item sm={4}>
-            <MovieSearch />
-             </Grid>
+              <FadeInAnimation wrapperElement="div" direction="right">
+                <MovieSearch />
+              </FadeInAnimation>
+            </Grid>
+          </Grid>
         </Grid>
-    </Grid>
+
+        <Grid item container>
+          <Grid item container direction="row" spacing={4}>
+            <Grid item sm={8}></Grid>
+            <Grid item sm={4}>
+              <FadeInAnimation wrapperElement="div" direction="right">
+                <MovieSearch />
+              </FadeInAnimation>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     </Container>
   );
 }
