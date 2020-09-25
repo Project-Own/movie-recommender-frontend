@@ -25,7 +25,7 @@ class MovieSearch extends Component {
   };
 
   handleKeyPress = (event) => {
-    if (event === "Enter") {
+    if (event.key === "Enter") {
       this.searchMovie();
     }
   };
@@ -39,6 +39,15 @@ class MovieSearch extends Component {
       })
       .catch((error) => alert(error.message));
   };
+  componentDidMount() {
+    fetch(`${API_ADDRESS}avengers`)
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json);
+        this.setState({ movie: json });
+      })
+      .catch((error) => alert(error.message));
+  }
 
   render() {
     console.log(this.state.movieQuery);
