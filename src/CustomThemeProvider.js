@@ -1,5 +1,5 @@
-import React, { useState, createContext } from "react";
-import { ThemeProvider } from "@material-ui/core";
+import React, { useState, createContext, useMemo } from "react";
+import { ThemeProvider, useMediaQuery } from "@material-ui/core";
 import getTheme from "./themes/base";
 
 export const CustomThemeContext = createContext({
@@ -9,13 +9,22 @@ export const CustomThemeContext = createContext({
 
 const CustomThemeProvider = (props) => {
   const { children } = props;
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+
+  let currentTheme;
+  /*eslint-disable */
+  useMemo(() => (currentTheme = prefersDarkMode ? "dark" : "light"), [
+    prefersDarkMode,
+  ]);
+  /*eslint-enable */
 
   // Read current theme from localStorage
-  const currentTheme = localStorage.getItem("apiTheme") || "normal";
+  currentTheme = localStorage.getItem("appTheme") || currentTheme;
 
   // State to hold the selected theme name
   const [themeName, _setThemeName] = useState(currentTheme);
 
+  console.log("Theme name: " + themeName);
   // Retrieve the theme object by theme name
   const theme = getTheme(themeName);
 

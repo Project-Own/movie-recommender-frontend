@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext } from "react";
 import {
   AppBar,
   Toolbar,
@@ -6,7 +6,6 @@ import {
   Typography,
   useScrollTrigger,
   Switch,
-  useMediaQuery,
 } from "@material-ui/core";
 import Menu from "@material-ui/icons/Menu";
 import PropTypes from "prop-types";
@@ -26,20 +25,12 @@ function ElevationScroll(props) {
 }
 
 ElevationScroll.propTypes = {
-  childres: PropTypes.element.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default function TopNavBar(props) {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-
   const { currentTheme, setTheme } = useContext(CustomThemeContext);
   const isDark = Boolean(currentTheme === "dark");
-
-  /*eslint-disable */
-  useMemo(() => setTheme(prefersDarkMode ? "dark" : "light"), [
-    prefersDarkMode,
-  ]);
-  /*eslint-enable */
 
   const handleThemeChange = (event) => {
     const { checked } = event.target;

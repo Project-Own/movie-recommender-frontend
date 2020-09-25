@@ -62,7 +62,7 @@ const MovieCard = ({ movie }) => {
         </Typography>
         {movie.Ratings.map((Ratings) => {
           return (
-            <Typography align="center">
+            <Typography align="center" key={Ratings.Source}>
               {" "}
               {Ratings.Source} : {Ratings.Value}{" "}
             </Typography>

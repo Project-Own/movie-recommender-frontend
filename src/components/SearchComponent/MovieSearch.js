@@ -31,13 +31,16 @@ class MovieSearch extends Component {
   };
 
   searchMovie = () => {
-    fetch(`${API_ADDRESS} + ${this.state.movieQuery}`)
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
-        this.setState({ movie: json });
-      })
-      .catch((error) => alert(error.message));
+    if (this.state.movieQuery !== "") {
+      fetch(`${API_ADDRESS} + ${this.state.movieQuery}`)
+        .then((response) => response.json())
+        .then((json) => {
+          if (json.Response !== "False") {
+            this.setState({ ...this.state, movie: json });
+          }
+        })
+        .catch((error) => alert(error.message));
+    }
   };
   componentDidMount() {
     fetch(`${API_ADDRESS}avengers`)
