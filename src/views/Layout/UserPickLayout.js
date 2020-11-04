@@ -1,10 +1,11 @@
+import React from 'react';
 import { Grid} from '@material-ui/core';
-import Header from './components/frontPage/Header';
-import Contents from './components/frontPage/Contents'
+import Header from '../../components/frontPage/Header';
+import Contents from '../../components/frontPage/Contents'
 
 
 
-const App = () =>{
+const UserPickLayout = () =>{
   return (
     <Grid container direction='column'>
       <Grid item > 
@@ -28,4 +29,4 @@ const App = () =>{
   );
 }
 
-export default App;
+export default UserPickLayout;

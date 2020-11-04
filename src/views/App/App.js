@@ -1,6 +1,7 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Layout from "../Layout/Layout";
+/* import Layout from "../Layout/Layout"; */
+import  UserPickLayout from "../Layout/UserPickLayout"
 import { Provider } from "react-redux";
 import CustomThemeProvider from "../../CustomThemeProvider";
 import store from "../../store";
@@ -13,7 +14,7 @@ export default function App() {
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <CustomizedSnackbars />
-        <Layout />
+        <UserPickLayout />
       </Provider>
     </CustomThemeProvider>
   );
