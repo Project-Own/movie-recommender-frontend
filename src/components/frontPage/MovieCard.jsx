@@ -14,10 +14,10 @@ const MovieCard =(props)=>{
     const [posterOpacity,setposterOpacity] = useState('false');
     const [iconOpacity,setIconOpacity] = useState('false');
     
-    function shoot(icon,posterOpacity,iconOpacity) {
-            setIcon(icon);
-            setposterOpacity(posterOpacity);
-            setIconOpacity(iconOpacity);
+    function shoot() {
+            setIcon(!icon);
+            setposterOpacity(!posterOpacity);
+            setIconOpacity(!iconOpacity);
             if(selectedList.includes(props.title)){
                 selectedList.splice(selectedList.indexOf(props.title),1);
             }else{
@@ -79,7 +79,7 @@ const MovieCard =(props)=>{
             <ThemeProvider theme={theme}>
                 <ButtonBase 
                     className={classes.buttonbasestyle} 
-                    onClick={()=>shoot(!icon,!posterOpacity,!iconOpacity)}
+                    onClick={shoot}
                 >
                         <Box className={classes.divStyle} textAlign='center'>
                             <img className={classes.image} src={"https://image.tmdb.org/t/p/w185"+props.poster_path} alt="rohit" ></img>
