@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/movie-recommender-frontend/static/css/main.b17e9825.chunk.css",
-    "main.js": "/movie-recommender-frontend/static/js/main.cb9039ee.chunk.js",
-    "main.js.map": "/movie-recommender-frontend/static/js/main.cb9039ee.chunk.js.map",
+    "main.js": "/movie-recommender-frontend/static/js/main.aa474cc6.chunk.js",
+    "main.js.map": "/movie-recommender-frontend/static/js/main.aa474cc6.chunk.js.map",
     "runtime-main.js": "/movie-recommender-frontend/static/js/runtime-main.87526358.js",
     "runtime-main.js.map": "/movie-recommender-frontend/static/js/runtime-main.87526358.js.map",
     "static/js/2.d68eea1e.chunk.js": "/movie-recommender-frontend/static/js/2.d68eea1e.chunk.js",
     "static/js/2.d68eea1e.chunk.js.map": "/movie-recommender-frontend/static/js/2.d68eea1e.chunk.js.map",
     "index.html": "/movie-recommender-frontend/index.html",
-    "precache-manifest.3ee35b5003016bc9f05e823038bbd156.js": "/movie-recommender-frontend/precache-manifest.3ee35b5003016bc9f05e823038bbd156.js",
+    "precache-manifest.080388168bd3b391fa09e378857bf7ac.js": "/movie-recommender-frontend/precache-manifest.080388168bd3b391fa09e378857bf7ac.js",
     "service-worker.js": "/movie-recommender-frontend/service-worker.js",
     "static/css/main.b17e9825.chunk.css.map": "/movie-recommender-frontend/static/css/main.b17e9825.chunk.css.map",
     "static/js/2.d68eea1e.chunk.js.LICENSE.txt": "/movie-recommender-frontend/static/js/2.d68eea1e.chunk.js.LICENSE.txt",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.87526358.js",
     "static/js/2.d68eea1e.chunk.js",
     "static/css/main.b17e9825.chunk.css",
-    "static/js/main.cb9039ee.chunk.js"
+    "static/js/main.aa474cc6.chunk.js"
   ]
 }
