@@ -1,22 +1,23 @@
 {
   "files": {
-    "main.css": "/movie-recommender-frontend/static/css/main.5ecd60fb.chunk.css",
-    "main.js": "/movie-recommender-frontend/static/js/main.e935e060.chunk.js",
-    "main.js.map": "/movie-recommender-frontend/static/js/main.e935e060.chunk.js.map",
+    "main.css": "/movie-recommender-frontend/static/css/main.b17e9825.chunk.css",
+    "main.js": "/movie-recommender-frontend/static/js/main.cb9039ee.chunk.js",
+    "main.js.map": "/movie-recommender-frontend/static/js/main.cb9039ee.chunk.js.map",
     "runtime-main.js": "/movie-recommender-frontend/static/js/runtime-main.87526358.js",
     "runtime-main.js.map": "/movie-recommender-frontend/static/js/runtime-main.87526358.js.map",
-    "static/js/2.8fc50bbf.chunk.js": "/movie-recommender-frontend/static/js/2.8fc50bbf.chunk.js",
-    "static/js/2.8fc50bbf.chunk.js.map": "/movie-recommender-frontend/static/js/2.8fc50bbf.chunk.js.map",
+    "static/js/2.d68eea1e.chunk.js": "/movie-recommender-frontend/static/js/2.d68eea1e.chunk.js",
+    "static/js/2.d68eea1e.chunk.js.map": "/movie-recommender-frontend/static/js/2.d68eea1e.chunk.js.map",
     "index.html": "/movie-recommender-frontend/index.html",
-    "precache-manifest.e142b1135e07c34d09d4b8179c313124.js": "/movie-recommender-frontend/precache-manifest.e142b1135e07c34d09d4b8179c313124.js",
+    "precache-manifest.3ee35b5003016bc9f05e823038bbd156.js": "/movie-recommender-frontend/precache-manifest.3ee35b5003016bc9f05e823038bbd156.js",
     "service-worker.js": "/movie-recommender-frontend/service-worker.js",
-    "static/css/main.5ecd60fb.chunk.css.map": "/movie-recommender-frontend/static/css/main.5ecd60fb.chunk.css.map",
-    "static/js/2.8fc50bbf.chunk.js.LICENSE.txt": "/movie-recommender-frontend/static/js/2.8fc50bbf.chunk.js.LICENSE.txt"
+    "static/css/main.b17e9825.chunk.css.map": "/movie-recommender-frontend/static/css/main.b17e9825.chunk.css.map",
+    "static/js/2.d68eea1e.chunk.js.LICENSE.txt": "/movie-recommender-frontend/static/js/2.d68eea1e.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/movie-recommender-frontend/static/media/showcase.4b31330b.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.87526358.js",
-    "static/js/2.8fc50bbf.chunk.js",
-    "static/css/main.5ecd60fb.chunk.css",
-    "static/js/main.e935e060.chunk.js"
+    "static/js/2.d68eea1e.chunk.js",
+    "static/css/main.b17e9825.chunk.css",
+    "static/js/main.cb9039ee.chunk.js"
   ]
 }
