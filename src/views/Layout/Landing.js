@@ -11,10 +11,10 @@ export const Landing = () => {
            Alright! Alright! Alright! You come to a fine place if you are confused on what to watch next? We will help you to take the decision.
           </p>
           <div className="buttons">
-            <Link to="/register" className="btn btn-primary">Sign Up</Link>
-            <Link to="/login" className="btn btn-light">Login</Link>
-            <Link to="/select" className="btn btn-light">Selection</Link>
-            <Link to="/dashboard" className="btn btn-light">Home</Link>
+            <Link to="/movie-recommender-frontend/register" className="btn btn-primary">Sign Up</Link>
+            <Link to="/movie-recommender-frontend/login" className="btn btn-light">Login</Link>
+            <Link to="/movie-recommender-frontend/select" className="btn btn-light">Selection</Link>
+            <Link to="/movie-recommender-frontend/dashboard" className="btn btn-light">Home</Link>
      
           </div>
         </div>

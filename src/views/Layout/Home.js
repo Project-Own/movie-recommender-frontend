@@ -14,11 +14,11 @@ const Home = () =>
   <Router>
 
     <Switch>
-    <Route exact path='/' component={Landing}/>
-    <Route exact path='/login' component={Login}/>
-    <Route exact path='/register' component={Register}/>
-    <Route exact path='/select' component={UserPickLayout}/>
-    <Route exact path='/dashboard' component={Layout}/>
+    <Route exact path='/movie-recommender-frontend/' component={Landing}/>
+    <Route exact path='/movie-recommender-frontend/login' component={Login}/>
+    <Route exact path='/movie-recommender-frontend/register' component={Register}/>
+    <Route exact path='/movie-recommender-frontend/select' component={UserPickLayout}/>
+    <Route exact path='/movie-recommender-frontend/dashboard' component={Layout}/>
      
      </Switch>
 
