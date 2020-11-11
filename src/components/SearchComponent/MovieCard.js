@@ -23,10 +23,11 @@ import clsx from "clsx";
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 10,
-    maxWidth: 345,
   },
   media: {
-    height: 300,
+    width: "100%",
+    maxHeight: 300,
+    objectFit: "cover",
   },
   expand: {
     transform: "rotate(0deg)",

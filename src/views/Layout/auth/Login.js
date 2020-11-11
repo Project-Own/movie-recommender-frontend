@@ -1,53 +1,54 @@
-import React,{Fragment,useState} from 'react';
-import {Link} from 'react-router-dom';
-import axios from 'axios';
-import '../../App/App.css'
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import "../../App/App.css";
 export const Login = () => {
   const [formData, setFormData] = useState({
-    email:'',
-    password:'',
+    email: "",
+    password: "",
   });
 
-const {email, password} = formData;
+  const { email, password } = formData;
 
-const onChange = e => setFormData({...formData, [e.target.name]: e.target.value});
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const User = {
+      email,
+      password,
+    };
 
-const onSubmit = async e => {
-  e.preventDefault();
-  const User = {
-    email,
-    password
-  }
-
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-    const body = JSON.stringify(User); 
-    const res = await axios.post('/api/auth', body, config);
-    console.log(res.data);
-  }catch(err) {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const body = JSON.stringify(User);
+      const res = await axios.post("/api/auth", body, config);
+      console.log(res.data);
+    } catch (err) {
       console.error(err.response.data);
-      console.log('Invalid credentials');
-  }
-}
+      console.log("Invalid credentials");
+    }
+  };
 
-
-    return (
-        <div class='container'>
-            <h1 className="large text-primary">Sign In</h1>
-      <p className="lead"><i className="fas fa-user"></i> Sign into Your Account</p>
-      <form className="form" onSubmit ={e => onSubmit(e)}>
+  return (
+    <div class="container">
+      <h1 className="large text-primary">Sign In</h1>
+      <p className="lead">
+        <i className="fas fa-user"></i> Sign into Your Account
+      </p>
+      <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <input
             type="email"
             placeholder="Email Address"
             name="email"
             value={email}
-            onChange = {e => onChange(e)}
+            onChange={(e) => onChange(e)}
             required
           />
         </div>
@@ -55,8 +56,8 @@ const onSubmit = async e => {
           <input
             type="password"
             placeholder="Password"
-            value = {password}
-            onChange={e => onChange(e)}
+            value={password}
+            onChange={(e) => onChange(e)}
             name="password"
             minLength="6"
           />
@@ -66,7 +67,7 @@ const onSubmit = async e => {
       <p className="my-1">
         Don't have an account? <Link to="/register">Sign Up</Link>
       </p>
-        </div>
-    )
-}
- export default Login;
+    </div>
+  );
+};
+export default Login;

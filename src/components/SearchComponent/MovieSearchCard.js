@@ -1,15 +1,14 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
-import {
-  Button,
-  Typography,
-  CardActions,
-  TextField,
-  Card,
-  CardContent,
-} from "@material-ui/core";
-
+import { Card, CardContent, CardHeader } from "@material-ui/core";
+import MovieAutoComplete from "./MovieAutoComplete";
 const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&t=";
+
+// const AUTOCOMPLETE_API_ADDRESS =
+//   "https://api.themoviedb.org/3/search/movie?api_key=ea575fa4bf65c424e93e0c032ab5c5f2&language=en-US&query=";
+// const AUTOCOMPLETE_TOP_API_ADDRESS =
+//   "https://api.themoviedb.org/3/movie/top_rated?api_key=ea575fa4bf65c424e93e0c032ab5c5f2&language=en-US&page=1";
+
 // const style = {
 //   width: 200,
 //   height: 200,
@@ -17,70 +16,58 @@ const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&t=";
 //   objectFit: "cover",
 // };
 
-class MovieSearchCard extends Component {
-  state = { movieQuery: "", movie: "" };
+const MovieSearchCard = () => {
+  // const [state, setState] = useState({ movieQuery: "", movie: "" });
+  const [movieSelected, setMovieSelected] = useState("");
+  const [movie, setMovie] = useState("");
 
-  updateMovieQuerry = (event) => {
-    this.setState({ movieQuery: event.target.value });
-  };
-
-  handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      this.searchMovie();
-    }
-  };
-
-  searchMovie = () => {
-    if (this.state.movieQuery !== "") {
-      fetch(`${API_ADDRESS} + ${this.state.movieQuery}`)
-        .then((response) => response.json())
-        .then((json) => {
-          if (json.Response !== "False") {
-            this.setState({ ...this.state, movie: json });
-          }
-        })
-        .catch((error) => alert(error.message));
-    }
-  };
-  componentDidMount() {
+  useEffect(() => {
     fetch(`${API_ADDRESS}avengers`)
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
-        this.setState({ movie: json });
+        // console.log(json);
+        setMovie(json);
+        // setState({ movie: json });
       })
       .catch((error) => alert(error.message));
-  }
+  }, []);
 
-  render() {
-    console.log(this.state.movieQuery);
-    return (
-      <>
-        <Card>
-          <CardContent>
-            <Typography variant="h5">Movie Search</Typography>
-            <TextField
-              variant="outlined"
-              onChange={this.updateMovieQuerry}
-              onKeyPress={this.handleKeyPress}
-              placeholder="Search Movie"
-            />
-          </CardContent>
+  useEffect(() => {
+    const searchMovie = () => {
+      if (movieSelected !== "") {
+        fetch(`${API_ADDRESS} + ${movieSelected.title}`)
+          .then((response) => response.json())
+          .then((json) => {
+            if (json.Response !== "False") {
+              // setState({ ...state, movie: json });
+              setMovie(json);
+              // setQuery("");
+            }
+          })
+          .catch((error) => alert(error.message));
+      }
+    };
 
-          <CardActions>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.searchMovie}
-            >
-              Search
-            </Button>
-          </CardActions>
-        </Card>
-        {this.state.movie ? <MovieCard movie={this.state.movie} /> : null}
-      </>
-    );
-  }
-}
+    if (typeof movieSelected !== "undefined") {
+      console.log(movieSelected);
+      searchMovie();
+    }
+  }, [movieSelected]);
+
+  // console.log(query);
+  return (
+    <>
+      <Card>
+        <CardHeader title="Movie Search" />
+        <CardContent>
+          {/* <Typography variant="h5">Movie Search</Typography> */}
+
+          <MovieAutoComplete setMovieSelected={setMovieSelected} />
+        </CardContent>
+      </Card>
+      {movie ? <MovieCard movie={movie} /> : null}
+    </>
+  );
+};
 
 export default MovieSearchCard;
