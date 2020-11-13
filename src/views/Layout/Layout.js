@@ -1,7 +1,10 @@
 import React from "react";
 import TopNavBar from "../../components/AppBar/TopNavBar";
 import { Container, Grid, Button } from "@material-ui/core";
+<<<<<<< HEAD
 // import FadeInAnimation from "../../components/FadeIn/FadeIn";
+=======
+>>>>>>> fa33590b897e8d9e2f58c9df4365d8c85093d490
 import DraggableComponent from "../../components/Draggable/Draggable";
 
 import { setSnackbar } from "../../features/Snackbar/snackbarSlice";
@@ -13,11 +16,9 @@ export default function Layout() {
 
   return (
     <Container maxWidth={"lg"}>
-
-<TopNavBar />
+      <TopNavBar />
       <Grid container direction="column" spacing={4}>
-        <Grid item>
-        </Grid>
+        <Grid item></Grid>
 
         <Grid item container>
           <Grid item container direction="row" spacing={4}>
@@ -26,11 +27,10 @@ export default function Layout() {
                 <Grid item>
                   <DraggableComponent />
                 </Grid>
-          
               </Grid>
             </Grid>
             <Grid item sm={4}>
-                <MovieSearchCard />
+              <MovieSearchCard />
             </Grid>
           </Grid>
         </Grid>
@@ -58,7 +58,6 @@ export default function Layout() {
                 </Grid>
               </Grid>
             </Grid>
-           
           </Grid>
         </Grid>
       </Grid>
