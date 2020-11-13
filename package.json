@@ -18,11 +18,8 @@
     "gsap": "^3.5.1",
     "mongoose": "^5.10.14",
     "node-forge": "^0.10.0",
-<<<<<<< HEAD
-    "nodemon": "^2.0.6",
-=======
     "object-path": "^0.11.5",
->>>>>>> fa33590b897e8d9e2f58c9df4365d8c85093d490
+
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",

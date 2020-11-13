@@ -1,14 +1,8 @@
-<<<<<<< HEAD
-import React,{useState} from 'react';
-import {Link} from 'react-router-dom';
-import axios from 'axios';
-import '../../App/App.css'
-=======
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../../App/App.css";
->>>>>>> fa33590b897e8d9e2f58c9df4365d8c85093d490
+
 export const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
