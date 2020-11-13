@@ -6,13 +6,15 @@ import { makeStyles } from '@material-ui/core/styles';
 const Footer = (props)=>{
     const useStyles = makeStyles(theme=>({
         footerStyle :{
-            backgroundColor: "#F8F8F8",
+            backgroundColor: "#F2F2F2",
             textAlign: "center",
-            padding: "20px",
+            
+
+            padding: "16px",
             position: "fixed",
             left: "0",
             bottom: "0",
-            height: "50px",
+            height: "80px",
             width: "100%",
         },
         buttonStyle:{

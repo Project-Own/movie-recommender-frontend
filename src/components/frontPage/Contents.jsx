@@ -7,6 +7,7 @@ import movieList from './data'
 import {useState} from 'react';
 
 
+
 const Contents=()=>{
 
     const [check,setCheck] = useState(false);

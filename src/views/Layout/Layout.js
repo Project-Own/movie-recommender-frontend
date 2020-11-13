@@ -1,7 +1,7 @@
 import React from "react";
 import TopNavBar from "../../components/AppBar/TopNavBar";
 import { Container, Grid, Button } from "@material-ui/core";
-import FadeInAnimation from "../../components/FadeIn/FadeIn";
+// import FadeInAnimation from "../../components/FadeIn/FadeIn";
 import DraggableComponent from "../../components/Draggable/Draggable";
 
 import { setSnackbar } from "../../features/Snackbar/snackbarSlice";
