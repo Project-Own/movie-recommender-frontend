@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+
 import Slider from "@material-ui/core/Slider";
 import { makeStyles } from "@material-ui/core/styles";
-import MovieList from "./data";
+
 const useStyles = makeStyles({
   root: {
     width: 250,
@@ -34,11 +35,7 @@ const ImageSlider = ({ imgList }) => {
   return (
     imgList.length > 0 && (
       <div className={classes.root}>
-        <img
-          className={classes.imge}
-          src={"https://image.tmdb.org/t/p/w185" + imgList[index]}
-          alt={index}
-        />
+        <img className={classes.imge} src={imgList[index]} alt={index} />
         <Slider
           value={index}
           onChange={handleSliderChange}

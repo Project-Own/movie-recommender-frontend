@@ -6,12 +6,12 @@ import { useDispatch } from "react-redux";
 import MovieSearchCard from "../../components/SearchComponent/MovieSearchCard";
 import { Link } from "react-router-dom";
 import ImageSlider from "../../components/frontPage/ImageSlider";
-import movieList from "../../components/frontPage/data";
+import OscarList from "../../components/frontPage/oscar_data";
 
 export default function Layout() {
   const dispatch = useDispatch();
 
-  const imgList = movieList.map((data) => data.poster_path);
+  const imgList = OscarList.map((data) => data.poster_path);
   return (
     <>
       <section className="landing">
