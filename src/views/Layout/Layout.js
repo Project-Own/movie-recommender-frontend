@@ -5,10 +5,13 @@ import { setSnackbar } from "../../features/Snackbar/snackbarSlice";
 import { useDispatch } from "react-redux";
 import MovieSearchCard from "../../components/SearchComponent/MovieSearchCard";
 import { Link } from "react-router-dom";
+import ImageSlider from "../../components/frontPage/ImageSlider";
+import movieList from "../../components/frontPage/data";
 
 export default function Layout() {
   const dispatch = useDispatch();
 
+  const imgList = movieList.map((data) => data.poster_path);
   return (
     <>
       <section className="landing">
@@ -83,7 +86,8 @@ export default function Layout() {
               <Grid item sm={8}>
                 <Grid item container direction="column">
                   <Grid item>
-                    <DraggableComponent />
+                    {/* <DraggableComponent /> */}
+                    <ImageSlider imgList={imgList} />
                   </Grid>
                 </Grid>
               </Grid>
