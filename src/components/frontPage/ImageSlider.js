@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Slider from '@material-ui/core/Slider'
 import { makeStyles } from '@material-ui/core/styles';
-import MovieList from './data'
+import MovieList from './oscar_data'
 const useStyles = makeStyles({
   root: {
     width: 250,
