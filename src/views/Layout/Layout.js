@@ -1,61 +1,125 @@
 import React from "react";
-import TopNavBar from "../../components/AppBar/TopNavBar";
 import { Container, Grid, Button } from "@material-ui/core";
 import DraggableComponent from "../../components/Draggable/Draggable";
 import { setSnackbar } from "../../features/Snackbar/snackbarSlice";
 import { useDispatch } from "react-redux";
 import MovieSearchCard from "../../components/SearchComponent/MovieSearchCard";
+import { Link } from "react-router-dom";
 
 export default function Layout() {
   const dispatch = useDispatch();
 
   return (
-    <Container maxWidth={"lg"}>
-      <TopNavBar />
-      <Grid container direction="column" spacing={4}>
-        <Grid item></Grid>
-
-        <Grid item container>
-          <Grid item container direction="row" spacing={4}>
-            <Grid item sm={8}>
-              <Grid item container direction="column">
+    <>
+      <section className="landing">
+        <div className="dark-overlay">
+          <div className="landing-inner">
+            <h1 className="x-large">Movie Recommender</h1>
+            <p className="lead">
+              Alright! Alright! Alright! You come to a fine place if you are
+              confused on what to watch next? We will help you to take the
+              decision.
+            </p>
+            <div className="buttons">
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                spacing={2}
+              >
                 <Grid item>
-                  <DraggableComponent />
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item sm={4}>
-              <MovieSearchCard />
-            </Grid>
-          </Grid>
-        </Grid>
-
-        <Grid item container>
-          <Grid item container direction="row" spacing={4}>
-            <Grid item sm={8}>
-              <Grid item container direction="column">
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                      dispatch(
-                        setSnackbar({
-                          snackbarOpen: true,
-                          snackbarType: "success",
-                          snackbarMessage: "Snackbar launched",
-                        })
-                      );
-                    }}
+                  <Link
+                    to="/movie-recommender-frontend/register"
+                    // className="btn btn-primary"
                   >
-                    Launch Snackbar
-                  </Button>
+                    <Button color="secondary" variant="contained">
+                      Register
+                    </Button>
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link
+                    to="/movie-recommender-frontend/login"
+                    // className="btn btn-light"
+                  >
+                    <Button color="primary" variant="contained">
+                      Login
+                    </Button>
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link
+                    to="/movie-recommender-frontend/select"
+                    // className="btn btn-light"
+                  >
+                    <Button color="primary" variant="contained">
+                      Selection
+                    </Button>
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link
+                    to="/movie-recommender-frontend/"
+                    // className="btn btn-light"
+                  >
+                    <Button color="primary" variant="contained">
+                      Home
+                    </Button>
+                  </Link>
+                </Grid>
+              </Grid>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Container maxWidth={"lg"}>
+        <Grid container direction="column" spacing={4}>
+          <Grid item></Grid>
+
+          <Grid item container>
+            <Grid item container direction="row" spacing={4}>
+              <Grid item sm={8}>
+                <Grid item container direction="column">
+                  <Grid item>
+                    <DraggableComponent />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item sm={4}>
+                <MovieSearchCard />
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item container>
+            <Grid item container direction="row" spacing={4}>
+              <Grid item sm={8}>
+                <Grid item container direction="column">
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => {
+                        dispatch(
+                          setSnackbar({
+                            snackbarOpen: true,
+                            snackbarType: "success",
+                            snackbarMessage: "Snackbar launched",
+                          })
+                        );
+                      }}
+                    >
+                      Launch Snackbar
+                    </Button>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </>
   );
 }
