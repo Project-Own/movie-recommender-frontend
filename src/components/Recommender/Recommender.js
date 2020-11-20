@@ -19,16 +19,16 @@ const useStyles = makeStyles((theme) => ({
     },
 
     buttonbasestyle: {
-        maxWidth: "200px",
-        maxHeight: "200px",
-        minWidth: "200px",
-        minHeight: "200px",
+        // maxWidth: "200px",
+        maxHeight: "20px",
+        minWidth: "150px",
+        minHeight: "20px",
         borderRadius: 10,
         "&:hover": {
             color: "red"
         },
-        marginBottom: 24,
-        marginTop: 16
+        marginBottom: 10,
+        marginTop: 10
     },
     textStyle: {
         position: "absolute",
@@ -51,15 +51,13 @@ export default function Recommender() {
         <
         Grid item xs = { 12 } >
         <
-        Paper className = { classes.control } >
-        <
-        Grid container >
+        Paper style = {
+            { width: 300, height: 20 } } >
         <
         Grid item >
         <
         FormLabel > Recommendation
         for { movie } < /FormLabel> <
-        /Grid> <
         /Grid> <
         /Paper> <
         /Grid>
@@ -74,14 +72,16 @@ export default function Recommender() {
                 <
                 ButtonBase className = { classes.buttonbasestyle }
                 onClick = { shoot } >
-                <
-                h5 textAlign = "center"
-                className = { classes.textStyle } > { movie.title } <
-                /h5> <
-                img className = { classes.image }
-                src = { "https://image.tmdb.org/t/p/w185" + movie.posterPath }
-                alt = "rohitjoey" >
-                < /img> <
+
+                { movie.title }
+
+                {
+                    /* <img
+                                      className={classes.image}
+                                      src={"https://image.tmdb.org/t/p/w185" + movie.posterPath}
+                                      alt="rohitjoey"
+                                    ></img> */
+                } <
                 /ButtonBase> <
                 /Grid>
             ))
