@@ -17,57 +17,64 @@ const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&t=";
 // };
 
 const MovieSearchCard = () => {
-  // const [state, setState] = useState({ movieQuery: "", movie: "" });
-  const [movieSelected, setMovieSelected] = useState("");
-  const [movie, setMovie] = useState("");
+        // const [state, setState] = useState({ movieQuery: "", movie: "" });
+        const [movieSelected, setMovieSelected] = useState("");
+        const [movie, setMovie] = useState("");
 
-  useEffect(() => {
-    fetch(`${API_ADDRESS}avengers`)
-      .then((response) => response.json())
-      .then((json) => {
-        // console.log(json);
-        setMovie(json);
-        // setState({ movie: json });
-      })
-      .catch((error) => alert(error.message));
-  }, []);
+        useEffect(() => {
+            fetch(`${API_ADDRESS}avengers`)
+                .then((response) => response.json())
+                .then((json) => {
+                    // console.log(json);
+                    console.log(json);
+                    setMovie(json);
+                    // setState({ movie: json });
+                })
+                .catch((error) => alert(error.message));
+        }, []);
 
-  useEffect(() => {
-    const searchMovie = () => {
-      if (movieSelected !== "") {
-        fetch(`${API_ADDRESS} + ${movieSelected.title}`)
-          .then((response) => response.json())
-          .then((json) => {
-            if (json.Response !== "False") {
-              // setState({ ...state, movie: json });
-              setMovie(json);
-              // setQuery("");
+        useEffect(() => {
+            const searchMovie = () => {
+                if (movieSelected !== "") {
+                    fetch(`${API_ADDRESS} + ${movieSelected.title}`)
+                        .then((response) => response.json())
+                        .then((json) => {
+                            if (json.Response !== "False") {
+                                // setState({ ...state, movie: json });
+                                setMovie(json);
+
+                                // setQuery("");
+                            }
+                        })
+                        .catch((error) => alert(error.message));
+                }
+            };
+
+            if (typeof movieSelected !== "undefined") {
+                console.log(movieSelected);
+                searchMovie();
             }
-          })
-          .catch((error) => alert(error.message));
-      }
-    };
+        }, [movieSelected]);
 
-    if (typeof movieSelected !== "undefined") {
-      console.log(movieSelected);
-      searchMovie();
-    }
-  }, [movieSelected]);
+        // console.log(query);
+        return ( <
+            >
+            <
+            Card >
+            <
+            CardHeader title = "Movie Search" / >
+            <
+            CardContent > { /* <Typography variant="h5">Movie Search</Typography> */ }
 
-  // console.log(query);
-  return (
-    <>
-      <Card>
-        <CardHeader title="Movie Search" />
-        <CardContent>
-          {/* <Typography variant="h5">Movie Search</Typography> */}
+            <
+            MovieAutoComplete setMovieSelected = { setMovieSelected }
+            /> <
+            /CardContent> <
+            /Card> {
+                movie ? < MovieCard movie = { movie }
+                /> : null} <
+                />
+            );
+        };
 
-          <MovieAutoComplete setMovieSelected={setMovieSelected} />
-        </CardContent>
-      </Card>
-      {movie ? <MovieCard movie={movie} /> : null}
-    </>
-  );
-};
-
-export default MovieSearchCard;
+        export default MovieSearchCard;
