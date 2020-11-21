@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../../App/App.css";
+import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
+import { useDispatch } from "react-redux";
 export const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -9,7 +11,7 @@ export const Register = () => {
     password: "",
     password2: "",
   });
-
+ const dispatch = useDispatch();
   const { name, email, password, password2 } = formData;
 
   const onChange = (e) =>
@@ -18,7 +20,13 @@ export const Register = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log("Passwords do not match");
+      dispatch(
+        setSnackbar({
+            snackbarOpen: true,
+            snackbarType: "error",
+            snackbarMessage: "Password doesnot match",
+        })
+    );
     } else {
       const newUser = {
         name,
@@ -36,7 +44,7 @@ export const Register = () => {
         const res = await axios.post("https://login4530.herokuapp.com/api/users", body, config);
         console.log(res.data);
       } catch (err) {
-        console.error(err.response.data);
+        console.error(err.response);
       }
     }
   };

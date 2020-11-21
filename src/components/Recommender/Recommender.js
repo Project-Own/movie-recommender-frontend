@@ -94,7 +94,7 @@ export default function Recommender() {
                 </Grid>
             ))
         } </Grid>  </Grid >  </Grid>  
-        { < MovieCard movie = { movie1 }/>} 
+       {movie1 ? <MovieCard movie={movie1} /> : null}
         </>
         );
     }

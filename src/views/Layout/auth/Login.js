@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../../App/App.css";
+import { useDispatch } from "react-redux";
+import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
 
 export const Login = () => {
     const [formData, setFormData] = useState({
@@ -9,6 +11,7 @@ export const Login = () => {
         password: "",
     });
 
+    const dispatch = useDispatch();
     const { email, password } = formData;
 
     const onChange = (e) =>
@@ -31,8 +34,14 @@ export const Login = () => {
             const res = await axios.post("https://login4530.herokuapp.com/api/auth", body, config);
             console.log(res.data);
         } catch (err) {
-            console.error(err.response.data);
-            console.log("Invalid credentials");
+            console.error(err.response);
+            dispatch(
+                setSnackbar({
+                    snackbarOpen: true,
+                    snackbarType: "error",
+                    snackbarMessage: "Invalid Credentials",
+                })
+            );
         }
     };
 
