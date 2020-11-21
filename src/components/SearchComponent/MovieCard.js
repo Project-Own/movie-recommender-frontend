@@ -58,46 +58,27 @@ const MovieCard = ({ movie }) => {
         image = { movie.Poster }
         />
 
-        <
-        CardContent >
-        <
-        Typography align = "center" > { movie.Year } { movie.Genre } { movie.Runtime } { " " } <
-        /Typography> {
+        <CardContent >
+        <Typography align = "center" > { movie.Year } { movie.Genre } { movie.Runtime } { " " } 
+        </Typography> {
             movie.Ratings.map((Ratings) => {
-                return ( <
-                    Typography align = "center"
-                    key = { Ratings.Source } > { " " } { Ratings.Source }: { Ratings.Value } { " " } <
-                    /Typography>
+                return ( 
+                    <Typography align = "center" key = { Ratings.Source } > { " " } { Ratings.Source }: { Ratings.Value } { " " } 
+                    </Typography>
                 );
             })
-        } <
-        /CardContent> <
-        CardActions >
-        <
-        IconButton onClick = { handleExpandClick }
-        aria - expanded = { expanded }
-        aria - label = "Show More"
+        } </CardContent> 
+        <CardActions >
+        <IconButton onClick = { handleExpandClick } aria-expanded = { expanded } aria-label = "Show More"
         className = { clsx(classes.expand, {
                 [classes.expandOpen]: expanded }) } >
-        <
-        ExpandMoreIcon / >
-        <
-        /IconButton> <
-        /CardActions> <
-        Collapse in = { expanded }
+        <ExpandMoreIcon / >
+        </IconButton> </CardActions> <Collapse in = { expanded }
         timeout = "auto"
         unmountOnExit >
-        <
-        CardContent >
-        <
-        Typography align = "center" > { movie.Actors } < /Typography> <
-        Typography align = "center" > BoxOffice: { movie.BoxOffice } < /Typography> <
-        Typography variant = "body1"
-        align = "justify" > { movie.Plot } <
-        /Typography> <
-        /CardContent> <
-        /Collapse> <
-        /Card>
+        <CardContent >
+        <Typography align = "center" > { movie.Actors } </Typography> <Typography align = "center" > BoxOffice: { movie.BoxOffice } </Typography> <Typography variant = "body1"
+        align = "justify" > { movie.Plot } </Typography> </CardContent> </Collapse> </Card>
     );
 };
 

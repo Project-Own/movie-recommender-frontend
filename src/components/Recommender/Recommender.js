@@ -64,39 +64,24 @@ export default function Recommender() {
         }
     };
 
-    return ( < >
-        <
-        Grid container className = { classes.root }
-        spacing = { 2 } >
-        <
-        Grid item xs = { 12 } >
-        <
-        Paper style = {
+    return ( 
+    <>
+        <Grid container className = { classes.root } spacing = { 2 } >
+        <Grid item xs = { 12 } >
+        <Paper style = {
             { width: 300, height: 20 }
         } >
-        <
-        Grid item >
-        <
-        FormLabel > Recommendation
-        for { movie } < /FormLabel>  <
-        /Grid >  <
-        /Paper>  <
-        /Grid >
+        <Grid item >
+        <FormLabel > Recommendation for { movie } </FormLabel>  </Grid >  </Paper>  </Grid >
 
-        <
-        Grid item xs = { 12 } >
-        <
-        Grid container justify = "center"
-        spacing = { 1 } > {
-            data.map((movie) => ( <
-                Grid item >
-                <
-                Button className = { classes.buttonbasestyle }
+        <Grid item xs = { 12 } >
+        <Grid container justify = "center" spacing = { 1 } > {
+            data.map((movie) => ( <Grid item >
+                <Button className = { classes.buttonbasestyle }
                 variant = "outlined"
                 color = "primary"
                 onClick = {
-                    () => { searchMovie(movie.title) } } > { movie.title } <
-                /Button>
+                    () => { searchMovie(movie.title) } } > { movie.title } </Button>
 
                 {
                     /* <img
@@ -106,14 +91,10 @@ export default function Recommender() {
                                     ></img> */
                 }
 
-                <
-                /Grid>
+                </Grid>
             ))
-        } <
-        /Grid>  <
-        /Grid >  <
-        /Grid>  { < MovieCard movie = { movie1 }
-            />} <
-            />
+        } </Grid>  </Grid >  </Grid>  
+        { < MovieCard movie = { movie1 }/>} 
+        </>
         );
     }

@@ -33,7 +33,7 @@ export const Register = () => {
           },
         };
         const body = JSON.stringify(newUser);
-        const res = await axios.post("/api/users", body, config);
+        const res = await axios.post("https://login4530.herokuapp.com/api/users", body, config);
         console.log(res.data);
       } catch (err) {
         console.error(err.response.data);
