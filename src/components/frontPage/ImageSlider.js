@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ImageSlider = ({ imgList,title }) => {
+const ImageSlider = ({ imgList,title,date }) => {
   // takes in images as props
   const classes = useStyles();
   const [index, setIndex] = useState(0); // create state to keep track of images index, set the default index to 0
@@ -38,7 +38,9 @@ const ImageSlider = ({ imgList,title }) => {
       <div className={classes.root}>
         <img className={classes.imge} src={imgList[index]} alt={index} />
         <div>{title[index]}</div>
+        <div>{date[index]}</div>
         <Slider
+          
           value={index}
           onChange={handleSliderChange}
           aria-labelledby="input-slider"

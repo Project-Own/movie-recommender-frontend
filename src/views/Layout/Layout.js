@@ -14,6 +14,7 @@ export default function Layout() {
 
   const imgList = OscarList.map((data) => data.poster_path);
   const oscTitle=OscarList.map(t=>t.title)
+  const oscDate=OscarList.map(d=>d.date)
   return (
     <>
       <section className="landing">
@@ -88,7 +89,7 @@ export default function Layout() {
                   <Grid item>
                     <Recommender />
                     <DraggableComponent />
-                    <ImageSlider imgList={imgList} title={oscTitle} />{" "}
+                    <ImageSlider imgList={imgList} title={oscTitle} date={oscDate} />{" "}
                   </Grid>{" "}
                 </Grid>{" "}
               </Grid>{" "}
