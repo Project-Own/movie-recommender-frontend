@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ImageSlider = ({ imgList }) => {
+const ImageSlider = ({ imgList,title }) => {
   // takes in images as props
   const classes = useStyles();
   const [index, setIndex] = useState(0); // create state to keep track of images index, set the default index to 0
@@ -31,11 +31,13 @@ const ImageSlider = ({ imgList }) => {
     }
   };
 
-  console.log({ imgList });
+  
+  
   return (
     imgList.length > 0 && (
       <div className={classes.root}>
         <img className={classes.imge} src={imgList[index]} alt={index} />
+        <div>{title[index]}</div>
         <Slider
           value={index}
           onChange={handleSliderChange}
