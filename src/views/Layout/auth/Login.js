@@ -25,29 +25,29 @@ export const Login = () => {
     };
 
     try {
-      // const config = {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     "Access-Control-Allow-Origin": "*",
-      //   },
-      // };
-
-      const body = JSON.stringify(User);
-      const res = await fetch("https://login4530.herokuapp.com/api/users", {
-        method: "POST",
-        mode: "no-cors",
-        cache: "no-cache",
+      const config = {
         headers: {
           "Content-Type": "application/json",
+          // "Access-Control-Allow-Origin": "*",
         },
+      };
 
-        body: body,
-      });
-      // const res = await axios.post(
-      //   "https://login4530.herokuapp.com/api/auth",
-      //   body,
-      //   config
-      // );
+      const body = JSON.stringify(User);
+      // const res = await fetch("https://login4530.herokuapp.com/api/users", {
+      //   method: "POST",
+      //   mode: "no-cors",
+      //   cache: "no-cache",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+
+      //   body: body,
+      // });
+      const res = await axios.post(
+        "https://vae-login.herokuapp.com/api/auth",
+        body,
+        config
+      );
       console.log(res.data);
     } catch (err) {
       console.error(err.response);

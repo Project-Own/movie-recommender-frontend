@@ -8,7 +8,9 @@ import {
   Button,
   Slide,
   makeStyles,
+  IconButton,
 } from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
 import PropTypes from "prop-types";
 import { CustomThemeContext } from "../../CustomThemeProvider";
 import { Link } from "react-router-dom";
@@ -34,13 +36,13 @@ ElevationScroll.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
+const drawerWidth = 240;
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
+
   title: {
     flexGrow: 1,
     color: "white",
@@ -48,12 +50,30 @@ const useStyles = makeStyles((theme) => ({
   text: {
     color: "white",
   },
+
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
+    },
+  },
+  navBar: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
 }));
 
 export default function TopNavBar(props) {
   const classes = useStyles();
 
   const { currentTheme, setTheme } = useContext(CustomThemeContext);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
   const isDark = Boolean(currentTheme === "dark");
 
@@ -76,7 +96,15 @@ export default function TopNavBar(props) {
                 REC
               </Typography>
             </Link>
-
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
             <Link to="/movie-recommender-frontend/login">
               <Button variant="body2" className={classes.title}>
                 Login
