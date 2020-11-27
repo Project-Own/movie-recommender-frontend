@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Grid, Button, Typography} from "@material-ui/core";
 import DraggableComponent from "../../components/Draggable/Draggable";
+// import DraggableComponent from "../../components/Draggable/Draggable";
 import Recommender from "../../components/Recommender/Recommender";
 import { setSnackbar } from "../../features/Snackbar/snackbarSlice";
 import { useDispatch } from "react-redux";
@@ -9,6 +10,8 @@ import { Link } from "react-router-dom";
 import ImageSlider from "../../components/frontPage/ImageSlider";
 import OscarList from "../../components/frontPage/oscar_data";
 import CheckboxListSecondary from "../../components/frontPage/imdbList"
+import ImdbList from "../../components/frontPage/imdbList";
+// import ReactScrollableList from '../../dist/index'
 
 export default function Layout() {
   const dispatch = useDispatch();
@@ -16,6 +19,7 @@ export default function Layout() {
   const imgList = OscarList.map((data) => data.poster_path);
   const oscTitle=OscarList.map(t=>t.title)
   const oscDate=OscarList.map(d=>d.date)
+ 
   return (
     <>
       <section className="landing">
@@ -91,6 +95,8 @@ export default function Layout() {
                     <Recommender />
                     <DraggableComponent />
                     <ImageSlider imgList={imgList} title={oscTitle} date={oscDate} />{" "}
+                    <ImdbList/>
+                    
                   </Grid>{" "}
                 </Grid>{" "}
               </Grid>{" "}
