@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid, Button } from "@material-ui/core";
+import { Container, Grid, Button, Typography} from "@material-ui/core";
 import DraggableComponent from "../../components/Draggable/Draggable";
 import Recommender from "../../components/Recommender/Recommender";
 import { setSnackbar } from "../../features/Snackbar/snackbarSlice";
@@ -8,6 +8,7 @@ import MovieSearchCard from "../../components/SearchComponent/MovieSearchCard";
 import { Link } from "react-router-dom";
 import ImageSlider from "../../components/frontPage/ImageSlider";
 import OscarList from "../../components/frontPage/oscar_data";
+import CheckboxListSecondary from "../../components/frontPage/imdbList"
 
 export default function Layout() {
   const dispatch = useDispatch();
@@ -95,6 +96,8 @@ export default function Layout() {
               </Grid>{" "}
               <Grid item sm={4}>
                 <MovieSearchCard />
+                <Typography>TOP IMDB LIST</Typography>
+                <CheckboxListSecondary/>
               </Grid>{" "}
             </Grid>{" "}
           </Grid>
