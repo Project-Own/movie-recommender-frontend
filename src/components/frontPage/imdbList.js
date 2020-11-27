@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CheckboxListSecondary() {
+export default function ImdbList() {
   const classes = useStyles();
   
   const [data, setData] = useState([]);
