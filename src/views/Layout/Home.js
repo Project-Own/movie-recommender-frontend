@@ -5,8 +5,8 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Layout from "./Layout";
 import UserPickLayout from "./UserPickLayout";
-
-const Home = () => {
+const Home = (props) => {
+  console.log(props);
   return (
     <Router>
       <TopNavBar />
@@ -30,6 +30,11 @@ const Home = () => {
         <Route
           exact
           path="/movie-recommender-frontend/dashboard"
+          component={Layout}
+        />
+        <Route
+          exact
+          path="/movie-recommender-frontend/profile"
           component={Layout}
         />
       </Switch>

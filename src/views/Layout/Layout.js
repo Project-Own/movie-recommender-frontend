@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid, Button, Typography} from "@material-ui/core";
+import { Container, Grid, Button, Typography } from "@material-ui/core";
 import DraggableComponent from "../../components/Draggable/Draggable";
 // import DraggableComponent from "../../components/Draggable/Draggable";
 import Recommender from "../../components/Recommender/Recommender";
@@ -9,28 +9,32 @@ import MovieSearchCard from "../../components/SearchComponent/MovieSearchCard";
 import { Link } from "react-router-dom";
 import ImageSlider from "../../components/frontPage/ImageSlider";
 import OscarList from "../../components/frontPage/oscar_data";
-import CheckboxListSecondary from "../../components/frontPage/imdbList"
+import CheckboxListSecondary from "../../components/frontPage/imdbList";
 import ImdbList from "../../components/frontPage/imdbList";
 // import ReactScrollableList from '../../dist/index'
+import ScrollTop from "../../components/ScrollTop";
+import { Fab } from "@material-ui/core";
 
-export default function Layout() {
+import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+
+export default function Layout(props) {
   const dispatch = useDispatch();
 
   const imgList = OscarList.map((data) => data.poster_path);
-  const oscTitle=OscarList.map(t=>t.title)
-  const oscDate=OscarList.map(d=>d.date)
- 
+  const oscTitle = OscarList.map((t) => t.title);
+  const oscDate = OscarList.map((d) => d.date);
+
   return (
     <>
       <section className="landing">
         <div className="dark-overlay">
           <div className="landing-inner">
-            <h1 className="x-large"> Movie Recommender </h1>{" "}
+            <h1 className="x-large"> Movie Recommender </h1>
             <p className="lead">
               Alright!Alright!Alright!You come to a fine place if you are
               confused on what to watch next ? We will help you to take the
-              decision.{" "}
-            </p>{" "}
+              decision.
+            </p>
             <div className="buttons">
               <Grid
                 container
@@ -45,71 +49,74 @@ export default function Layout() {
                     // className="btn btn-primary"
                   >
                     <Button color="secondary" variant="contained">
-                      Register{" "}
-                    </Button>{" "}
-                  </Link>{" "}
-                </Grid>{" "}
+                      Register
+                    </Button>
+                  </Link>
+                </Grid>
                 <Grid item>
                   <Link
                     to="/movie-recommender-frontend/login"
                     // className="btn btn-light"
                   >
                     <Button color="primary" variant="contained">
-                      Login{" "}
-                    </Button>{" "}
-                  </Link>{" "}
-                </Grid>{" "}
+                      Login
+                    </Button>
+                  </Link>
+                </Grid>
                 <Grid item>
                   <Link
                     to="/movie-recommender-frontend/select"
                     // className="btn btn-light"
                   >
                     <Button color="primary" variant="contained">
-                      Selection{" "}
-                    </Button>{" "}
-                  </Link>{" "}
-                </Grid>{" "}
+                      Selection
+                    </Button>
+                  </Link>
+                </Grid>
                 <Grid item>
                   <Link
                     to="/movie-recommender-frontend/"
                     // className="btn btn-light"
                   >
                     <Button color="primary" variant="contained">
-                      Home{" "}
-                    </Button>{" "}
-                  </Link>{" "}
-                </Grid>{" "}
-              </Grid>{" "}
-            </div>{" "}
-          </div>{" "}
-        </div>{" "}
+                      Home
+                    </Button>
+                  </Link>
+                </Grid>
+              </Grid>
+            </div>
+          </div>
+        </div>
       </section>
       <Container maxWidth={"lg"}>
         <Grid container direction="column" spacing={4}>
           <Grid item> </Grid>
           <Grid item container>
             <Grid item container direction="row" spacing={4}>
-              <Grid item sm={8}>
+              <Grid item md={8} sm={12}>
                 <Grid item container direction="column">
                   <Grid item>
                     <Recommender />
                     <DraggableComponent />
-                    <ImageSlider imgList={imgList} title={oscTitle} date={oscDate} />{" "}
-                    <ImdbList/>
-                    
-                  </Grid>{" "}
-                </Grid>{" "}
-              </Grid>{" "}
-              <Grid item sm={4}>
+                    <ImageSlider
+                      imgList={imgList}
+                      title={oscTitle}
+                      date={oscDate}
+                    />
+                    <ImdbList />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item md={4} sm={12}>
                 <MovieSearchCard />
                 <Typography>TOP IMDB LIST</Typography>
-                <CheckboxListSecondary/>
-              </Grid>{" "}
-            </Grid>{" "}
+                <CheckboxListSecondary />
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item container>
             <Grid item container direction="row" spacing={4}>
-              <Grid item sm={8}>
+              <Grid item md={8} sm={12}>
                 <Grid item container direction="column">
                   <Grid item>
                     <Button
@@ -125,15 +132,20 @@ export default function Layout() {
                         );
                       }}
                     >
-                      Launch Snackbar{" "}
-                    </Button>{" "}
-                  </Grid>{" "}
-                </Grid>{" "}
-              </Grid>{" "}
-            </Grid>{" "}
-          </Grid>{" "}
-        </Grid>{" "}
-      </Container>{" "}
+                      Launch Snackbar
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+        <ScrollTop {...props}>
+          <Fab color="secondary" size="small" aria-label="scroll back to top">
+            <KeyboardArrowUpIcon />
+          </Fab>
+        </ScrollTop>
+      </Container>
     </>
   );
 }

@@ -53,7 +53,11 @@ export const Register = () => {
 
         //   body: body,
         // });
-        const res = await axios.post("https://vae-login.herokuapp.com/api/users", body, config);
+        const res = await axios.post(
+          "https://vae-login.herokuapp.com/api/users",
+          body,
+          config
+        );
         console.log(res.data);
       } catch (err) {
         console.log(err);
@@ -61,7 +65,7 @@ export const Register = () => {
     }
   };
   return (
-    <div class="container">
+    <div className="container">
       <h1 className="large text-primary">Sign Up</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Create Your Account
