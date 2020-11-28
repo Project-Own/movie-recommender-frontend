@@ -1,49 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {REGISTER_SUCCESS, REGISTER_FAIL} from './types';
 
 const initialState = {
-    token: localStorage.getItem('token'),
-    isAuthenticated: null,
-    loading: true,
-    user: null
+  token: localStorage.getItem("token"),
+  isAuthenticated: null,
+  loading: true,
+  user: null,
 };
 
 export const registerSlice = createSlice({
-    name: "register",
-    initialState,
-    reducers: {
-        auth: (state,action) => {
-            console.log("Action", action.payload);
-            
-            const{ type, payload } = action;
-
-            switch(type) {
-                case REGISTER_SUCCESS:
-                localStorage.setItem('token');
-                return {
-                    ...state,
-                    ...payload,
-                    isAuthenticated: true,
-                    loading: false,
-                }
-        
-                case REGISTER_FAIL:
-                    localStorage.removeItem('token');
-                    return{
-                        ...state,
-                        token:null,
-                        isAuthenticated: false,
-                        loading: false,
-                    }
-                default: return state;
-            }
-        }
-        
-    }
+  name: "register",
+  initialState,
+  reducers: {
+    success: (state, action) => {
+      localStorage.setItem("token", action.payload);
+      state.isAuthenticated = true;
+      state.loading = false;
+    },
+    failure: (state, action) => {
+      console.log(action.type);
+      localStorage.removeItem("token");
+      state.token = null;
+      state.isAuthenticated = false;
+      state.loading = false;
+    },
+  },
 });
 
-
-export const {auth} = registerSlice.actions;
+export const { success, failure } = registerSlice.actions;
 
 export const register = (state) => state.register;
 

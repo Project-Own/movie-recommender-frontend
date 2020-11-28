@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "../../App/App.css";
 import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
+import {success, failure} from "./registerSlice";
 import { useDispatch } from "react-redux";
 
-import {REGISTER_SUCCESS, REGISTER_FAIL} from './types';
+
 
 
 export const Register = () => {
@@ -49,17 +50,18 @@ export const Register = () => {
         const body = JSON.stringify(newUser);
        
         const res = await axios.post("https://vae-login.herokuapp.com/api/users", body, config);
-        dispatch({
-          type:REGISTER_SUCCESS,
-          payload: res.data
-      });
+        dispatch(
+          success({
+            payload: res.data
+      })
+      );
 
         console.log(res.data);
       } catch (err) {
         console.log(err);
-        dispatch({
-          type:REGISTER_FAIL
-      });
+        dispatch(failure({
+          type:"REGISTER_FAIL",
+         }));
       }
 
     }
