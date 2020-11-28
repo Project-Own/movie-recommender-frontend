@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Container, Grid } from "@material-ui/core";
 import Header from "../../components/frontPage/Header";
 import Contents from "../../components/frontPage/Contents";
 import MovieSearch from "../../components/SearchComponent/MovieSearch";
+import Axios from "axios";
 
 const UserPickLayout = () => {
   return (

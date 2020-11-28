@@ -20,9 +20,10 @@ const Contents = () => {
 
   return (
     <Grid item container spacing={4}>
-      {movieList.map((movieObj) => (
+      {movieList.map((movieObj, index) => (
         <Grid
           item
+          key={index}
           container
           xs={12}
           sm={6}
