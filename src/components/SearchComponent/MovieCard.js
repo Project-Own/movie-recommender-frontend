@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, index }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
 
@@ -58,7 +58,7 @@ const MovieCard = ({ movie }) => {
         image={movie.Poster}
       />
       <CardContent>
-        <LikeButton data={movie} />
+        <LikeButton data={movie} key={index} />
         <Typography align="center">
           {movie.Year} {movie.Genre} {movie.Runtime}
         </Typography>
@@ -95,4 +95,4 @@ const MovieCard = ({ movie }) => {
   );
 };
 
-export default MovieCard;
+export default React.memo(MovieCard);

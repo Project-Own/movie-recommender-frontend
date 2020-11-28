@@ -15,6 +15,7 @@ import {
 } from "@material-ui/core";
 import { Info } from "@material-ui/icons";
 import Axios from "axios";
+import LikeButton from "../LikeButton";
 
 const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&t=";
 const RECOMMEND_API_ADDRESS =
@@ -123,14 +124,11 @@ export default function Recommender() {
         <Grid item xs={12}>
           <GridList cellHeight={400} cols={3}>
             {recommendedMovieList.map((movie, index) => (
-              <GridListTile
-                key={index}
-                cols={movie.cols || 1}
-                onClick={() => {
-                  searchMovie(movie.title);
-                }}
-              >
+              <GridListTile key={index} cols={movie.cols || 1}>
                 <img
+                  onClick={() => {
+                    searchMovie(movie.title);
+                  }}
                   className={classes.image}
                   src={movie.posterPath}
                   alt="Poster"
@@ -139,7 +137,7 @@ export default function Recommender() {
                   title={movie.title}
                   actionIcon={
                     <IconButton>
-                      <Info />
+                      <LikeButton data={movie} index={movie.index} />
                     </IconButton>
                   }
                 >
@@ -157,7 +155,7 @@ export default function Recommender() {
           </GridList>
         </Grid>
       </Grid>
-      {movie1 ? <MovieCard movie={movie1} /> : null}
+      {movie1 ? <MovieCard movie={movie1} index={movie.index} /> : null}
     </>
   );
 }

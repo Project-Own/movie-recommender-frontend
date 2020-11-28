@@ -4,6 +4,10 @@ import axios from "axios";
 import "../../App/App.css";
 import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
 import { useDispatch } from "react-redux";
+
+import {REGISTER_SUCCESS, REGISTER_FAIL} from './types';
+
+
 export const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -11,6 +15,7 @@ export const Register = () => {
     password: "",
     password2: "",
   });
+
   const dispatch = useDispatch();
   const { name, email, password, password2 } = formData;
 
@@ -38,30 +43,25 @@ export const Register = () => {
         const config = {
           headers: {
             "Content-Type": "application/json",
-            // "Access-Control-Allow-Origin": "*",
           },
         };
 
         const body = JSON.stringify(newUser);
-        // const res = await fetch("https://login4530.herokuapp.com/api/users", {
-        //   method: "POST",
-        //   mode: "no-cors",
-        //   cache: "no-cache",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
+       
+        const res = await axios.post("https://vae-login.herokuapp.com/api/users", body, config);
+        dispatch({
+          type:REGISTER_SUCCESS,
+          payload: res.data
+      });
 
-        //   body: body,
-        // });
-        const res = await axios.post(
-          "https://vae-login.herokuapp.com/api/users",
-          body,
-          config
-        );
         console.log(res.data);
       } catch (err) {
         console.log(err);
+        dispatch({
+          type:REGISTER_FAIL
+      });
       }
+
     }
   };
   return (
