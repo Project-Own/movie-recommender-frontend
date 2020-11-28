@@ -9,10 +9,10 @@ import {
   CardActions,
   IconButton,
 } from "@material-ui/core";
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import clsx from "clsx";
+import LikeButton from "../LikeButton";
 
 // const style = {
 //     width: 200,
@@ -44,31 +44,31 @@ const useStyles = makeStyles((theme) => ({
 const MovieCard = ({ movie }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   return (
     <Card className={classes.root}>
-      <CardHeader title={movie.Title} />{" "}
+      <CardHeader title={movie.Title} />
       <CardMedia
         component="img"
         className={classes.media}
         image={movie.Poster}
       />
       <CardContent>
+        <LikeButton data={movie} />
         <Typography align="center">
-          {" "}
-          {movie.Year} {movie.Genre} {movie.Runtime}{" "}
-        </Typography>{" "}
+          {movie.Year} {movie.Genre} {movie.Runtime}
+        </Typography>
         {movie.Ratings.map((Ratings) => {
           return (
             <Typography align="center" key={Ratings.Source}>
-              {" "}
-              {Ratings.Source}: {Ratings.Value}{" "}
+              {Ratings.Source}: {Ratings.Value}
             </Typography>
           );
-        })}{" "}
+        })}
       </CardContent>
       <CardActions>
         <IconButton
@@ -80,18 +80,17 @@ const MovieCard = ({ movie }) => {
           })}
         >
           <ExpandMoreIcon />
-        </IconButton>{" "}
-      </CardActions>{" "}
+        </IconButton>
+      </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography align="center"> {movie.Actors} </Typography>{" "}
-          <Typography align="center"> BoxOffice: {movie.BoxOffice} </Typography>{" "}
+          <Typography align="center"> {movie.Actors} </Typography>
+          <Typography align="center"> BoxOffice: {movie.BoxOffice} </Typography>
           <Typography variant="body1" align="justify">
-            {" "}
-            {movie.Plot}{" "}
-          </Typography>{" "}
-        </CardContent>{" "}
-      </Collapse>{" "}
+            {movie.Plot}
+          </Typography>
+        </CardContent>
+      </Collapse>
     </Card>
   );
 };
