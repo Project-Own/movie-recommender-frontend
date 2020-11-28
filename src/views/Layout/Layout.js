@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Grid, Button, Typography } from "@material-ui/core";
 import DraggableComponent from "../../components/Draggable/Draggable";
 // import DraggableComponent from "../../components/Draggable/Draggable";
@@ -9,7 +9,6 @@ import MovieSearchCard from "../../components/SearchComponent/MovieSearchCard";
 import { Link } from "react-router-dom";
 import ImageSlider from "../../components/frontPage/ImageSlider";
 import OscarList from "../../components/frontPage/oscar_data";
-import CheckboxListSecondary from "../../components/frontPage/imdbList";
 import ImdbList from "../../components/frontPage/imdbList";
 // import ReactScrollableList from '../../dist/index'
 import ScrollTop from "../../components/ScrollTop";
@@ -23,6 +22,8 @@ export default function Layout(props) {
   const imgList = OscarList.map((data) => data.poster_path);
   const oscTitle = OscarList.map((t) => t.title);
   const oscDate = OscarList.map((d) => d.date);
+
+  const [movie, setMovie] = useState("");
 
   return (
     <>
@@ -94,23 +95,29 @@ export default function Layout(props) {
           <Grid item container>
             <Grid item container direction="row" spacing={4}>
               <Grid item md={8} sm={12}>
-                <Grid item container direction="column">
+                <Grid item container direction="column" spacing={4}>
                   <Grid item>
-                    <Recommender />
+                    <Recommender movie={movie} setMovie={setMovie} />
+                  </Grid>
+                  <Grid item>
                     <DraggableComponent />
+                  </Grid>
+                  <Grid item>
                     <ImageSlider
                       imgList={imgList}
                       title={oscTitle}
                       date={oscDate}
                     />
-                    <ImdbList />
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item md={4} sm={12}>
-                <MovieSearchCard />
-                <Typography>TOP IMDB LIST</Typography>
-                <CheckboxListSecondary />
+              <Grid item container spacing={2} md={4} sm={12}>
+                <Grid item sm={6} md={12}>
+                  <MovieSearchCard movie={movie} setMovie={setMovie} />
+                </Grid>
+                <Grid item sm={6} md={12}>
+                  <ImdbList />
+                </Grid>
               </Grid>
             </Grid>
           </Grid>

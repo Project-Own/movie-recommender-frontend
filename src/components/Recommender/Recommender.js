@@ -47,29 +47,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Recommender() {
-  const [movie, setMovie] = React.useState("guarded bayou");
+export default function Recommender(props) {
   const [recommendedMovieList, setRecommendedMovieList] = React.useState([]);
-  const [movie1, setMovie1] = React.useState("");
-
+  const { movie, setMovie } = props;
   const classes = useStyles();
 
   const searchMovie = (movie) => {
     if (movie !== "") {
-      fetch(`${API_ADDRESS} + ${movie}`)
+      fetch(`${API_ADDRESS} + ${movie.title}`)
         .then((response) => response.json())
         .then((json) => {
           if (json.Response !== "False") {
             // setState({ ...state, movie: json });
-            console.log(json);
-            setMovie1(json);
+            json.index = movie.index;
+            setMovie(json);
             // setQuery("");
           }
         })
         .catch((error) => alert(error.message));
     }
   };
-
   const searchRecommendation = (movie) => {
     if (movie !== "") {
       fetch(`${RECOMMEND_API_ADDRESS}`)
@@ -98,7 +95,6 @@ export default function Recommender() {
               })
             );
 
-            console.log(movies);
             setRecommendedMovieList(movies);
             // setQuery("");
           }
@@ -115,19 +111,12 @@ export default function Recommender() {
     <>
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
-          <Paper style={{ width: 300, height: 20 }}>
-            <Grid item>
-              <FormLabel> Recommendation for {movie} </FormLabel>
-            </Grid>
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
           <GridList cellHeight={400} cols={3}>
             {recommendedMovieList.map((movie, index) => (
               <GridListTile key={index} cols={movie.cols || 1}>
                 <img
                   onClick={() => {
-                    searchMovie(movie.title);
+                    searchMovie(movie);
                   }}
                   className={classes.image}
                   src={movie.posterPath}
@@ -135,11 +124,7 @@ export default function Recommender() {
                 />
                 <GridListTileBar
                   title={movie.title}
-                  actionIcon={
-                    <IconButton>
-                      <LikeButton data={movie} index={movie.index} />
-                    </IconButton>
-                  }
+                  actionIcon={<LikeButton data={movie} index={movie.index} />}
                 >
                   {/* <Button
                     className={classes.buttonbasestyle}
@@ -155,7 +140,6 @@ export default function Recommender() {
           </GridList>
         </Grid>
       </Grid>
-      {movie1 ? <MovieCard movie={movie1} index={movie.index} /> : null}
     </>
   );
 }

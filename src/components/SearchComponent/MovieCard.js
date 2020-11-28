@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     width: "100%",
-    maxHeight: 300,
+    maxHeight: 400,
     objectFit: "cover",
   },
   expand: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieCard = ({ movie, index }) => {
+const MovieCard = ({ movie, index = 69 }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
 
@@ -58,7 +58,7 @@ const MovieCard = ({ movie, index }) => {
         image={movie.Poster}
       />
       <CardContent>
-        <LikeButton data={movie} key={index} />
+        <LikeButton data={movie} index={index} />
         <Typography align="center">
           {movie.Year} {movie.Genre} {movie.Runtime}
         </Typography>

@@ -29,7 +29,8 @@ const LikeButton = (props) => {
         autoplay: false,
       });
     setAnimation(loadAnimation());
-  }, [index]);
+  }, []);
+
   useEffect(() => {
     if (!animation) return;
 
