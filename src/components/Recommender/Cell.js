@@ -1,13 +1,23 @@
-import { Grid, Typography } from "@material-ui/core";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Grid,
+  Typography,
+  useTheme,
+} from "@material-ui/core";
 import Close from "@material-ui/icons/Close";
 import React, { Component, lazy } from "react";
 import { Slug, Fade } from "../../components/Grid/Primitives";
 import FlipCard from "../FlipCard/FlipCard";
 import FloatCard from "../FloatCard/FloatCard";
 import LikeButton from "../LikeButton";
-import "./grid.css";
+
 const Cell = (props) => {
   const { index, title, height, width, posterPath } = props;
+  const theme = useTheme();
   return (
     <FloatCard height={height} width={width}>
       <FlipCard
@@ -25,14 +35,27 @@ const Cell = (props) => {
             />
           </>
         }
-        back={<p style={{ height: height, width: width }}>{title}</p>}
+        back={
+          <Card style={{ height: height, width: width }}>
+            <CardContent>
+              <Typography>s</Typography>
+              <Typography>s</Typography>
+              <Typography>s</Typography>
+              <Typography>s</Typography>
+              <Typography>s</Typography>
+              <Typography>s</Typography>
+              <Typography>s</Typography>
+              <Typography>s</Typography>
+            </CardContent>
+          </Card>
+        }
       />
 
       <Grid
         container
         style={{
           width: width + 20,
-          background: "black",
+          background: theme.palette.primary.main,
           position: "absolute",
           marginTop: -50,
           marginLeft: -5,
@@ -41,7 +64,9 @@ const Cell = (props) => {
         }}
       >
         <Grid item xs={8}>
-          <Typography style={{ padding: 20 }}>{title}</Typography>
+          <Typography onClick={null} style={{ padding: 20, cursor: "pointer" }}>
+            {title}
+          </Typography>
         </Grid>
         <Grid item xs={4}>
           <LikeButton index={index} />

@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 import {
+  Container,
   GridList,
   GridListTile,
   GridListTileBar,
+  Paper,
   Typography,
 } from "@material-ui/core";
 import Axios from "axios";
@@ -137,79 +139,80 @@ const Recommender = (props) => {
   let state = { data };
   return (
     <>
-      {/* <FloatCard>
+      <Container>
+        {/* <FloatCard>
         <FlipCard
           height={height}
           width={breadth}
           front={<p>Front</p>}
           back={<p>Back</p>}
-        />
+        />z
       </FloatCard> */}
 
-      {loading ? (
-        <GridList cols={cols} height={height} spacing={32}>
-          {new Array(10).fill(0).map((value, index) => (
-            <GridListTile>
-              <Skeleton
-                animation="wave"
+        {loading ? (
+          <GridList cols={cols} height={height} spacing={32}>
+            {new Array(10).fill(0).map((value, index) => (
+              <GridListTile>
+                <Skeleton
+                  animation="wave"
+                  height={height}
+                  width="100%"
+                  variant="rect"
+                />
+                <GridListTileBar
+                  title={
+                    <Skeleton
+                      animation="wave"
+                      height={10}
+                      width="80%"
+                      style={{ marginBottom: 6 }}
+                    />
+                  }
+                  actionIcon={
+                    <Skeleton
+                      animation="wave"
+                      variant="circle"
+                      height={20}
+                      width={20}
+                      style={{ margin: 20 }}
+                    />
+                  }
+                />
+              </GridListTile>
+            ))}
+          </GridList>
+        ) : (
+          <CustomGrid
+            style={{ width: "100%" }}
+            // Arbitrary data, should contain keys, possibly heights, etc.
+            data={recommendedMovieList}
+            // Key accessor, instructs grid on how to fet individual keys from the data set
+            keys={(d) => d.index}
+            // Can be a fixed value or an individual data accessor
+            heights={height}
+            // Number of columns
+            columns={cols}
+            // Space between elements
+            margin={100}
+            // Removes the possibility to scroll away from a maximized element
+            lockScroll={false}
+            // Delay when active elements (blown up) are minimized again
+            closeDelay={500}
+            // Regular react-spring configs
+            config={config.slow}
+          >
+            {(data, active, toggle) => (
+              <Cell
+                active={active}
+                toggle={toggle}
+                {...data}
                 height={height}
-                width="100%"
-                variant="rect"
+                width={breadth}
               />
-              <GridListTileBar
-                title={
-                  <Skeleton
-                    animation="wave"
-                    height={10}
-                    width="80%"
-                    style={{ marginBottom: 6 }}
-                  />
-                }
-                actionIcon={
-                  <Skeleton
-                    animation="wave"
-                    variant="circle"
-                    height={20}
-                    width={20}
-                    style={{ margin: 20 }}
-                  />
-                }
-              />
-            </GridListTile>
-          ))}
-        </GridList>
-      ) : (
-        <CustomGrid
-          style={{ flex: 1, width: "100%" }}
-          // Arbitrary data, should contain keys, possibly heights, etc.
-          data={recommendedMovieList}
-          // Key accessor, instructs grid on how to fet individual keys from the data set
-          keys={(d) => d.index}
-          // Can be a fixed value or an individual data accessor
-          heights={height}
-          // Number of columns
-          columns={cols}
-          // Space between elements
-          margin={100}
-          // Removes the possibility to scroll away from a maximized element
-          lockScroll={false}
-          // Delay when active elements (blown up) are minimized again
-          closeDelay={500}
-          // Regular react-spring configs
-          config={config.slow}
-        >
-          {(data, active, toggle) => (
-            <Cell
-              active={active}
-              toggle={toggle}
-              {...data}
-              height={height}
-              width={breadth}
-            />
-          )}
-        </CustomGrid>
-      )}
-      {/* <GridList
+            )}
+          </CustomGrid>
+        )}
+        {/* <GridList
         cellHeight={height}
         cols={cols}
         spacing={32}
@@ -292,6 +295,7 @@ const Recommender = (props) => {
               </GridListTile>
             ))}
       </GridList> */}
+      </Container>
     </>
   );
 };
