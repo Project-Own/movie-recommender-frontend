@@ -8,15 +8,23 @@ const Footer = (props)=>{
         footerStyle :{
             backgroundColor: "#F2F2F2",
             textAlign: "center",
-            
-
             padding: "16px",
             position: "fixed",
             left: "0",
             bottom: "0",
             height: "80px",
             width: "100%",
+            
+            
         },
+        phantom :{
+            display: 'block',
+            padding: '16px',
+            height: '80px',
+            width: '100%',
+            marginTop:'60'
+          },
+
         buttonStyle:{
             fontFamily:'Trispace',
             borderRadius:24,
@@ -39,18 +47,25 @@ const Footer = (props)=>{
     
         if(props.check){
             return (
+                <div>
+                <div className={classes.phantom} />
                 <span className={classes.footerStyle}>
                     <Button  className={classes.buttonStyle} > Finished</Button>
                 
                 </span>
+                </div>
             );
 
         }else {
             return (
+                <div>
+                <div className={classes.phantom} />
                 <span className={classes.footerStyle}>
                      <Typography className={classes.textStyle}>Select at least one movie or use the search bar.</Typography>
             
                 </span>
+                </div>
+                
             );
             
         }
