@@ -13,6 +13,7 @@ import React, { useEffect, useState } from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import clsx from "clsx";
 import LikeButton from "../LikeButton";
+import { Skeleton } from "@material-ui/lab";
 
 // const style = {
 //     width: 200,
@@ -41,7 +42,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieCard = ({ movie, index = 69 }) => {
+const MovieCard = (props) => {
+  const { movie, index = 69, loading = false } = props;
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
 
@@ -51,24 +53,66 @@ const MovieCard = ({ movie, index = 69 }) => {
 
   return (
     <Card className={classes.root}>
-      <CardHeader title={movie.Title} />
-      <CardMedia
-        component="img"
-        className={classes.media}
-        image={movie.Poster}
+      <CardHeader
+        title={
+          loading ? (
+            <Skeleton
+              animation="wave"
+              height={10}
+              width="80%"
+              style={{ marginBottom: 6 }}
+            />
+          ) : (
+            movie?.Title ?? "Unknown"
+          )
+        }
       />
+      {loading ? (
+        <Skeleton animation="wave" variant="rect" />
+      ) : (
+        <CardMedia
+          component="img"
+          className={classes.media}
+          image={movie?.Poster}
+        />
+      )}
+
       <CardContent>
-        <LikeButton data={movie} index={index} />
-        <Typography align="center">
-          {movie.Year} {movie.Genre} {movie.Runtime}
-        </Typography>
-        {movie.Ratings.map((Ratings) => {
-          return (
-            <Typography align="center" key={Ratings.Source}>
-              {Ratings.Source}: {Ratings.Value}
+        {loading ? (
+          <>
+            <Skeleton
+              animation="wave"
+              height={10}
+              style={{ marginBottom: 6 }}
+            />
+            <Skeleton
+              animation="wave"
+              height={10}
+              style={{ marginBottom: 6 }}
+            />
+            <Skeleton
+              animation="wave"
+              height={10}
+              width="80%"
+              style={{ marginBottom: 6 }}
+            />
+          </>
+        ) : (
+          <>
+            <LikeButton data={movie} index={index} />
+            <Typography align="center">
+              {movie?.Year ?? "Unknown"} {movie?.Genre ?? "Unknown"}
+              {movie?.Runtime ?? "Unknown"}
             </Typography>
-          );
-        })}
+            {movie?.Ratings?.map((Ratings, index) => {
+              return (
+                <Typography align="center" key={Ratings?.Source ?? index}>
+                  {Ratings?.Source ?? "Unknown"}: {Ratings?.Value ?? index}
+                </Typography>
+              );
+            })}
+          </>
+        )}
       </CardContent>
       <CardActions>
         <IconButton
@@ -84,11 +128,33 @@ const MovieCard = ({ movie, index = 69 }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography align="center"> {movie.Actors} </Typography>
-          <Typography align="center"> BoxOffice: {movie.BoxOffice} </Typography>
-          <Typography variant="body1" align="justify">
-            {movie.Plot}
-          </Typography>
+          {loading ? (
+            <>
+              <Skeleton
+                animation="wave"
+                height={10}
+                style={{ marginBottom: 6 }}
+              />
+              <Skeleton
+                animation="wave"
+                height={10}
+                width="80%"
+                style={{ marginBottom: 6 }}
+              />
+            </>
+          ) : (
+            <>
+              <Typography align="center">
+                {movie?.Actors ?? "Unknown"}
+              </Typography>
+              <Typography align="center">
+                BoxOffice: {movie?.BoxOffice ?? "Unknown"}
+              </Typography>
+              <Typography variant="body1" align="justify">
+                {movie?.Plot ?? "Unknown"}
+              </Typography>
+            </>
+          )}
         </CardContent>
       </Collapse>
     </Card>

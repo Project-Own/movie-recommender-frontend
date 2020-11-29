@@ -1,30 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import FormLabel from "@material-ui/core/FormLabel";
-import Paper from "@material-ui/core/Paper";
-
-import MovieCard from "../SearchComponent/MovieCard";
-
-import Button from "@material-ui/core/Button";
+import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 import {
+  Avatar,
+  Grid,
   GridList,
   GridListTile,
   GridListTileBar,
-  IconButton,
 } from "@material-ui/core";
-import { Info } from "@material-ui/icons";
 import Axios from "axios";
 import LikeButton from "../LikeButton";
+import { Skeleton } from "@material-ui/lab";
+import FloatCard from "../FloatCard";
 
 const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&t=";
 const RECOMMEND_API_ADDRESS =
   "https://vae-movie-recommender.herokuapp.com/predict/10";
 
 const useStyles = makeStyles((theme) => ({
+  bar: {
+    borderRadius: "0px 0px 10px 10px",
+  },
   image: {
     width: "100%",
-    borderRadius: 20,
+    borderRadius: "10px",
   },
 
   buttonbasestyle: {
@@ -45,12 +44,34 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16,
     fontFamily: "Lato",
   },
+  root: {
+    padding: theme.spacing() * 2,
+  },
 }));
 
-export default function Recommender(props) {
-  const [recommendedMovieList, setRecommendedMovieList] = React.useState([]);
-  const { movie, setMovie } = props;
+const Recommender = (props) => {
+  const [recommendedMovieList, setRecommendedMovieList] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const { movie, setMovie, colSize = {}, height = 300 } = props;
   const classes = useStyles();
+
+  function getCols(screenWidth) {
+    if (isWidthUp("lg", screenWidth)) {
+      return colSize?.lg ?? 6;
+    }
+
+    if (isWidthUp("md", screenWidth)) {
+      return colSize?.md ?? 4;
+    }
+    if (isWidthUp("sm", screenWidth)) {
+      return colSize?.sm ?? 3;
+    }
+
+    return colSize?.xs ?? 2;
+  }
+
+  const cols = getCols(props.width); // width is associated when using withWidth()
 
   const searchMovie = (movie) => {
     if (movie !== "") {
@@ -96,6 +117,7 @@ export default function Recommender(props) {
             );
 
             setRecommendedMovieList(movies);
+            setLoading(false);
             // setQuery("");
           }
         })
@@ -104,42 +126,82 @@ export default function Recommender(props) {
   };
 
   useEffect(() => {
+    setLoading(true);
     searchRecommendation();
   }, []);
 
   return (
-    <>
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12}>
-          <GridList cellHeight={400} cols={3}>
-            {recommendedMovieList.map((movie, index) => (
-              <GridListTile key={index} cols={movie.cols || 1}>
+    <Grid container spacing={2} className={classes.root}>
+      {loading
+        ? new Array(10).fill(0).map((value, index) => (
+            <Grid
+              item
+              key={index}
+              sm={colSize?.sm ?? 4}
+              lg={colSize?.lg ?? 2}
+              md={colSize?.md ?? 3}
+              xs={colSize?.xs ?? 6}
+            >
+              <Skeleton animation="wave" height={height} variant="rect" />
+
+              <Skeleton
+                animation="wave"
+                height={10}
+                width="80%"
+                style={{ marginBottom: 6 }}
+              />
+              <Skeleton
+                animation="wave"
+                variant="circle"
+                height={20}
+                width={20}
+                style={{ margin: 20 }}
+              />
+            </Grid>
+          ))
+        : recommendedMovieList.map((movie, index) => (
+            <Grid
+              key={index}
+              item
+              sm={colSize?.sm ?? 4}
+              lg={colSize?.lg ?? 2}
+              md={colSize?.md ?? 3}
+              xs={colSize?.xs ?? 6}
+            >
+              <FloatCard>
                 <img
                   onClick={() => {
                     searchMovie(movie);
                   }}
+                  height={height}
                   className={classes.image}
-                  src={movie.posterPath}
+                  src={movie?.posterPath}
                   alt="Poster"
                 />
-                <GridListTileBar
-                  title={movie.title}
-                  actionIcon={<LikeButton data={movie} index={movie.index} />}
-                >
-                  {/* <Button
-                    className={classes.buttonbasestyle}
-                   
-                    color="primary"
-                  
-                  >
-                    {movie.title}
-                  </Button> */}
-                </GridListTileBar>
-              </GridListTile>
-            ))}
-          </GridList>
-        </Grid>
-      </Grid>
-    </>
+              </FloatCard>
+
+              {/* <GridListTileBar
+                className={classes.bar}
+                title={
+                  loading ? (
+                    <Skeleton
+                      animation="wave"
+                      height={10}
+                      width="80%"
+                      style={{ marginBottom: 6 }}
+                    />
+                  ) : (
+                    movie?.title ?? "Unknown"
+                  )
+                }
+                actionIcon={
+                  <LikeButton data={movie} index={movie?.index ?? 69} />
+                }
+              /> */}
+            </Grid>
+          ))}
+    </Grid>
   );
-}
+};
+
+export default withWidth()(Recommender);
