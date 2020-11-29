@@ -9,7 +9,9 @@ import CustomizedSnackbars from "../../features/Snackbar/Snackbar";
 import Home from "../Layout/Home";
 
 export default function App() {
+  
   return (
+    
     <CustomThemeProvider>
       <Provider store={store}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon.  */}

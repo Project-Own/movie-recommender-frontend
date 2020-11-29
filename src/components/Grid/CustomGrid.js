@@ -17,7 +17,7 @@ const styles = {
   },
 };
 
-export default class Grid extends React.Component {
+export default class CustomGrid extends React.Component {
   static propTypes = {
     data: PropTypes.array,
     keys: PropTypes.func,
