@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../../App/App.css";
+import { useDispatch } from "react-redux";
+import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
 
 export const Login = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +11,7 @@ export const Login = () => {
     password: "",
   });
 
+  const dispatch = useDispatch();
   const { email, password } = formData;
 
   const onChange = (e) =>
@@ -27,21 +30,32 @@ export const Login = () => {
           "Content-Type": "application/json",
         },
       };
+
       const body = JSON.stringify(User);
-      const res = await axios.post("/api/auth", body, config);
+      const res = await axios.post(
+        "https://vae-login.herokuapp.com/api/auth",
+        body,
+        config
+      );
       console.log(res.data);
     } catch (err) {
-      console.error(err.response.data);
-      console.log("Invalid credentials");
+      console.error(err.response);
+      dispatch(
+        setSnackbar({
+          snackbarOpen: true,
+          snackbarType: "error",
+          snackbarMessage: "Invalid Credentials",
+        })
+      );
     }
   };
 
   return (
-    <div class="container">
-      <h1 className="large text-primary">Sign In</h1>
+    <div className="container">
+      <h1 className="large text-primary"> Sign In </h1>{" "}
       <p className="lead">
-        <i className="fas fa-user"></i> Sign into Your Account
-      </p>
+        <i className="fas fa-user"> </i> Sign into Your Account{" "}
+      </p>{" "}
       <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <input
@@ -52,7 +66,7 @@ export const Login = () => {
             onChange={(e) => onChange(e)}
             required
           />
-        </div>
+        </div>{" "}
         <div className="form-group">
           <input
             type="password"
@@ -62,12 +76,13 @@ export const Login = () => {
             name="password"
             minLength="6"
           />
-        </div>
+        </div>{" "}
         <input type="submit" className="btn btn-primary" value="Login" />
-      </form>
+      </form>{" "}
       <p className="my-1">
-        Don't have an account? <Link to="/register">Sign Up</Link>
-      </p>
+        Don 't have an account?{" "}
+        <Link to="/movie-recommender-frontend/register"> Sign Up </Link>{" "}
+      </p>{" "}
     </div>
   );
 };

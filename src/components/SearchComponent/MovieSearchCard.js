@@ -16,11 +16,11 @@ const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&t=";
 //   objectFit: "cover",
 // };
 
-const MovieSearchCard = () => {
+const MovieSearchCard = (props) => {
   // const [state, setState] = useState({ movieQuery: "", movie: "" });
   const [movieSelected, setMovieSelected] = useState("");
-  const [movie, setMovie] = useState("");
 
+  const {movie, setMovie} = props
   useEffect(() => {
     fetch(`${API_ADDRESS}avengers`)
       .then((response) => response.json())

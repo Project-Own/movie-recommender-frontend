@@ -46,18 +46,35 @@ function DraggableComponent() {
     <Card>
       <CardContent>
         <svg
-          width="539"
+          width="100%"
           height="397"
           viewBox="0 0 500 500"
           xmlns="http://www.w3.org/2000/svg"
         >
+          <defs>
+            <pattern
+              id="img1"
+              patternUnits="userSpaceOnUse"
+              width="100%"
+              height="100%"
+            >
+              <image
+                className="twombly"
+                href="https://sm.mashable.com/mashable_in/seo/default/8-years-of-the-avengers-how-joss-whedons-risk-became-crucial_5z9w.jpg"
+                x="-0"
+                y="0"
+                width="100%"
+                height="100%"
+              />
+            </pattern>
+          </defs>
           <rect
             id="poster"
             x="90"
             y="100"
             height="200"
             width="475"
-            fill="yellow"
+            fill="url(#img1)"
           />
 
           <g>

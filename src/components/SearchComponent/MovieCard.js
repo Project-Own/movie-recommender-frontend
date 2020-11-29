@@ -9,10 +9,10 @@ import {
   CardActions,
   IconButton,
 } from "@material-ui/core";
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import clsx from "clsx";
+import LikeButton from "../LikeButton";
 
 // const style = {
 //     width: 200,
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     width: "100%",
-    maxHeight: 300,
+    maxHeight: 400,
     objectFit: "cover",
   },
   expand: {
@@ -41,9 +41,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, index = 69 }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -56,16 +57,15 @@ const MovieCard = ({ movie }) => {
         className={classes.media}
         image={movie.Poster}
       />
-
       <CardContent>
+        <LikeButton data={movie} index={index} />
         <Typography align="center">
-          {movie.Year} {movie.Genre} {movie.Runtime}{" "}
+          {movie.Year} {movie.Genre} {movie.Runtime}
         </Typography>
         {movie.Ratings.map((Ratings) => {
           return (
             <Typography align="center" key={Ratings.Source}>
-              {" "}
-              {Ratings.Source} : {Ratings.Value}{" "}
+              {Ratings.Source}: {Ratings.Value}
             </Typography>
           );
         })}
@@ -75,15 +75,17 @@ const MovieCard = ({ movie }) => {
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="Show More"
-          className={clsx(classes.expand, { [classes.expandOpen]: expanded })}
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
         >
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography align="center">{movie.Actors}</Typography>
-          <Typography align="center"> BoxOffice: {movie.BoxOffice}</Typography>
+          <Typography align="center"> {movie.Actors} </Typography>
+          <Typography align="center"> BoxOffice: {movie.BoxOffice} </Typography>
           <Typography variant="body1" align="justify">
             {movie.Plot}
           </Typography>
@@ -93,4 +95,4 @@ const MovieCard = ({ movie }) => {
   );
 };
 
-export default MovieCard;
+export default React.memo(MovieCard);

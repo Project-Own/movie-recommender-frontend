@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import {Grid} from '@material-ui/core';
 import MovieCard  from './MovieCard';
@@ -9,8 +10,20 @@ import Footer from './Footer';
 import axios from 'axios';
 import {useState,useEffect} from 'react';
 
+=======
+import React from "react";
+import { Grid } from "@material-ui/core";
+import MovieCard from "./MovieCard";
+import Footer from "./Footer";
+import movieList from "./data";
+// https://image.tmdb.org/t/p/w185
+import { useState } from "react";
+>>>>>>> 52bf4465fafab4a8b32c01f446d7f0f61efd5c64
 
+const Contents = () => {
+  const [check, setCheck] = useState(false);
 
+<<<<<<< HEAD
 
 const Contents=()=>{
 
@@ -156,9 +169,36 @@ const Contents=()=>{
 
     );
 }
+=======
+  const showHide = (selectedList) => {
+    console.log(selectedList);
+    if (selectedList === undefined || selectedList.length < 1) {
+      setCheck(false);
+    } else {
+      setCheck(true);
+    }
+  };
+
+  return (
+    <Grid item container spacing={4}>
+      {movieList.map((movieObj, index) => (
+        <Grid
+          item
+          key={index}
+          container
+          xs={12}
+          sm={6}
+          md={3}
+          justify="center"
+          alignItems="center"
+        >
+          <MovieCard {...movieObj} showHide={showHide} />
+        </Grid>
+      ))}
+      <Footer check={check} />
+    </Grid>
+  );
+};
+>>>>>>> 52bf4465fafab4a8b32c01f446d7f0f61efd5c64
 
 export default Contents;
-
-
-
-
