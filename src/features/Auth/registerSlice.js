@@ -41,6 +41,7 @@ export const { success, failure, userLoaded } = registerSlice.actions;
 export const selectRegister = (state) => state.register;
 export const selectUser = (state) => state.register.user;
 export const selectToken = (state) => state.register.token;
+export const isAuthenticated = (state) => state.register.isAuthenticated;
 
 
 export default registerSlice.reducer;

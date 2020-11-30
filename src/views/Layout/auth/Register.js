@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 import "../../App/App.css";
 import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { failure, success } from "../../../features/Auth/registerSlice";
-
+import { isAuthenticated } from "../../../features/Auth/registerSlice";
 import { loadUser } from "../../../features/Auth/loadUser";
+
 
 export const Register = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ export const Register = () => {
     password2: "",
   });
 
+  const authenticated = useSelector(isAuthenticated);
   const dispatch = useDispatch();
   const { name, email, password, password2 } = formData;
 
@@ -30,6 +32,11 @@ export const Register = () => {
           snackbarOpen: true,
           snackbarType: "error",
           snackbarMessage: "Password doesnot match",
+        })
+      );
+      dispatch(
+        failure({
+          type: "REGISTER_FAIL",
         })
       );
     } else {
@@ -62,6 +69,8 @@ export const Register = () => {
         loadUser(dispatch);
 
         console.log(res.data);
+        console.log(authenticated);
+
       } catch (err) {
         console.log(err);
         dispatch(
@@ -70,8 +79,21 @@ export const Register = () => {
           })
         );
       }
+
+      console.log("Hi");
+         
     }
   };
+
+  
+ //Redirect if logged in
+ if(authenticated){
+  console.log("Inside if");
+  
+  return  <Redirect from='/movie-recommender-frontend/register' to='/movie-recommender-frontend/select'/>;
+  
+}
+
   return (
     <div className="container">
       <h1 className="large text-primary">Sign Up</h1>

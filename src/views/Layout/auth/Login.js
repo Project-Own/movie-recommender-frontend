@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,Redirect } from "react-router-dom";
 import axios from "axios";
 import "../../App/App.css";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
-import { failure, success, userLoaded } from "../../../features/Auth/registerSlice";
+import { failure, success, userLoaded, isAuthenticated } from "../../../features/Auth/registerSlice";
 
 export const Login = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +12,8 @@ export const Login = () => {
     password: "",
   });
 
+    
+  const authenticated = useSelector(isAuthenticated);
   const dispatch = useDispatch();
   const { email, password } = formData;
 
@@ -59,6 +61,14 @@ export const Login = () => {
        }));
     }
   };
+
+  //Redirect if logged in
+ if(authenticated){
+  console.log("Inside if");
+  
+  return  <Redirect from='/movie-recommender-frontend/login' to='/movie-recommender-frontend/dashboard'/>;
+  
+}
 
   return (
     <div className="container">
