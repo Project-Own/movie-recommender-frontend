@@ -17,7 +17,6 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import MovieCard from "../../components/SearchComponent/MovieCard";
 import ScrollFollow from "../../components/ScrollFollow/ScrollFollow";
 import ScrollTop from "../../components/ScrollTop/ScrollTop";
-import UserProfileUI from "../../components/frontPage/UserProfileUI";
 
 export default function Layout(props) {
   const dispatch = useDispatch();
@@ -136,7 +135,10 @@ export default function Layout(props) {
                 </Grid>
                 <Grid item container spacing={2} md={4} sm={12}>
                   <Grid item sm={6} md={12}>
-                    <MovieSearchCard movie={movie} setMovie={setMovie} />
+                    <MovieSearchCard
+                      movie={movie}
+                      setMovie={setMovie}
+                    />
                   </Grid>
                   <Grid item sm={6} md={12}>
                     <ImdbList />

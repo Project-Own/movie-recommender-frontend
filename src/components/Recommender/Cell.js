@@ -18,9 +18,21 @@ import FloatCard from "../FloatCard/FloatCard";
 import LikeButton from "../LikeButton/LikeButton";
 
 const Cell = (props) => {
-  const { index, title, height, width, posterPath } = props;
+  const {
+    index,
+    title,
+    imdbId,
+    genres,
+    popularity,
+    voteAverage,
+    voteCount,
+    height,
+    width,
+    posterPath,
+    searchMovie,
+  } = props;
   const theme = useTheme();
-
+  console.log(props);
   return (
     <FloatCard height={height} width={width}>
       <FlipCard
@@ -41,10 +53,10 @@ const Cell = (props) => {
         back={
           <Card style={{ height: height, width: width }}>
             <CardContent>
-              <Typography>s</Typography>
-              <Typography>s</Typography>
-              <Typography>s</Typography>
-              <Typography>s</Typography>
+              <Typography>{genres}}</Typography>
+              <Typography>{voteAverage}</Typography>
+              <Typography>{voteCount}</Typography>
+              <Typography>{popularity}</Typography>
               <Typography>s</Typography>
               <Typography>s</Typography>
               <Typography>s</Typography>
@@ -67,7 +79,12 @@ const Cell = (props) => {
         }}
       >
         <Grid item xs={8}>
-          <Typography onClick={null} style={{ padding: 20, cursor: "pointer" }}>
+          <Typography
+            onClick={() => {
+              searchMovie(imdbId, index);
+            }}
+            style={{ padding: 20, cursor: "pointer" }}
+          >
             <Link color="textPrimary">{title}</Link>
           </Typography>
         </Grid>

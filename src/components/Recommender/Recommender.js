@@ -18,7 +18,7 @@ import data from "./data";
 import { config } from "react-spring/renderprops";
 import Cell from "./Cell";
 import FlipCard from "../FlipCard/FlipCard";
-const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&t=";
+const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
 const RECOMMEND_API_ADDRESS =
   "https://vae-movie-recommender.herokuapp.com/predict/10";
 
@@ -78,14 +78,14 @@ const Recommender = (props) => {
 
   const cols = getCols(props.width); // width is associated when using withWidth()
 
-  const searchMovie = (movie) => {
+  const searchMovie = (imdbId, index) => {
     if (movie !== "") {
-      fetch(`${API_ADDRESS} + ${movie.title}`)
+      fetch(`${API_ADDRESS} + ${imdbId}`)
         .then((response) => response.json())
         .then((json) => {
           if (json.Response !== "False") {
             // setState({ ...state, movie: json });
-            json.index = movie.index;
+            json.index = index;
             setMovie(json);
             // setQuery("");
           }
@@ -103,6 +103,8 @@ const Recommender = (props) => {
             console.log(json);
             const movies = await Promise.all(
               json.movies.map(async (movie, index) => {
+                console.log("Wo");
+                console.log(movie);
                 try {
                   const res = await Axios.get(
                     "https://image.tmdb.org/t/p/w185" + movie.posterPath
@@ -111,11 +113,11 @@ const Recommender = (props) => {
                   movie.posterPath =
                     "https://image.tmdb.org/t/p/w185" + movie.posterPath;
                 } catch (err) {
-                  const res = await Axios.get(
-                    `${API_ADDRESS} + ${movie.title}`
+                  const omdbRes = await Axios.get(
+                    `${API_ADDRESS}${movie.imdbId}`
                   );
                   // console.log(res);
-                  movie.posterPath = res.data.Poster;
+                  movie.posterPath = omdbRes.data.Poster;
                 }
                 return movie;
               })
@@ -207,6 +209,7 @@ const Recommender = (props) => {
                 {...data}
                 height={height}
                 width={breadth}
+                searchMovie={searchMovie}
               />
             )}
           </CustomGrid>
