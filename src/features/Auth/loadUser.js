@@ -5,9 +5,9 @@ import axios from "axios";
 //Load User
 export const loadUser = async (dispatch) => {
   console.log("Load");
-  if (localStorage.token) {
-    setAuthToken(localStorage.token);
-  }
+  //   if (localStorage.token) {
+  //     setAuthToken(localStorage.token);
+  //   }
 
   console.log("Load");
   try {
