@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 /* import Layout from "../Layout/Layout"; */
@@ -8,10 +8,8 @@ import store from "../../store";
 import CustomizedSnackbars from "../../features/Snackbar/Snackbar";
 import Home from "../Layout/Home";
 
-
-const App = () =>{
+const App = () => {
   return (
-    
     <CustomThemeProvider>
       <Provider store={store}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon.  */}
@@ -22,5 +20,5 @@ const App = () =>{
       </Provider>
     </CustomThemeProvider>
   );
-}
+};
 export default App;

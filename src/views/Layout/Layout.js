@@ -17,6 +17,7 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import MovieCard from "../../components/SearchComponent/MovieCard";
 import ScrollFollow from "../../components/ScrollFollow/ScrollFollow";
 import ScrollTop from "../../components/ScrollTop/ScrollTop";
+import UserProfileUI from "../../components/frontPage/UserProfileUI";
 
 export default function Layout(props) {
   const dispatch = useDispatch();
@@ -79,6 +80,16 @@ export default function Layout(props) {
               >
                 <Button color="primary" variant="contained">
                   Home
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link
+                to="/movie-recommender-frontend/profile"
+                // className="btn btn-light"
+              >
+                <Button color="primary" variant="contained">
+                  Profile
                 </Button>
               </Link>
             </Grid>
