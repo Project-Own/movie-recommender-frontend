@@ -16,6 +16,7 @@ import { Fab } from "@material-ui/core";
 
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import MovieCard from "../../components/SearchComponent/MovieCard";
+import ScrollFollow from "../../components/ScrollFollow/ScrollFollow";
 
 export default function Layout(props) {
   const dispatch = useDispatch();
@@ -158,10 +159,12 @@ export default function Layout(props) {
               </Grid>
             </Grid>
           </Grid>
+
           <ScrollTop {...props}>
-            <Fab color="secondary" size="small" aria-label="scroll back to top">
+            {/* <Fab color="secondary" size="small" aria-label="scroll back to top">
               <KeyboardArrowUpIcon />
-            </Fab>
+            </Fab> */}
+            <ScrollFollow style={{ width: 50 }} />
           </ScrollTop>
         </Container>
       </Container>
