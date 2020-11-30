@@ -4,6 +4,7 @@ import axios from "axios";
 import "../../App/App.css";
 import { useDispatch } from "react-redux";
 import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
+import {success, failure, userLoaded } from "./registerSlice";
 
 export const Login = () => {
   const [formData, setFormData] = useState({
@@ -37,6 +38,12 @@ export const Login = () => {
         body,
         config
       );
+      dispatch(
+        success({
+          payload: res.data
+    })
+    );
+      dispatch( userLoaded() );
       console.log(res.data);
     } catch (err) {
       console.error(err.response);
@@ -47,6 +54,9 @@ export const Login = () => {
           snackbarMessage: "Invalid Credentials",
         })
       );
+      dispatch(failure({
+        type:"REGISTER_FAIL",
+       }));
     }
   };
 

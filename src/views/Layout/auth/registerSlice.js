@@ -11,8 +11,19 @@ export const registerSlice = createSlice({
   name: "register",
   initialState,
   reducers: {
+    userLoaded: (state,action) => {
+      state.isAuthenticated = true;
+      state.loading = false;
+      state.user = action.payload;
+    },
+
+
     success: (state, action) => {
-      localStorage.setItem("token", action.payload);
+      localStorage.setItem("token", action.payload.token);
+      console.log("token");
+      console.log();
+   
+      state.token = action.payload.token;
       state.isAuthenticated = true;
       state.loading = false;
     },
@@ -26,7 +37,7 @@ export const registerSlice = createSlice({
   },
 });
 
-export const { success, failure } = registerSlice.actions;
+export const { success, failure, userLoaded } = registerSlice.actions;
 
 export const register = (state) => state.register;
 

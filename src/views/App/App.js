@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 
@@ -10,7 +10,7 @@ import CustomizedSnackbars from "../../features/Snackbar/Snackbar";
 import Home from "../Layout/Home";
 
 
-export default function App() {
+const App = () =>{
   return (
     <CustomThemeProvider>
       <Provider store={store}>
@@ -23,3 +23,4 @@ export default function App() {
     </CustomThemeProvider> 
   );
 }
+export default App;

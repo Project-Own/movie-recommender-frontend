@@ -6,6 +6,8 @@ import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
 import {success, failure} from "./registerSlice";
 import { useDispatch } from "react-redux";
 
+import {loadUser} from "./loadUser";
+
 
 
 
@@ -52,9 +54,10 @@ export const Register = () => {
         const res = await axios.post("https://vae-login.herokuapp.com/api/users", body, config);
         dispatch(
           success({
-            payload: res.data
+            token: res.data.token
       })
       );
+      loadUser();
 
         console.log(res.data);
       } catch (err) {
