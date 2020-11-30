@@ -42,4 +42,5 @@ export const selectRegister = (state) => state.register;
 export const selectUser = (state) => state.register.user;
 export const selectToken = (state) => state.register.token;
 
+
 export default registerSlice.reducer;
