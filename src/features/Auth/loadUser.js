@@ -1,27 +1,30 @@
 import setAuthToken from "./utils/setAuthToken";
-import {userLoaded, failure} from "./registerSlice";
+import { userLoaded, failure } from "./registerSlice";
 import axios from "axios";
 
-
-
 //Load User
-export const loadUser = () => async dispatch => {
-    if(localStorage.token){
-        setAuthToken(localStorage.token);
-    }
+export const loadUser = async (dispatch) => {
+  console.log("Load");
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
 
-    try {
-        const res= await axios.get('/api/auth');
-
-        dispatch(
-            userLoaded({
-                 payload: res.data
-            })
-        );
-    } catch (err) {
-        dispatch(failure({
-            type: "auth_error"
-            })
-        );
-    }
-}
+  console.log("Load");
+  try {
+    const res = await axios.get("https://vae-login.herokuapp.com/api/auth");
+    console.log("User Data");
+    console.log(res);
+    dispatch(
+      userLoaded({
+        payload: res.data,
+      })
+    );
+  } catch (err) {
+    console.log("errir");
+    dispatch(
+      failure({
+        type: "auth_error",
+      })
+    );
+  }
+};

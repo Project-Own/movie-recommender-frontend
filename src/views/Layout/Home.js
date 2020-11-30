@@ -15,12 +15,13 @@ const Home = (props) => {
   const user = useSelector(selectToken);
 
   console.log(user);
+  loadUser(dispatch);
   useEffect(() => {
-    dispatch(loadUser());
+    loadUser(dispatch);
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-  }, [user, dispatch]);
+  }, []);
 
   console.log(props);
   return (
