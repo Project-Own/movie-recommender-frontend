@@ -2,7 +2,7 @@ import { Grid, List } from '@material-ui/core'
 import React, { useState,useEffect } from 'react'
 import UserProfile from './userProfile'
 import Avatar from '@material-ui/core/Avatar';
-import './App.css'
+import '../../views/App/App.css'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
  
 
  
-function App() {
+function UserProfileUi() {
   const [data, setData] = useState([]);
 
 
@@ -70,7 +70,7 @@ function App() {
  
     return (
       <div className="ima">
-        <Grid item container direction="column" >
+        <Grid item container direction="row" >
           <Grid item xs={1}  >                
             
             <Avatar
@@ -148,4 +148,4 @@ function App() {
   
 }
  
-export default App
+export default UserProfileUi;
