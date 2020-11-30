@@ -8,7 +8,6 @@ import UserPickLayout from "./UserPickLayout";
 
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "../../features/Auth/loadUser";
-import setAuthToken from "../../features/Auth/utils/setAuthToken";
 import { selectToken } from "../../features/Auth/registerSlice";
 const Home = (props) => {
   const dispatch = useDispatch();
