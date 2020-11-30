@@ -107,7 +107,7 @@ const Contents=()=>{
             var fourRndom = getRandom(detailsList,4);
             console.log(fourRndom);
             
-            movieList.splice(movieasdf.indexOf(index)+1,4,...fourRndom);
+            await movieList.splice(movieasdf.indexOf(index)+1,4,...fourRndom);
             setMovieList(movieList);
             console.log(movieList); //kam lagcha after click
         }
@@ -136,11 +136,13 @@ const Contents=()=>{
        
        return (
         <Grid item xs={12} sm={6} md={3}>
+           
             <MovieCard 
                 {...movieObj}
                 showHide={showHide}
                 getDetails={getDetails}
             />
+            
         </Grid>
        );
    }

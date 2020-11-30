@@ -9,6 +9,9 @@ import {ThemeProvider} from '@material-ui/core/styles';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 // import defaultMoviePoster from '../../assets/images/defaultMoviePoster.png';
 import {useEffect} from 'react';
+import FloatCard from '../FloatCard/FloatCard';
+import LikeButton from '../LikeButton';
+
 
 var selectedList=[];
 
@@ -54,9 +57,10 @@ const MovieCard =(props)=>{
           maxHeight: '200px', 
           minWidth: '200px', 
           minHeight: '200px',
+          color:'transparent',
           borderRadius:400,
             "&:hover":{
-            color:'red'
+            color:'transparent'       
             },
             marginBottom:24,
             marginTop:16,
@@ -112,7 +116,7 @@ const MovieCard =(props)=>{
     }, [props.posterPath,props.imdbId]);
      
 
-        async function getMovieTitle(selectedTitle){
+        async function getMovieTitle(selectedTitle){  //recommendation 
            
             const requestOptions={
                 method:'POST',
@@ -148,21 +152,28 @@ const MovieCard =(props)=>{
 
            
       return(
-            <ThemeProvider theme={theme}>
+          <ThemeProvider theme={theme}>
                 <ButtonBase 
+
                     className={classes.buttonbasestyle} 
                     onClick={shoot}
                 >
+                    <FloatCard>
+
                         <Box className={classes.divStyle} textAlign='center'>
                             
                             <img className={classes.image} src={posterUrl} alt=""></img>
                             
                             <Typography className={classes.textStyle} >{props.title}</Typography>
                             <FavoriteIcon className={classes.iconStyle} fontSize='large'></FavoriteIcon>
+                            
                         </Box>
+                    </FloatCard>
+                
                 </ButtonBase>
                
                 </ThemeProvider>
+                
     );
 };
 
