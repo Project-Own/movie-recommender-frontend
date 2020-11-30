@@ -12,8 +12,8 @@ import {
 import React, { useEffect, useState } from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import clsx from "clsx";
-import LikeButton from "../LikeButton";
-import { Skeleton } from "@material-ui/lab";
+import Skeleton from "@material-ui/lab/Skeleton";
+import LikeButton from "../LikeButton/LikeButton";
 
 // const style = {
 //     width: 200,

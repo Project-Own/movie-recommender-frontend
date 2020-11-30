@@ -14,7 +14,7 @@ import React, { Component, lazy } from "react";
 import { Slug, Fade } from "../../components/Grid/Primitives";
 import FlipCard from "../FlipCard/FlipCard";
 import FloatCard from "../FloatCard/FloatCard";
-import LikeButton from "../LikeButton";
+import LikeButton from "../LikeButton/LikeButton";
 
 const Cell = (props) => {
   const { index, title, height, width, posterPath } = props;

@@ -11,12 +11,12 @@ import ImageSlider from "../../components/frontPage/ImageSlider";
 import OscarList from "../../components/frontPage/oscar_data";
 import ImdbList from "../../components/frontPage/imdbList";
 // import ReactScrollableList from '../../dist/index'
-import ScrollTop from "../../components/ScrollTop";
 import { Fab } from "@material-ui/core";
 
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import MovieCard from "../../components/SearchComponent/MovieCard";
 import ScrollFollow from "../../components/ScrollFollow/ScrollFollow";
+import ScrollTop from "../../components/ScrollTop/ScrollTop";
 
 export default function Layout(props) {
   const dispatch = useDispatch();

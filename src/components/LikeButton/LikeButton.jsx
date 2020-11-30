@@ -1,10 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import lottie from "lottie-web/build/player/lottie_light";
-import likeAnimation from "../assets/lottie/like.json";
-import heartLoveAnimation from "../assets/lottie/heart-love.json";
-import heartsLikeAnimation from "../assets/lottie/hearts-like.json";
-import starAniamtion from "../assets/lottie/star.json";
-import starDarkAniamtion from "../assets/lottie/star-dark.json";
+import starDarkAniamtion from "../../assets/lottie/star-dark.json";
 import { IconButton } from "@material-ui/core";
 
 const LikeButton = (props) => {
