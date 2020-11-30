@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Grid, Button, Typography } from "@material-ui/core";
+import { Container, Grid, Button, Typography, Paper } from "@material-ui/core";
 import DraggableComponent from "../../components/Draggable/Draggable";
 // import DraggableComponent from "../../components/Draggable/Draggable";
 import Recommender from "../../components/Recommender/Recommender";
@@ -15,6 +15,7 @@ import ScrollTop from "../../components/ScrollTop";
 import { Fab } from "@material-ui/core";
 
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import MovieCard from "../../components/SearchComponent/MovieCard";
 
 export default function Layout(props) {
   const dispatch = useDispatch();
@@ -27,131 +28,142 @@ export default function Layout(props) {
 
   return (
     <>
-      <section className="landing">
-        <div className="dark-overlay">
-          <div className="landing-inner">
-            <h1 className="x-large"> Movie Recommender </h1>
-            <p className="lead">
-              Alright!Alright!Alright!You come to a fine place if you are
-              confused on what to watch next ? We will help you to take the
-              decision.
-            </p>
-            <div className="buttons">
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-                spacing={2}
+      <Container>
+        <p className="lead">
+          Alright!Alright!Alright!You come to a fine place if you are confused
+          on what to watch next ? We will help you to take the decision.
+        </p>
+        <div className="buttons">
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+            spacing={2}
+          >
+            <Grid item>
+              <Link
+                to="/movie-recommender-frontend/register"
+                // className="btn btn-primary"
               >
-                <Grid item>
-                  <Link
-                    to="/movie-recommender-frontend/register"
-                    // className="btn btn-primary"
-                  >
-                    <Button color="secondary" variant="contained">
-                      Register
-                    </Button>
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link
-                    to="/movie-recommender-frontend/login"
-                    // className="btn btn-light"
-                  >
-                    <Button color="primary" variant="contained">
-                      Login
-                    </Button>
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link
-                    to="/movie-recommender-frontend/select"
-                    // className="btn btn-light"
-                  >
-                    <Button color="primary" variant="contained">
-                      Selection
-                    </Button>
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link
-                    to="/movie-recommender-frontend/"
-                    // className="btn btn-light"
-                  >
-                    <Button color="primary" variant="contained">
-                      Home
-                    </Button>
-                  </Link>
-                </Grid>
-              </Grid>
-            </div>
-          </div>
+                <Button color="secondary" variant="contained">
+                  Register
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link
+                to="/movie-recommender-frontend/login"
+                // className="btn btn-light"
+              >
+                <Button color="primary" variant="contained">
+                  Login
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link
+                to="/movie-recommender-frontend/select"
+                // className="btn btn-light"
+              >
+                <Button color="primary" variant="contained">
+                  Selection
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link
+                to="/movie-recommender-frontend/"
+                // className="btn btn-light"
+              >
+                <Button color="primary" variant="contained">
+                  Home
+                </Button>
+              </Link>
+            </Grid>
+          </Grid>
         </div>
-      </section>
-      <Container maxWidth={"lg"}>
-        <Grid container direction="column" spacing={4}>
-          <Grid item> </Grid>
-          <Grid item container>
-            <Grid item container direction="row" spacing={4}>
-              <Grid item md={8} sm={12}>
-                <Grid item container direction="column" spacing={4}>
-                  <Grid item>
-                    <Recommender movie={movie} setMovie={setMovie} />
-                  </Grid>
-                  <Grid item>
-                    <DraggableComponent />
-                  </Grid>
-                  <Grid item>
-                    <ImageSlider
-                      imgList={imgList}
-                      title={oscTitle}
-                      date={oscDate}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item container spacing={2} md={4} sm={12}>
-                <Grid item sm={6} md={12}>
-                  <MovieSearchCard movie={movie} setMovie={setMovie} />
-                </Grid>
-                <Grid item sm={6} md={12}>
-                  <ImdbList />
-                </Grid>
-              </Grid>
-            </Grid>
+
+        {/* <Grid container>
+          <Grid item>
+            <MovieCard movie={movie} />
           </Grid>
-          <Grid item container>
-            <Grid item container direction="row" spacing={4}>
-              <Grid item md={8} sm={12}>
-                <Grid item container direction="column">
-                  <Grid item>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        dispatch(
-                          setSnackbar({
-                            snackbarOpen: true,
-                            snackbarType: "success",
-                            snackbarMessage: "Snackbar launched",
-                          })
-                        );
-                      }}
-                    >
-                      Launch Snackbar
-                    </Button>
+          <Grid item>
+            <Recommender
+              movie={movie}
+              setMovie={setMovie}
+              cols={{ lg: 8, md: 6, sm: 4, xs: 2 }}
+            />
+          </Grid>
+        </Grid> */}
+        <Container maxWidth={"lg"}>
+          <Grid container direction="column" spacing={4}>
+            <Grid item> </Grid>
+            <Grid item container>
+              <Grid item container direction="row" spacing={4}>
+                <Grid item md={8} sm={12}>
+                  <Grid item container direction="column" spacing={4}>
+                    <Grid item>
+                      <Recommender
+                        movie={movie}
+                        setMovie={setMovie}
+                        colSize={{ lg: 3, md: 3, sm: 3, xs: 1 }}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <DraggableComponent />
+                    </Grid>
+                    <Grid item>
+                      <ImageSlider
+                        imgList={imgList}
+                        title={oscTitle}
+                        date={oscDate}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item container spacing={2} md={4} sm={12}>
+                  <Grid item sm={6} md={12}>
+                    <MovieSearchCard movie={movie} setMovie={setMovie} />
+                  </Grid>
+                  <Grid item sm={6} md={12}>
+                    <ImdbList />
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
+            <Grid item container>
+              <Grid item container direction="row" spacing={4}>
+                <Grid item md={8} sm={12}>
+                  <Grid item container direction="column">
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                          dispatch(
+                            setSnackbar({
+                              snackbarOpen: true,
+                              snackbarType: "success",
+                              snackbarMessage: "Snackbar launched",
+                            })
+                          );
+                        }}
+                      >
+                        Launch Snackbar
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
           </Grid>
-        </Grid>
-        <ScrollTop {...props}>
-          <Fab color="secondary" size="small" aria-label="scroll back to top">
-            <KeyboardArrowUpIcon />
-          </Fab>
-        </ScrollTop>
+          <ScrollTop {...props}>
+            <Fab color="secondary" size="small" aria-label="scroll back to top">
+              <KeyboardArrowUpIcon />
+            </Fab>
+          </ScrollTop>
+        </Container>
       </Container>
     </>
   );

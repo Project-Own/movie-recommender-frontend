@@ -3,7 +3,7 @@ import { Slide, useScrollTrigger } from "@material-ui/core";
 const HideOnScroll = ({ children }) => {
   const trigger = useScrollTrigger({
     disableHysteresis: true,
-    threshold: 200,
+    threshold: 1,
   });
   // console.log(window.pageYOffset);
   return (

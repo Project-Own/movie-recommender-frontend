@@ -1,4 +1,3 @@
-
 const movieList=[
     {
     "poster_path":"/emSTzEr2qdo3lV14ZQ3uIYsqHJS.jpg",
@@ -201,5 +200,5 @@ const movieList=[
     "title":"Cedar Boys"
     }
 ];
-
+// console.log(movieList);
 export default movieList;

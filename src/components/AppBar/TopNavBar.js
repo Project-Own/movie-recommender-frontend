@@ -148,7 +148,7 @@ export default function TopNavBar(props) {
     <div className={classes.root}>
       {/* <ElevationScroll {...props}> */}
       <HideOnScroll {...props}>
-        <AppBar className={classes.appBar}>
+        <AppBar>
           <Toolbar id="back-to-top-anchor">
             <Link to="/movie-recommender-frontend/" className={classes.title}>
               <Typography variant="h5" className={classes.title}>

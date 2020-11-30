@@ -1,30 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import FormLabel from "@material-ui/core/FormLabel";
-import Paper from "@material-ui/core/Paper";
-
-import MovieCard from "../SearchComponent/MovieCard";
-
-import Button from "@material-ui/core/Button";
+import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 import {
+  Container,
   GridList,
   GridListTile,
   GridListTileBar,
-  IconButton,
+  Paper,
+  Typography,
 } from "@material-ui/core";
-import { Info } from "@material-ui/icons";
 import Axios from "axios";
 import LikeButton from "../LikeButton";
+import { Skeleton } from "@material-ui/lab";
+import FloatCard from "../FloatCard/FloatCard";
+import CustomGrid from "../Grid/CustomGrid";
 
+import data from "./data";
+import { config } from "react-spring/renderprops";
+import Cell from "./Cell";
+import FlipCard from "../FlipCard/FlipCard";
 const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&t=";
 const RECOMMEND_API_ADDRESS =
   "https://vae-movie-recommender.herokuapp.com/predict/10";
 
 const useStyles = makeStyles((theme) => ({
+  bar: {
+    borderRadius: "0px 0px 10px 10px",
+  },
   image: {
-    width: "100%",
-    borderRadius: 20,
+    borderRadius: "10px",
+    width: 200,
   },
 
   buttonbasestyle: {
@@ -45,12 +50,34 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16,
     fontFamily: "Lato",
   },
+  root: {
+    padding: theme.spacing() * 2,
+  },
 }));
 
-export default function Recommender(props) {
-  const [recommendedMovieList, setRecommendedMovieList] = React.useState([]);
-  const { movie, setMovie } = props;
+const Recommender = (props) => {
+  const [recommendedMovieList, setRecommendedMovieList] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const { movie, setMovie, colSize = {}, height = 300, breadth = 200 } = props;
   const classes = useStyles();
+
+  function getCols(screenWidth) {
+    if (isWidthUp("lg", screenWidth)) {
+      return colSize?.lg ?? 6;
+    }
+
+    if (isWidthUp("md", screenWidth)) {
+      return colSize?.md ?? 4;
+    }
+    if (isWidthUp("sm", screenWidth)) {
+      return colSize?.sm ?? 3;
+    }
+
+    return colSize?.xs ?? 2;
+  }
+
+  const cols = getCols(props.width); // width is associated when using withWidth()
 
   const searchMovie = (movie) => {
     if (movie !== "") {
@@ -96,6 +123,7 @@ export default function Recommender(props) {
             );
 
             setRecommendedMovieList(movies);
+            setLoading(false);
             // setQuery("");
           }
         })
@@ -104,42 +132,172 @@ export default function Recommender(props) {
   };
 
   useEffect(() => {
+    setLoading(true);
     searchRecommendation();
   }, []);
 
+  let state = { data };
   return (
     <>
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12}>
-          <GridList cellHeight={400} cols={3}>
-            {recommendedMovieList.map((movie, index) => (
-              <GridListTile key={index} cols={movie.cols || 1}>
-                <img
-                  onClick={() => {
-                    searchMovie(movie);
-                  }}
-                  className={classes.image}
-                  src={movie.posterPath}
-                  alt="Poster"
+      <Container>
+        {/* <FloatCard>
+        <FlipCard
+          height={height}
+          width={breadth}
+          front={<p>Front</p>}
+          back={<p>Back</p>}
+        />z
+      </FloatCard> */}
+
+        {loading ? (
+          <GridList cols={cols} height={height} spacing={32}>
+            {new Array(10).fill(0).map((value, index) => (
+              <GridListTile>
+                <Skeleton
+                  animation="wave"
+                  height={height}
+                  width="100%"
+                  variant="rect"
                 />
                 <GridListTileBar
-                  title={movie.title}
-                  actionIcon={<LikeButton data={movie} index={movie.index} />}
-                >
-                  {/* <Button
-                    className={classes.buttonbasestyle}
-                   
-                    color="primary"
-                  
-                  >
-                    {movie.title}
-                  </Button> */}
-                </GridListTileBar>
+                  title={
+                    <Skeleton
+                      animation="wave"
+                      height={10}
+                      width="80%"
+                      style={{ marginBottom: 6 }}
+                    />
+                  }
+                  actionIcon={
+                    <Skeleton
+                      animation="wave"
+                      variant="circle"
+                      height={20}
+                      width={20}
+                      style={{ margin: 20 }}
+                    />
+                  }
+                />
               </GridListTile>
             ))}
           </GridList>
-        </Grid>
-      </Grid>
+        ) : (
+          <CustomGrid
+            style={{ width: "100%" }}
+            // Arbitrary data, should contain keys, possibly heights, etc.
+            data={recommendedMovieList}
+            // Key accessor, instructs grid on how to fet individual keys from the data set
+            keys={(d) => d.index}
+            // Can be a fixed value or an individual data accessor
+            heights={height}
+            // Number of columns
+            columns={cols}
+            // Space between elements
+            margin={100}
+            // Removes the possibility to scroll away from a maximized element
+            lockScroll={false}
+            // Delay when active elements (blown up) are minimized again
+            closeDelay={500}
+            // Regular react-spring configs
+            config={config.slow}
+          >
+            {(data, active, toggle) => (
+              <Cell
+                active={active}
+                toggle={toggle}
+                {...data}
+                height={height}
+                width={breadth}
+              />
+            )}
+          </CustomGrid>
+        )}
+        {/* <GridList
+        cellHeight={height}
+        cols={cols}
+        spacing={32}
+        className={classes.root}
+      >
+        {loading
+          ? new Array(10).fill(0).map((value, index) => (
+              <GridListTile cols={movie?.cols || 1}>
+                <Skeleton
+                  animation="wave"
+                  height={height}
+                  width={breadth}
+                  variant="rect"
+                />
+                <GridListTileBar
+                  title={
+                    <Skeleton
+                      animation="wave"
+                      height={10}
+                      width="80%"
+                      style={{ marginBottom: 6 }}
+                    />
+                  }
+                  actionIcon={
+                    <Skeleton
+                      animation="wave"
+                      variant="circle"
+                      height={20}
+                      width={20}
+                      style={{ margin: 20 }}
+                    />
+                  }
+                />
+              </GridListTile>
+            ))
+          : recommendedMovieList.map((movie, index) => (
+              <GridListTile
+                key={index}
+                cols={movie?.cols ?? 1}
+                // component={FloatCard}
+              >
+                <FlipCard
+                  height={height}
+                  width={breadth}
+                  front={
+                    <img
+                      onClick={() => {
+                        searchMovie(movie);
+                      }}
+                      style={{ height: height, width: breadth }}
+                      src={movie?.posterPath}
+                      alt="Poster"
+                    />
+                  }
+                  back={
+                    <div style={{ height: height, width: breadth }}>
+                      <Typography>{movie?.title}</Typography>
+                    </div>
+                  }
+                />
+
+                <GridListTileBar
+                  className={classes.bar}
+                  title={
+                    loading ? (
+                      <Skeleton
+                        animation="wave"
+                        height={10}
+                        width="80%"
+                        style={{ marginBottom: 6 }}
+                      />
+                    ) : (
+                      movie?.title ?? "Unknown"
+                    )
+                  }
+                  actionIcon={
+                    <LikeButton data={movie} index={movie?.index ?? 69} />
+                  }
+                />
+              </GridListTile>
+            ))}
+      </GridList> */}
+      </Container>
     </>
   );
-}
+};
+
+export default withWidth()(Recommender);

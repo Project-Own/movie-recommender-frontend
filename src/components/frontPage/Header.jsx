@@ -26,7 +26,7 @@ const Header = ()=>{
                 Let us Recommend!
             </Typography>
             <Typography className={classes.subHeaderStyle}>
-                What are your favorite movies? The more you select, the better your recommendations!
+                What are your favorite movies? The more you select, the better our recommendations!
             </Typography>
         </div>
         
