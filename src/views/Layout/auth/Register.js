@@ -3,13 +3,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "../../App/App.css";
 import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
-import {success, failure} from "./registerSlice";
 import { useDispatch } from "react-redux";
+import { failure, success } from "../../../features/Auth/registerSlice";
 
-import {loadUser} from "./loadUser";
-
-
-
+import { loadUser } from "../../../features/Auth/loadUser";
 
 export const Register = () => {
   const [formData, setFormData] = useState({
@@ -50,23 +47,29 @@ export const Register = () => {
         };
 
         const body = JSON.stringify(newUser);
-       
-        const res = await axios.post("https://vae-login.herokuapp.com/api/users", body, config);
+
+        const res = await axios.post(
+          "https://vae-login.herokuapp.com/api/users",
+          body,
+          config
+        );
         dispatch(
           success({
-            token: res.data.token
-      })
-      );
-      loadUser();
+            token: res.data.token,
+          })
+        );
+        
+        loadUser();
 
         console.log(res.data);
       } catch (err) {
         console.log(err);
-        dispatch(failure({
-          type:"REGISTER_FAIL",
-         }));
+        dispatch(
+          failure({
+            type: "REGISTER_FAIL",
+          })
+        );
       }
-
     }
   };
   return (

@@ -4,7 +4,7 @@ import axios from "axios";
 import "../../App/App.css";
 import { useDispatch } from "react-redux";
 import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
-import {success, failure, userLoaded } from "./registerSlice";
+import { failure, success, userLoaded } from "../../../features/Auth/registerSlice";
 
 export const Login = () => {
   const [formData, setFormData] = useState({

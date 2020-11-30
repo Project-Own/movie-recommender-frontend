@@ -5,6 +5,7 @@ import {
   CardContent,
   CardHeader,
   Grid,
+  Link,
   Typography,
   useTheme,
 } from "@material-ui/core";
@@ -65,7 +66,7 @@ const Cell = (props) => {
       >
         <Grid item xs={8}>
           <Typography onClick={null} style={{ padding: 20, cursor: "pointer" }}>
-            {title}
+            <Link color="textPrimary">{title}</Link>
           </Typography>
         </Grid>
         <Grid item xs={4}>

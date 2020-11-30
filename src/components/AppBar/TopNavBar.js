@@ -19,6 +19,8 @@ import {
   useTheme,
   Zoom,
   Fab,
+  Link as LinkMUI,
+  Grid,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -29,7 +31,6 @@ import PropTypes from "prop-types";
 import { CustomThemeContext } from "../../CustomThemeProvider";
 import { Link } from "react-router-dom";
 import HideOnScroll from "./HideOnScroll";
-
 function ElevationScroll(props) {
   const { children } = props;
 
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
   },
   drawerText: {
-    color: theme.palette.primary,
+    color: theme.palette.text.primary,
   },
 
   menuButton: {
@@ -114,10 +115,9 @@ export default function TopNavBar(props) {
   };
 
   const drawer = (
-    <div>
-      <div className={classes.drawerContainer} />
+    <div className={classes.drawerContainer}>
       <Link to="/movie-recommender-frontend/">
-        <Typography variant="h5" color="textPrimary">
+        <Typography variant="h5" color="textPrimary" style={{ padding: 20 }}>
           REC
         </Typography>
       </Link>
@@ -134,13 +134,23 @@ export default function TopNavBar(props) {
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+
+              <ListItemText primary={text} className={classes.drawerText} />
             </ListItem>
           </Link>
         ))}
       </List>
       <Divider />
-      <Switch checked={isDark} onChange={handleThemeChange} />
+      <Grid container style={{ paddingTop: 20, paddingLeft: 5 }}>
+        <Grid item xs={3}>
+          <Switch checked={isDark} onChange={handleThemeChange} />
+        </Grid>
+        <Grid item xs={9}>
+          <Typography color="textPrimary" style={{ padding: 5 }}>
+            Dark Mode
+          </Typography>
+        </Grid>
+      </Grid>
     </div>
   );
 
