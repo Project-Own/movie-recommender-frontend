@@ -10,6 +10,7 @@ import {
   useTheme,
 } from "@material-ui/core";
 import Close from "@material-ui/icons/Close";
+import Axios from "axios";
 import React, { Component, lazy } from "react";
 import { Slug, Fade } from "../../components/Grid/Primitives";
 import FlipCard from "../FlipCard/FlipCard";
@@ -19,6 +20,7 @@ import LikeButton from "../LikeButton/LikeButton";
 const Cell = (props) => {
   const { index, title, height, width, posterPath } = props;
   const theme = useTheme();
+
   return (
     <FloatCard height={height} width={width}>
       <FlipCard
