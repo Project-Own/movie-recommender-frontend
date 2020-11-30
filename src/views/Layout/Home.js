@@ -19,7 +19,7 @@ const Home = (props) => {
   useEffect(() => {
     loadUser(dispatch);
     if (localStorage.token) {
-      setAuthToken(localStorage.token);
+      // setAuthToken(localStorage.token);
     }
   }, []);
 
