@@ -122,7 +122,7 @@ const MovieCard =(props)=>{
         
             
 
-            return fetch('http://127.0.0.1:5000/recom', requestOptions)
+            return fetch('https://item-recommendation.herokuapp.com/recom', requestOptions)
                 .then(async response => {
                     const data = await response.json();
                     // check for error response

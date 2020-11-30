@@ -20,7 +20,7 @@ const Contents=()=>{
       async function fetchData(){
         
         await axios
-       .get('/api/items')
+       .get('https://movie-database-server.herokuapp.com/api/items')
        .then(async res=>{
              const data = await res.data;
              setMovieList(data);
@@ -66,7 +66,7 @@ const Contents=()=>{
         
         
         
-    return fetch('http://localhost:4000/api/items/singleItem', requestOptions)
+    return fetch('https://movie-database-server.herokuapp.com/api/items/singleItem', requestOptions)
         .then(async response => {
             const data = await response.json();
                 // check for error response
