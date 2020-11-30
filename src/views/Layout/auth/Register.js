@@ -58,8 +58,8 @@ export const Register = () => {
             token: res.data.token,
           })
         );
-        
-        loadUser();
+
+        loadUser(dispatch);
 
         console.log(res.data);
       } catch (err) {

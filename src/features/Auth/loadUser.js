@@ -11,7 +11,11 @@ export const loadUser = async (dispatch) => {
 
   console.log("Load");
   try {
-    const res = await axios.get("https://vae-login.herokuapp.com/api/auth");
+    const res = await axios.get("https://vae-login.herokuapp.com/api/auth", {
+      headers: {
+        "x-auth-token": localStorage.token,
+      },
+    });
     console.log("User Data");
     console.log(res);
     dispatch(
