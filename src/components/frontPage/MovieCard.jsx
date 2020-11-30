@@ -1,16 +1,16 @@
-import React from 'react';
-import {useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import {Typography} from '@material-ui/core'
-import ButtonBase from '@material-ui/core/CardActionArea';
-import Box from '@material-ui/core/Box';
-import theme from '../../themes/theme';
-import {ThemeProvider} from '@material-ui/core/styles';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import React from "react";
+import { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
+import ButtonBase from "@material-ui/core/CardActionArea";
+import Box from "@material-ui/core/Box";
+import theme from "../../themes/theme";
+import { ThemeProvider } from "@material-ui/core/styles";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 // import defaultMoviePoster from '../../assets/images/defaultMoviePoster.png';
 import {useEffect} from 'react';
 import FloatCard from '../FloatCard/FloatCard';
-import LikeButton from '../LikeButton';
+
 
 
 var selectedList=[];
@@ -177,4 +177,4 @@ const MovieCard =(props)=>{
     );
 };
 
-export default MovieCard;
+export default React.memo(MovieCard);
