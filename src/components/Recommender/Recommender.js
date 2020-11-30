@@ -10,7 +10,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import Axios from "axios";
-import LikeButton from "../LikeButton";
 import { Skeleton } from "@material-ui/lab";
 import FloatCard from "../FloatCard/FloatCard";
 import CustomGrid from "../Grid/CustomGrid";

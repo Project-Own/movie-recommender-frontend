@@ -5,6 +5,7 @@ const initialState = {
   isAuthenticated: null,
   loading: true,
   user: null,
+  preferredMovies: [],
 };
 
 export const registerSlice = createSlice({
@@ -14,7 +15,8 @@ export const registerSlice = createSlice({
     userLoaded: (state, action) => {
       state.isAuthenticated = true;
       state.loading = false;
-      state.user = action.payload;
+      state.user = action.payload.user;
+      state.preferredMovies = action.payload.user.preferredMovies;
     },
 
     success: (state, action) => {
@@ -33,15 +35,29 @@ export const registerSlice = createSlice({
       state.isAuthenticated = false;
       state.loading = false;
     },
+    addMovie: (state, action) => {
+      state.preferredMovies.push(action.payload.index);
+    },
+    removeMovie: (state, action) => {
+      state.preferredMovies = state.preferredMovies.filter(
+        (item) => item !== action.payload.index
+      );
+    },
   },
 });
 
-export const { success, failure, userLoaded } = registerSlice.actions;
+export const {
+  success,
+  failure,
+  userLoaded,
+  addMovie,
+  removeMovie,
+} = registerSlice.actions;
 
 export const selectRegister = (state) => state.register;
 export const selectUser = (state) => state.register.user;
 export const selectToken = (state) => state.register.token;
+export const selectPreferredMovies = (state) => state.register.preferredMovies;
 export const isAuthenticated = (state) => state.register.isAuthenticated;
-
 
 export default registerSlice.reducer;
