@@ -31,6 +31,12 @@ import PropTypes from "prop-types";
 import { CustomThemeContext } from "../../CustomThemeProvider";
 import { Link } from "react-router-dom";
 import HideOnScroll from "./HideOnScroll";
+
+import {failure} from "../../features/Auth/registerSlice";
+import { useDispatch } from "react-redux";
+
+
+
 function ElevationScroll(props) {
   const { children } = props;
 
@@ -98,6 +104,7 @@ export default function TopNavBar(props) {
   const theme = useTheme();
   const { currentTheme, setTheme } = useContext(CustomThemeContext);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const dispatch = useDispatch();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -113,6 +120,15 @@ export default function TopNavBar(props) {
       setTheme("light");
     }
   };
+
+  function logout(){
+    dispatch(
+      failure({
+        type: "REGISTER_FAIL",
+      })
+    );
+  }
+
 
   const drawer = (
     <div className={classes.drawerContainer}>
@@ -154,6 +170,7 @@ export default function TopNavBar(props) {
     </div>
   );
 
+  
   return (
     <div className={classes.root}>
       {/* <ElevationScroll {...props}> */}
@@ -190,11 +207,14 @@ export default function TopNavBar(props) {
                   Select
                 </Button>
               </Link>
-              <Link to="/movie-recommender-frontend/">
+              {/* <Link to="/movie-recommender-frontend/">
                 <Button variant="text" className={classes.title}>
                   Dashboard
                 </Button>
-              </Link>
+              </Link> */}
+              <Button variant="text" className={classes.title}  onClick = {logout} >
+                  Logout
+                </Button>
               <Switch checked={isDark} onChange={handleThemeChange} />
             </nav>
           </Toolbar>
