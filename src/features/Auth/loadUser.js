@@ -20,7 +20,7 @@ export const loadUser = async (dispatch) => {
       })
     );
   } catch (err) {
-    console.log("errir");
+    console.log(err);
     dispatch(
       failure({
         type: "auth_error",
