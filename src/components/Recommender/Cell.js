@@ -18,21 +18,8 @@ import FloatCard from "../FloatCard/FloatCard";
 import LikeButton from "../LikeButton/LikeButton";
 
 const Cell = (props) => {
-  const {
-    index,
-    title,
-    imdbId,
-    genres,
-    popularity,
-    voteAverage,
-    voteCount,
-    height,
-    width,
-    posterPath,
-    searchMovie,
-  } = props;
+  const { data, height, width, searchMovie } = props;
   const theme = useTheme();
-  console.log(props);
   return (
     <FloatCard height={height} width={width}>
       <FlipCard
@@ -45,22 +32,39 @@ const Cell = (props) => {
               //   searchMovie(movie);
               // }}
               style={{ height: height, width: width }}
-              src={posterPath}
+              src={data?.posterPath}
               alt="Poster"
             />
           </>
         }
         back={
-          <Card style={{ height: height, width: width }}>
+          <Card style={{ height: height, width: width - 20 }}>
             <CardContent>
-              <Typography>{genres}}</Typography>
-              <Typography>{voteAverage}</Typography>
-              <Typography>{voteCount}</Typography>
-              <Typography>{popularity}</Typography>
-              <Typography>s</Typography>
-              <Typography>s</Typography>
-              <Typography>s</Typography>
-              <Typography>s</Typography>
+              <Grid container>
+                <Grid item xs={12}>
+                  {data?.genres.split("|").map((value, key) => (
+                    <Typography key={key}> {value}</Typography>
+                  ))}
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography>{data?.voteAverage}</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography>{data?.voteCount}</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography>{data?.popularity}</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography>{data?.imdbRating}</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography>{data?.Genre}</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography>{data?.Director}</Typography>
+                </Grid>
+              </Grid>
             </CardContent>
           </Card>
         }
@@ -81,15 +85,15 @@ const Cell = (props) => {
         <Grid item xs={8}>
           <Typography
             onClick={() => {
-              searchMovie(imdbId, index);
+              searchMovie(data);
             }}
             style={{ padding: 20, cursor: "pointer" }}
           >
-            <Link color="textPrimary">{title}</Link>
+            <Link color="textPrimary">{data?.title ?? "Unknown"}</Link>
           </Typography>
         </Grid>
         <Grid item xs={4}>
-          <LikeButton index={index} />
+          <LikeButton index={data?.index ?? 70000} />
         </Grid>
       </Grid>
     </FloatCard>
