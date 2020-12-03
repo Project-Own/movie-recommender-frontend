@@ -51,7 +51,7 @@ const ScrollFollow = ({ children }) => {
     set({ xy: [x - window.innerWidth / 2, y - window.innerHeight / 2] });
   }, [x, y, set]);
   return (
-    <div class="followContainer">
+    <div className="followContainer">
       <a.svg style={{ transform: interpBg }} viewBox="0 0 500 500">
         <g /*id="bg"*/ style={{ fill: theme.palette.secondary.main }}>
           <path d="M490,267 C490,402.308594 380.308594,512 245,512 C109.691406,512 0,402.308594 0,267 C0,131.691406 109.691406,22 245,22 C380.308594,22 490,131.691406 490,267 Z" />

@@ -9,17 +9,21 @@ const calc = (x, y) => [
 const trans = (x, y, s) =>
   `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`;
 
-function FloatCard({ children,height,width }) {
+function FloatCard({ children, height, width }) {
   const [props, set] = useSpring(() => ({
     xys: [0, 0, 1],
     config: { mass: 5, tension: 350, friction: 40 },
   }));
   return (
     <animated.div
-      class="floatCard"
+      className="floatCard"
       onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
       onMouseLeave={() => set({ xys: [0, 0, 1] })}
-      style={{height:height,width:width, transform: props.xys.interpolate(trans) }}
+      style={{
+        height: height,
+        width: width,
+        transform: props.xys.interpolate(trans),
+      }}
     >
       {children}
     </animated.div>

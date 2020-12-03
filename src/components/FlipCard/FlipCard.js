@@ -19,7 +19,7 @@ export default class FlipCard extends React.Component {
       >
         {(props) => (
           <animated.div
-            class="flipCard"
+            className="flipCard"
             onClick={this.click}
             style={{ height: height, width: width, ...props }}
           >

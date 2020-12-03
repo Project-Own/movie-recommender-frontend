@@ -18,7 +18,7 @@ import data from "./data";
 import { config } from "react-spring/renderprops";
 import Cell from "./Cell";
 import FlipCard from "../FlipCard/FlipCard";
-const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&t=";
+const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
 const RECOMMEND_API_ADDRESS =
   "https://vae-movie-recommender.herokuapp.com/predict/10";
 
@@ -78,19 +78,22 @@ const Recommender = (props) => {
 
   const cols = getCols(props.width); // width is associated when using withWidth()
 
-  const searchMovie = (movie) => {
-    if (movie !== "") {
-      fetch(`${API_ADDRESS} + ${movie.title}`)
-        .then((response) => response.json())
-        .then((json) => {
-          if (json.Response !== "False") {
-            // setState({ ...state, movie: json });
-            json.index = movie.index;
-            setMovie(json);
-            // setQuery("");
-          }
-        })
-        .catch((error) => alert(error.message));
+  const searchMovie = (data) => {
+    if (data) {
+      // fetch(`${API_ADDRESS}${imdbId}`)
+      // .then((response) => response.json())
+      // .then((json) => {
+      //   if (json.Response !== "False") {
+      //     // setState({ ...state, movie: json });
+      //     json.index = index;
+      //     setMovie(json);
+      //     // setQuery("");
+      //   }
+      // })
+      // .catch((error) => {
+      //   alert(error.message);
+      // });
+      setMovie(data);
     }
   };
   const searchRecommendation = (movie) => {
@@ -100,9 +103,15 @@ const Recommender = (props) => {
         .then(async (json) => {
           if (json.Response !== "False") {
             // setState({ ...state, movie: json });
-            console.log(json);
             const movies = await Promise.all(
               json.movies.map(async (movie, index) => {
+                let omdbRes;
+                try {
+                  omdbRes = await Axios.get(`${API_ADDRESS}${movie.imdbId}`);
+                } catch (err) {
+                  console.log(err);
+                }
+
                 try {
                   const res = await Axios.get(
                     "https://image.tmdb.org/t/p/w185" + movie.posterPath
@@ -111,12 +120,11 @@ const Recommender = (props) => {
                   movie.posterPath =
                     "https://image.tmdb.org/t/p/w185" + movie.posterPath;
                 } catch (err) {
-                  const res = await Axios.get(
-                    `${API_ADDRESS} + ${movie.title}`
-                  );
                   // console.log(res);
-                  movie.posterPath = res.data.Poster;
+                  movie.posterPath = omdbRes?.data?.Poster ?? "Unknown";
                 }
+                movie = { ...movie, ...omdbRes.data };
+
                 return movie;
               })
             );
@@ -135,7 +143,6 @@ const Recommender = (props) => {
     searchRecommendation();
   }, []);
 
-  let state = { data };
   return (
     <>
       <Container>
@@ -151,7 +158,7 @@ const Recommender = (props) => {
         {loading ? (
           <GridList cols={cols} height={height} spacing={32}>
             {new Array(10).fill(0).map((value, index) => (
-              <GridListTile>
+              <GridListTile key={index}>
                 <Skeleton
                   animation="wave"
                   height={height}
@@ -204,9 +211,10 @@ const Recommender = (props) => {
               <Cell
                 active={active}
                 toggle={toggle}
-                {...data}
+                data={data}
                 height={height}
                 width={breadth}
+                searchMovie={searchMovie}
               />
             )}
           </CustomGrid>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Grid, Button, Typography, Paper } from "@material-ui/core";
+import { Container, Grid, Button } from "@material-ui/core";
 import DraggableComponent from "../../components/Draggable/Draggable";
 // import DraggableComponent from "../../components/Draggable/Draggable";
 import Recommender from "../../components/Recommender/Recommender";
@@ -11,10 +11,6 @@ import ImageSlider from "../../components/frontPage/ImageSlider";
 import OscarList from "../../components/frontPage/oscar_data";
 import ImdbList from "../../components/frontPage/imdbList";
 // import ReactScrollableList from '../../dist/index'
-import { Fab } from "@material-ui/core";
-
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import MovieCard from "../../components/SearchComponent/MovieCard";
 import ScrollFollow from "../../components/ScrollFollow/ScrollFollow";
 import ScrollTop from "../../components/ScrollTop/ScrollTop";
 
@@ -79,6 +75,16 @@ export default function Layout(props) {
               >
                 <Button color="primary" variant="contained">
                   Home
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link
+                to="/movie-recommender-frontend/profile"
+                // className="btn btn-light"
+              >
+                <Button color="primary" variant="contained">
+                  Profile
                 </Button>
               </Link>
             </Grid>
