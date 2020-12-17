@@ -8,19 +8,19 @@ import UserPickLayout from "./UserPickLayout";
 
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "../../features/Auth/loadUser";
-import { selectToken } from "../../features/Auth/registerSlice";
+import {
+  isAuthenticated,
+  selectToken,
+} from "../../features/Auth/registerSlice";
 const Home = (props) => {
   const dispatch = useDispatch();
-  const user = useSelector(selectToken);
+  const token = useSelector(selectToken);
 
-  console.log(user);
-  loadUser(dispatch);
+  const authenticated = useSelector(isAuthenticated);
+
   useEffect(() => {
-    loadUser(dispatch);
-    if (localStorage.token) {
-      // setAuthToken(localStorage.token);
-    }
-  }, []);
+    loadUser(dispatch, token);
+  }, [token, dispatch]);
 
   console.log(props);
   return (

@@ -8,7 +8,6 @@ import { failure, success } from "../../../features/Auth/registerSlice";
 import { isAuthenticated } from "../../../features/Auth/registerSlice";
 import { loadUser } from "../../../features/Auth/loadUser";
 
-
 export const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -70,7 +69,6 @@ export const Register = () => {
 
         console.log(res.data);
         console.log(authenticated);
-
       } catch (err) {
         console.log(err);
         dispatch(
@@ -81,18 +79,20 @@ export const Register = () => {
       }
 
       console.log("Hi");
-         
     }
   };
 
-  
- //Redirect if logged in
- if(authenticated){
-  console.log("Inside if");
-  
-  return  <Redirect from='/movie-recommender-frontend/register' to='/movie-recommender-frontend/select'/>;
-  
-}
+  //Redirect if logged in
+  if (authenticated) {
+    console.log("Inside if");
+
+    return (
+      <Redirect
+        from="/movie-recommender-frontend/register"
+        to="/movie-recommender-frontend/select"
+      />
+    );
+  }
 
   return (
     <div className="container">

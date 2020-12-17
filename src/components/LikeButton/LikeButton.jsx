@@ -8,31 +8,38 @@ import {
   addMovie,
   removeMovie,
   selectPreferredMovies,
+  selectToken,
 } from "../../features/Auth/registerSlice";
 
-const addToPreference = async (index, add = true) => {
+const addToPreference = async (index, token = "", add = true) => {
   const operation = add ? "add" : "remove";
-
-  await Axios.post(
-    `https://vae-login.herokuapp.com/api/${operation}-movie`,
-    {
-      index: index,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        "x-auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWZjMjc0MDJkNjdhNzgwMDE3ZTlhNzcyIn0sImlhdCI6MTYwNjczOTc0OCwiZXhwIjoxNjA3MDk5NzQ4fQ.0QkyMcx42t-vrvPhyGXc_EKCOpbLUgBDFArWq4g_2Ck",
+  try {
+    await Axios.post(
+      `https://vae-login.herokuapp.com/api/${operation}-movie`,
+      {
+        index: index,
       },
-    }
-  );
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": token
+            ? token
+            : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWZkYjc1ZDY2MzdlODMwMDE3NGI4Nzc1In0sImlhdCI6MTYwODIxOTk3OSwiZXhwIjoxNjA4NTc5OTc5fQ.bFtvfaoS2uTOgObrSnbK9VFqJx_rOq0yhCQxtWdHr_w",
+        },
+      }
+    );
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const LikeButton = (props) => {
   const [liked, setLiked] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const { index, height = 50, width = 50 } = props;
 
   const [animation, setAnimation] = useState(null);
+  const token = useSelector(selectToken);
   const dispatch = useDispatch();
   const container = useRef(null);
   const preferredMovies = useSelector(selectPreferredMovies);
@@ -51,12 +58,15 @@ const LikeButton = (props) => {
   }, []);
 
   useEffect(() => {
-    if (index in preferredMovies) setLiked(true);
+    if (preferredMovies.includes(index)) {
+      setLoaded(true);
+      setLiked(true);
+    }
   }, [preferredMovies, index]);
-
   useEffect(() => {
+    console.log(liked);
     if (!animation) return;
-
+    if (!loaded) return;
     if (liked) {
       lottie.setSpeed(1);
       lottie.setDirection(1);
@@ -68,10 +78,10 @@ const LikeButton = (props) => {
       lottie.play(index);
       dispatch(removeMovie({ index: index }));
     }
-    addToPreference(index, liked);
-  }, [liked, index, animation]);
-
+    addToPreference(index, token, liked);
+  }, [liked, token]);
   const handleLike = () => {
+    setLoaded(true);
     setLiked(!liked);
   };
 

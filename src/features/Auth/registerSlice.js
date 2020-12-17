@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  token: localStorage.getItem("token"),
+  token: localStorage.getItem("token") || "",
   isAuthenticated: null,
   loading: true,
   user: null,
@@ -13,16 +13,15 @@ export const registerSlice = createSlice({
   initialState,
   reducers: {
     userLoaded: (state, action) => {
+      console.log(action);
       state.isAuthenticated = true;
       state.loading = false;
-      state.user = action.payload.user;
-      state.preferredMovies = action.payload.user.preferredMovies;
+      state.user = action.payload;
+      state.preferredMovies = action.payload.preferredMovies;
     },
 
     success: (state, action) => {
       localStorage.setItem("token", action.payload.token);
-      console.log("token");
-      console.log();
 
       state.token = action.payload.token;
       state.isAuthenticated = true;
