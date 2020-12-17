@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Container, Grid, Button } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { Container, Grid, Button, Toolbar } from "@material-ui/core";
 import DraggableComponent from "../../components/Draggable/Draggable";
 // import DraggableComponent from "../../components/Draggable/Draggable";
 import Recommender from "../../components/Recommender/Recommender";
@@ -25,6 +25,7 @@ export default function Layout(props) {
 
   return (
     <>
+      <Toolbar />
       <Container>
         <p className="lead">
           Alright!Alright!Alright!You come to a fine place if you are confused

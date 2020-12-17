@@ -18,6 +18,8 @@ import data from "./data";
 import { config } from "react-spring/renderprops";
 import Cell from "./Cell";
 import FlipCard from "../FlipCard/FlipCard";
+import { useSelector } from "react-redux";
+import { selectPreferredMovies } from "../../features/Auth/registerSlice";
 const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
 const RECOMMEND_API_ADDRESS =
   "https://vae-movie-recommender.herokuapp.com/predict/10";
@@ -57,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
 const Recommender = (props) => {
   const [recommendedMovieList, setRecommendedMovieList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const preferredMovies = useSelector(selectPreferredMovies);
 
   const { movie, setMovie, colSize = {}, height = 300, breadth = 200 } = props;
   const classes = useStyles();
@@ -97,42 +100,87 @@ const Recommender = (props) => {
     }
   };
   const searchRecommendation = (movie) => {
-    if (movie !== "") {
-      fetch(`${RECOMMEND_API_ADDRESS}`)
-        .then((response) => response.json())
-        .then(async (json) => {
-          if (json.Response !== "False") {
-            // setState({ ...state, movie: json });
-            const movies = await Promise.all(
-              json.movies.map(async (movie, index) => {
-                let omdbRes;
-                try {
-                  omdbRes = await Axios.get(`${API_ADDRESS}${movie.imdbId}`);
-                } catch (err) {
-                  console.log(err);
-                }
+    console.log(preferredMovies);
+    if (preferredMovies.length !== 0) {
+      Axios.post(
+        RECOMMEND_API_ADDRESS,
+        {
+          preferred_movies: preferredMovies,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then(async (response) => {
+          console.log(response);
+          // setState({ ...state, movie: json });
+          const movies = await Promise.all(
+            response.data.movie.map(async (movie, index) => {
+              let omdbRes;
+              try {
+                omdbRes = await Axios.get(`${API_ADDRESS}${movie.imdbId}`);
+              } catch (err) {
+                console.log(err);
+              }
 
-                try {
-                  const res = await Axios.get(
-                    "https://image.tmdb.org/t/p/w185" + movie.posterPath
-                  );
-                  if (res.data === "<h1>File not Found</h1>") throw Error;
-                  movie.posterPath =
-                    "https://image.tmdb.org/t/p/w185" + movie.posterPath;
-                } catch (err) {
-                  // console.log(res);
-                  movie.posterPath = omdbRes?.data?.Poster ?? "Unknown";
-                }
-                movie = { ...movie, ...omdbRes.data };
+              try {
+                const res = await Axios.get(
+                  "https://image.tmdb.org/t/p/w185" + movie.posterPath
+                );
+                if (res.data === "<h1>File not Found</h1>") throw Error;
+                movie.posterPath =
+                  "https://image.tmdb.org/t/p/w185" + movie.posterPath;
+              } catch (err) {
+                // console.log(res);
+                movie.posterPath = omdbRes?.data?.Poster ?? "Unknown";
+              }
+              movie = { ...movie, ...omdbRes.data };
 
-                return movie;
-              })
-            );
+              return movie;
+            })
+          );
 
-            setRecommendedMovieList(movies);
-            setLoading(false);
-            // setQuery("");
-          }
+          setRecommendedMovieList(movies);
+          setLoading(false);
+          // setQuery("");
+        })
+        .catch((error) => alert(error.message));
+    } else {
+      Axios.get(RECOMMEND_API_ADDRESS)
+        .then(async (response) => {
+          console.log(response);
+          // setState({ ...state, movie: json });
+          const movies = await Promise.all(
+            response.data.movies.map(async (movie, index) => {
+              let omdbRes;
+              try {
+                omdbRes = await Axios.get(`${API_ADDRESS}${movie.imdbId}`);
+              } catch (err) {
+                console.log(err);
+              }
+
+              try {
+                const res = await Axios.get(
+                  "https://image.tmdb.org/t/p/w185" + movie.posterPath
+                );
+                if (res.data === "<h1>File not Found</h1>") throw Error;
+                movie.posterPath =
+                  "https://image.tmdb.org/t/p/w185" + movie.posterPath;
+              } catch (err) {
+                // console.log(res);
+                movie.posterPath = omdbRes?.data?.Poster ?? "Unknown";
+              }
+              movie = { ...movie, ...omdbRes.data };
+
+              return movie;
+            })
+          );
+
+          setRecommendedMovieList(movies);
+          setLoading(false);
+          // setQuery("");
         })
         .catch((error) => alert(error.message));
     }
@@ -141,7 +189,7 @@ const Recommender = (props) => {
   useEffect(() => {
     setLoading(true);
     searchRecommendation();
-  }, []);
+  }, [preferredMovies]);
 
   return (
     <>

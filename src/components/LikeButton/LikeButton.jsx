@@ -22,9 +22,7 @@ const addToPreference = async (index, token = "", add = true) => {
       {
         headers: {
           "Content-Type": "application/json",
-          "x-auth-token": token
-            ? token
-            : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWZkYjc1ZDY2MzdlODMwMDE3NGI4Nzc1In0sImlhdCI6MTYwODIxOTk3OSwiZXhwIjoxNjA4NTc5OTc5fQ.bFtvfaoS2uTOgObrSnbK9VFqJx_rOq0yhCQxtWdHr_w",
+          "x-auth-token": token,
         },
       }
     );

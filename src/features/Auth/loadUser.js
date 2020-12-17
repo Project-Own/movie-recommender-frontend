@@ -25,10 +25,10 @@ export const loadUser = async (dispatch, token) => {
   } catch (err) {
     console.log("Failure to load Data From Token");
     console.log(err);
-    // dispatch(
-    //   failure({
-    //     type: "auth_error",
-    //   })
-    // );
+    dispatch(
+      failure({
+        type: "auth_error",
+      })
+    );
   }
 };

@@ -33,7 +33,9 @@ const Footer = (props) => {
 
   return props.check ? (
     <Paper className={classes.footerStyle}>
-      <Button className={classes.buttonStyle}> Finished</Button>
+      <Button className={classes.buttonStyle} onClick={props.onClickFinished}>
+        Finished
+      </Button>
     </Paper>
   ) : (
     <Paper className={classes.footerStyle}>

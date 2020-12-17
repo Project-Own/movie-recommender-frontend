@@ -8,9 +8,16 @@ import Footer from "./Footer";
 // import axios from 'axios';
 import axios from "axios";
 import { useState, useEffect } from "react";
+import Axios from "axios";
+import { useSelector } from "react-redux";
+import { selectToken } from "../../features/Auth/registerSlice";
+import { Redirect } from "react-router";
 
 const Contents = () => {
   const [movieList, setMovieList] = useState("");
+  const [selectedMovieList, setSelectedMovieList] = useState([]);
+  const [selectButtonClicked, setSelectButtonClicked] = useState(false);
+  const token = useSelector(selectToken);
 
   useEffect(() => {
     async function fetchData() {
@@ -105,7 +112,8 @@ const Contents = () => {
   }
 
   const showHide = (selectedList) => {
-    console.log(selectedList);
+    setSelectedMovieList(selectedList);
+    console.log(selectedMovieList);
 
     if (selectedList === undefined || selectedList.length < 1) {
       setCheck(false);
@@ -120,6 +128,40 @@ const Contents = () => {
       </Grid>
     );
   };
+  const addToPreference = async () => {
+    console.log(selectedMovieList);
+    try {
+      const res = await Axios.post(
+        `https://vae-login.herokuapp.com/api/add-movie`,
+        {
+          index: selectedMovieList,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": token,
+          },
+        }
+      );
+
+      console.log(res);
+
+      setSelectButtonClicked(true);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const onClickFinished = () => {
+    addToPreference();
+  };
+  if (selectButtonClicked) {
+    return (
+      <Redirect
+        from="/movie-recommender-frontend/login"
+        to="/movie-recommender-frontend/dashboard"
+      />
+    );
+  }
 
   return (
     <Container>
@@ -133,7 +175,7 @@ const Contents = () => {
       >
         {Array.from(movieList).map((movieObj) => getMovieCard(movieObj))}
 
-        <Footer check={check} />
+        <Footer check={check} onClickFinished={onClickFinished} />
       </Grid>
     </Container>
   );
