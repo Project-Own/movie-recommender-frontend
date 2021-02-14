@@ -17,6 +17,8 @@ import {
 } from "../../features/Auth/registerSlice";
 import { Redirect } from "react-router";
 
+const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
+
 const addToPreferenceAPI = async (index, token = "", add = true) => {
   const operation = add ? "add" : "remove";
   try {
@@ -38,31 +40,61 @@ const addToPreferenceAPI = async (index, token = "", add = true) => {
 };
 
 const Contents = () => {
-  const [movieList, setMovieList] = useState("");
+  const [movieList, setMovieList] = useState([]);
   const [selectedMovieList, setSelectedMovieList] = useState([]);
+  const [movieIndex, setMovieIndex] = useState([]);
+
   const [selectButtonClicked, setSelectButtonClicked] = useState(false);
   const token = useSelector(selectToken);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const dispatch = useDispatch();
-
-  console.log(isAuthenticated);
 
   useEffect(() => {
     async function fetchData() {
       await axios
         .get("https://movie-database-server.herokuapp.com/api/items")
         .then(async (res) => {
-          const data = await res.data;
-          setMovieList(data);
+          const movies = await Promise.all(
+            res.data.map(async (movie, index) => {
+              let omdbRes;
+              try {
+                omdbRes = await Axios.get(`${API_ADDRESS}${movie.imdbId}`);
+              } catch (err) {
+                console.log(err);
+              }
+
+              try {
+                const res = await Axios.get(
+                  "https://image.tmdb.org/t/p/w185" + movie.posterPath
+                );
+                if (res.data === "<h1>File not Found</h1>") throw Error;
+                movie.posterPath =
+                  "https://image.tmdb.org/t/p/w185" + movie.posterPath;
+              } catch (err) {
+                // console.log(res);
+                movie.posterPath = omdbRes?.data?.Poster ?? "Unknown";
+              }
+              movie = { ...movie, ...omdbRes.data };
+
+              return movie;
+            })
+          );
+
+          // console.log("TEST MOVIE");
+          // console.table(movies);
+
+          setMovieList(movies);
+          setMovieIndex(
+            movies.map((movie) => {
+              return movie.index;
+            })
+          );
+          // console.log(res.data);
         })
         .catch((error) => alert(error.message));
     }
     fetchData();
   }, []);
-
-  var movieasdf = [];
-  Array.from(movieList).map((movie) => movieasdf.push(movie.index));
-  console.log(movieasdf);
 
   const [check, setCheck] = useState(false);
 
@@ -110,7 +142,8 @@ const Contents = () => {
   }
 
   async function getDetails(data, index) {
-    // console.log(data);
+    console.log("DATA");
+    console.log(data);
     try {
       var detailsList = [];
       await Promise.all(
@@ -128,12 +161,55 @@ const Contents = () => {
       // console.log(det);
       // console.log(detailsList);
 
+      // console.log("DETAILS LIST");
+      // console.log(detailsList);
       var fourRndom = getRandom(detailsList, 4);
-      console.log(fourRndom);
+      // console.log(fourRndom);
 
-      movieList.splice(movieasdf.indexOf(index) + 1, 4, ...fourRndom);
-      setMovieList(movieList);
-      console.log(movieList); //kam lagcha after click
+      const movies = await Promise.all(
+        fourRndom.map(async (movie, index) => {
+          let omdbRes;
+          try {
+            omdbRes = await Axios.get(`${API_ADDRESS}${movie.imdbId}`);
+          } catch (err) {
+            console.log(err);
+          }
+
+          try {
+            const res = await Axios.get(
+              "https://image.tmdb.org/t/p/w185" + movie.posterPath
+            );
+            if (res.data === "<h1>File not Found</h1>") throw Error;
+            movie.posterPath =
+              "https://image.tmdb.org/t/p/w185" + movie.posterPath;
+          } catch (err) {
+            // console.log(res);
+            movie.posterPath = omdbRes?.data?.Poster ?? "Unknown";
+          }
+          movie = { ...movie, ...omdbRes.data };
+
+          return movie;
+        })
+      );
+
+      const movieListFront = movieList.slice(0, movieIndex.indexOf(index) + 1);
+      const movieListBack = movieList.slice(movieIndex.indexOf(index) + 1);
+
+      let updatedMovieList = [];
+      updatedMovieList = movieListFront.concat(fourRndom);
+      updatedMovieList = updatedMovieList.concat(movieListBack);
+
+      // console.log("Updated Movie List");
+      // console.log(updatedMovieList);
+      // updatedMovieList.splice(movieIndex.indexOf(index) + 1, 4, ...fourRndom);
+
+      setMovieList(updatedMovieList);
+
+      setMovieIndex(
+        updatedMovieList.map((movie) => {
+          return movie.index;
+        })
+      );
     } catch (error) {
       alert(error);
     }
@@ -141,9 +217,9 @@ const Contents = () => {
 
   const showHide = (selectedList) => {
     setSelectedMovieList(selectedList);
-    console.log(selectedMovieList);
+    console.log("Selected Movie List" + selectedMovieList);
 
-    if (selectedList === undefined || selectedList.length < 1) {
+    if (typeof selectedList === "undefined" || selectedList.length < 1) {
       setCheck(false);
     } else {
       setCheck(true);
@@ -151,13 +227,18 @@ const Contents = () => {
   };
   const getMovieCard = (movieObj) => {
     return (
-      <Grid item xs={12} sm={6} md={3}>
-        <MovieCard {...movieObj} showHide={showHide} getDetails={getDetails} />
+      <Grid item xs={12} sm={4} md={2}>
+        <MovieCard
+          {...movieObj}
+          showHide={showHide}
+          selectedList={selectedMovieList}
+          setSelectedList={setSelectedMovieList}
+          getDetails={getDetails}
+        />
       </Grid>
     );
   };
   const addToPreference = async () => {
-    console.log(selectedMovieList);
     try {
       dispatch(addMovie({ index: selectedMovieList }));
 
@@ -178,21 +259,24 @@ const Contents = () => {
     );
   }
 
-  return (
-    <Container>
-      <Grid
-        direction="row"
-        item
-        justify="center"
-        alignItems="center"
-        container
-        spacing={2}
-      >
-        {Array.from(movieList).map((movieObj) => getMovieCard(movieObj))}
+  // console.log("Movie List:");
+  // console.table(movieList);
 
-        <Footer check={check} onClickFinished={addToPreference} />
-      </Grid>
-    </Container>
+  // console.log("Movie List" + movieList);
+  // console.log("Movie Index" + movieIndex);
+  return (
+    <Grid
+      direction="row"
+      item
+      justify="center"
+      alignItems="center"
+      container
+      spacing={2}
+    >
+      {movieList.map((movieObj) => getMovieCard(movieObj))}
+
+      <Footer check={check} onClickFinished={addToPreference} />
+    </Grid>
   );
 };
 

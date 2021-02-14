@@ -29,11 +29,6 @@ export default function Layout(props) {
   const oscDate = OscarList.map((d) => d.date);
 
   const [movie, setMovie] = useState("");
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    loadUser(dispatch);
-  }, []);
 
   return (
     <>

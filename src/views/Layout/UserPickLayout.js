@@ -16,12 +16,12 @@ const UserPickLayout = () => {
         </Grid>
 
         <Grid item align="center">
-          <MovieSearch />
+          {/* TO DO --> */}
+          {/* <MovieSearch /> */}
         </Grid>
 
         <Grid item container>
-          <Grid item xs={2} sm={2} md={2} />
-          <Grid item xs={10} sm={8} md={8}>
+          <Grid item xs={12}>
             <Contents />
           </Grid>
         </Grid>
