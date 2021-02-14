@@ -59,7 +59,6 @@ export const Register = () => {
           body,
           config
         );
-        loadUser(dispatch, res.data.token);
 
         dispatch(
           success({

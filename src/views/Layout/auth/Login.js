@@ -46,6 +46,9 @@ export const Login = () => {
         body,
         config
       );
+
+      loadUser(dispatch);
+
       dispatch(success(res.data));
       dispatch(
         setSnackbar({
@@ -76,6 +79,7 @@ export const Login = () => {
   if (authenticated) {
     console.log("Inside if");
 
+    loadUser(dispatch);
     dispatch(
       setSnackbar({
         snackbarOpen: true,
