@@ -11,6 +11,7 @@ import {
   selectIsAuthenticated,
   selectUser,
 } from "../../../features/Auth/registerSlice";
+import { loadUser } from "../../../features/Auth/loadUser";
 
 export const Login = () => {
   const [formData, setFormData] = useState({
