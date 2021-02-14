@@ -9,14 +9,15 @@ import UserPickLayout from "./UserPickLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "../../features/Auth/loadUser";
 import {
-  isAuthenticated,
+  selectIsAuthenticated,
   selectToken,
 } from "../../features/Auth/registerSlice";
+import Profile from "./Profile";
 const Home = (props) => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
 
-  const authenticated = useSelector(isAuthenticated);
+  const authenticated = useSelector(selectIsAuthenticated);
 
   useEffect(() => {
     loadUser(dispatch, token);
@@ -51,7 +52,7 @@ const Home = (props) => {
         <Route
           exact
           path="/movie-recommender-frontend/profile"
-          component={Layout}
+          component={Profile}
         />
       </Switch>
     </Router>

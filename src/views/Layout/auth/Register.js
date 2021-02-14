@@ -5,7 +5,7 @@ import "../../App/App.css";
 import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { failure, success } from "../../../features/Auth/registerSlice";
-import { isAuthenticated } from "../../../features/Auth/registerSlice";
+import { selectIsAuthenticated } from "../../../features/Auth/registerSlice";
 import { loadUser } from "../../../features/Auth/loadUser";
 
 export const Register = () => {
@@ -16,7 +16,7 @@ export const Register = () => {
     password2: "",
   });
 
-  const authenticated = useSelector(isAuthenticated);
+  const authenticated = useSelector(selectIsAuthenticated);
   const dispatch = useDispatch();
   const { name, email, password, password2 } = formData;
 
@@ -64,6 +64,13 @@ export const Register = () => {
             token: res.data.token,
           })
         );
+        dispatch(
+          setSnackbar({
+            snackbarOpen: true,
+            snackbarType: "success",
+            snackbarMessage: "User Registered",
+          })
+        );
 
         loadUser(dispatch);
 
@@ -74,6 +81,13 @@ export const Register = () => {
         dispatch(
           failure({
             type: "REGISTER_FAIL",
+          })
+        );
+        dispatch(
+          setSnackbar({
+            snackbarOpen: true,
+            snackbarType: "success",
+            snackbarMessage: "User Register Failed",
           })
         );
       }

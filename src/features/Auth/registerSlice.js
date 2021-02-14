@@ -57,6 +57,6 @@ export const selectRegister = (state) => state.register;
 export const selectUser = (state) => state.register.user;
 export const selectToken = (state) => state.register.token;
 export const selectPreferredMovies = (state) => state.register.preferredMovies;
-export const isAuthenticated = (state) => state.register.isAuthenticated;
+export const selectIsAuthenticated = (state) => state.register.isAuthenticated;
 
 export default registerSlice.reducer;

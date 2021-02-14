@@ -8,7 +8,8 @@ import {
   failure,
   success,
   userLoaded,
-  isAuthenticated,
+  selectIsAuthenticated,
+  selectUser,
 } from "../../../features/Auth/registerSlice";
 
 export const Login = () => {
@@ -17,7 +18,8 @@ export const Login = () => {
     password: "",
   });
 
-  const authenticated = useSelector(isAuthenticated);
+  const authenticated = useSelector(selectIsAuthenticated);
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const { email, password } = formData;
 
@@ -45,6 +47,13 @@ export const Login = () => {
         config
       );
       dispatch(success(res.data));
+      dispatch(
+        setSnackbar({
+          snackbarOpen: true,
+          snackbarType: "success",
+          snackbarMessage: ` Welcome `,
+        })
+      );
       console.log(res.data);
     } catch (err) {
       console.error(err.response);
@@ -57,7 +66,7 @@ export const Login = () => {
       );
       dispatch(
         failure({
-          type: "REGISTER_FAIL",
+          type: "LOGIN_FAIL",
         })
       );
     }
@@ -67,6 +76,13 @@ export const Login = () => {
   if (authenticated) {
     console.log("Inside if");
 
+    dispatch(
+      setSnackbar({
+        snackbarOpen: true,
+        snackbarType: "success",
+        snackbarMessage: ` Welcome Back `,
+      })
+    );
     return (
       <Redirect
         from="/movie-recommender-frontend/login"

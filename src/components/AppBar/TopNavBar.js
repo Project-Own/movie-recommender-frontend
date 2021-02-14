@@ -32,10 +32,12 @@ import { CustomThemeContext } from "../../CustomThemeProvider";
 import { Link } from "react-router-dom";
 import HideOnScroll from "./HideOnScroll";
 
-import {failure} from "../../features/Auth/registerSlice";
-import { useDispatch } from "react-redux";
-
-
+import {
+  failure,
+  selectIsAuthenticated,
+  selectUser,
+} from "../../features/Auth/registerSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -106,6 +108,9 @@ export default function TopNavBar(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const dispatch = useDispatch();
 
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const user = useSelector(selectUser);
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -121,14 +126,13 @@ export default function TopNavBar(props) {
     }
   };
 
-  function logout(){
+  function logout() {
     dispatch(
       failure({
         type: "REGISTER_FAIL",
       })
     );
   }
-
 
   const drawer = (
     <div className={classes.drawerContainer}>
@@ -140,21 +144,65 @@ export default function TopNavBar(props) {
 
       <Divider />
       <List>
-        {["Login", "Register", "Dashboard", "Select"].map((text, index) => (
-          <Link
-            key={text}
-            to={`/movie-recommender-frontend/${text.toLowerCase()}`}
-            className={classes.drawerText}
-          >
-            <ListItem button>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
+        {isAuthenticated ? (
+          <>
+            <Link to="/movie-recommender-frontend/profile">
+              <ListItem button>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
 
-              <ListItemText primary={text} className={classes.drawerText} />
-            </ListItem>
-          </Link>
-        ))}
+                <ListItemText
+                  primary={
+                    typeof user !== "undefined"
+                      ? user?.name.toUpperCase()
+                      : "User"
+                  }
+                  className={classes.drawerText}
+                />
+              </ListItem>
+            </Link>
+
+            <Link to="/movie-recommender-frontend/">
+              <ListItem button>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+
+                <ListItemText
+                  onClick={logout}
+                  primary="Log Out"
+                  className={classes.drawerText}
+                />
+              </ListItem>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to="/movie-recommender-frontend/login">
+              <ListItem button>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+
+                <ListItemText primary="Login" className={classes.drawerText} />
+              </ListItem>
+            </Link>
+
+            <Link to="/movie-recommender-frontend/register">
+              <ListItem button>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+
+                <ListItemText
+                  primary="Register"
+                  className={classes.drawerText}
+                />
+              </ListItem>
+            </Link>
+          </>
+        )}
       </List>
       <Divider />
       <Grid container style={{ paddingTop: 20, paddingLeft: 5 }}>
@@ -170,7 +218,6 @@ export default function TopNavBar(props) {
     </div>
   );
 
-  
   return (
     <div className={classes.root}>
       {/* <ElevationScroll {...props}> */}
@@ -192,29 +239,38 @@ export default function TopNavBar(props) {
               <MenuIcon />
             </IconButton>
             <nav className={classes.navBar}>
-              <Link to="/movie-recommender-frontend/login">
-                <Button variant="text" className={classes.title}>
-                  Login
-                </Button>
-              </Link>
-              <Link to="/movie-recommender-frontend/register">
-                <Button variant="text" className={classes.title}>
-                  Register
-                </Button>
-              </Link>
-              <Link to="/movie-recommender-frontend/select">
-                <Button variant="text" className={classes.title}>
-                  Select
-                </Button>
-              </Link>
-              {/* <Link to="/movie-recommender-frontend/">
-                <Button variant="text" className={classes.title}>
-                  Dashboard
-                </Button>
-              </Link> */}
-              <Button variant="text" className={classes.title}  onClick = {logout} >
-                  Logout
-                </Button>
+              {isAuthenticated ? (
+                <>
+                  <Link to="/movie-recommender-frontend/profile">
+                    <Button variant="text" className={classes.title}>
+                      {typeof user !== "undefined" ? user?.name : "User"}
+                    </Button>
+                  </Link>
+
+                  <Link to="/movie-recommender-frontend/">
+                    <Button
+                      variant="text"
+                      className={classes.title}
+                      onClick={logout}
+                    >
+                      Logout
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/movie-recommender-frontend/login">
+                    <Button variant="text" className={classes.title}>
+                      Login
+                    </Button>
+                  </Link>
+                  <Link to="/movie-recommender-frontend/register">
+                    <Button variant="text" className={classes.title}>
+                      Register
+                    </Button>
+                  </Link>
+                </>
+              )}
               <Switch checked={isDark} onChange={handleThemeChange} />
             </nav>
           </Toolbar>
