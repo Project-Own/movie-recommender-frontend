@@ -15,13 +15,10 @@ import {
 import Profile from "./Profile";
 const Home = (props) => {
   const dispatch = useDispatch();
-  const token = useSelector(selectToken);
-
-  const authenticated = useSelector(selectIsAuthenticated);
 
   useEffect(() => {
-    loadUser(dispatch, token);
-  }, [token, dispatch]);
+    loadUser(dispatch);
+  }, []);
 
   console.log(props);
   return (

@@ -59,6 +59,8 @@ export const Register = () => {
           body,
           config
         );
+        loadUser(dispatch, res.data.token);
+
         dispatch(
           success({
             token: res.data.token,
@@ -86,7 +88,7 @@ export const Register = () => {
         dispatch(
           setSnackbar({
             snackbarOpen: true,
-            snackbarType: "success",
+            snackbarType: "error",
             snackbarMessage: "User Register Failed",
           })
         );

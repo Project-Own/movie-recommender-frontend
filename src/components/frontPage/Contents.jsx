@@ -9,15 +9,43 @@ import Footer from "./Footer";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Axios from "axios";
-import { useSelector } from "react-redux";
-import { selectToken } from "../../features/Auth/registerSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addMovie,
+  selectIsAuthenticated,
+  selectToken,
+} from "../../features/Auth/registerSlice";
 import { Redirect } from "react-router";
+
+const addToPreferenceAPI = async (index, token = "", add = true) => {
+  const operation = add ? "add" : "remove";
+  try {
+    await Axios.post(
+      `https://vae-login.herokuapp.com/api/${operation}-movie`,
+      {
+        index: index,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": token,
+        },
+      }
+    );
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 const Contents = () => {
   const [movieList, setMovieList] = useState("");
   const [selectedMovieList, setSelectedMovieList] = useState([]);
   const [selectButtonClicked, setSelectButtonClicked] = useState(false);
   const token = useSelector(selectToken);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const dispatch = useDispatch();
+
+  console.log(isAuthenticated);
 
   useEffect(() => {
     async function fetchData() {
@@ -131,34 +159,21 @@ const Contents = () => {
   const addToPreference = async () => {
     console.log(selectedMovieList);
     try {
-      const res = await Axios.post(
-        `https://vae-login.herokuapp.com/api/add-movie`,
-        {
-          index: selectedMovieList,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "x-auth-token": token,
-          },
-        }
-      );
+      dispatch(addMovie({ index: selectedMovieList }));
 
-      console.log(res);
+      addToPreferenceAPI(selectedMovieList, token, true);
 
       setSelectButtonClicked(true);
     } catch (e) {
       console.log(e);
     }
   };
-  const onClickFinished = () => {
-    addToPreference();
-  };
+
   if (selectButtonClicked) {
     return (
       <Redirect
-        from="/movie-recommender-frontend/login"
-        to="/movie-recommender-frontend/dashboard"
+        from="/movie-recommender-frontend/select"
+        to="/movie-recommender-frontend/"
       />
     );
   }
@@ -175,7 +190,7 @@ const Contents = () => {
       >
         {Array.from(movieList).map((movieObj) => getMovieCard(movieObj))}
 
-        <Footer check={check} onClickFinished={onClickFinished} />
+        <Footer check={check} onClickFinished={addToPreference} />
       </Grid>
     </Container>
   );

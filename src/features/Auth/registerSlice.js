@@ -5,7 +5,6 @@ const initialState = {
   isAuthenticated: null,
   loading: true,
   user: null,
-  preferredMovies: [],
 };
 
 export const registerSlice = createSlice({
@@ -17,7 +16,7 @@ export const registerSlice = createSlice({
       state.isAuthenticated = true;
       state.loading = false;
       state.user = action.payload;
-      state.preferredMovies = action.payload.preferredMovies;
+      state.token = localStorage.getItem("token");
     },
 
     success: (state, action) => {
@@ -28,17 +27,21 @@ export const registerSlice = createSlice({
       state.loading = false;
     },
     failure: (state, action) => {
-      console.log(action.type);
+      console.error("Failure Condition: " + action.payload.type);
+      console.log("Failure Condition: " + action.payload.type);
       localStorage.removeItem("token");
       state.token = null;
       state.isAuthenticated = false;
       state.loading = false;
+      state.user = null;
     },
     addMovie: (state, action) => {
-      state.preferredMovies.push(action.payload.index);
+      if (!state.user?.preferredMovies.includes(action.payload.index)) {
+        state.user?.preferredMovies.push(action.payload.index);
+      }
     },
     removeMovie: (state, action) => {
-      state.preferredMovies = state.preferredMovies.filter(
+      state.user.preferredMovies = state.user?.preferredMovies.filter(
         (item) => item !== action.payload.index
       );
     },
@@ -56,7 +59,8 @@ export const {
 export const selectRegister = (state) => state.register;
 export const selectUser = (state) => state.register.user;
 export const selectToken = (state) => state.register.token;
-export const selectPreferredMovies = (state) => state.register.preferredMovies;
+export const selectPreferredMovies = (state) =>
+  state.register.user?.preferredMovies;
 export const selectIsAuthenticated = (state) => state.register.isAuthenticated;
 
 export default registerSlice.reducer;

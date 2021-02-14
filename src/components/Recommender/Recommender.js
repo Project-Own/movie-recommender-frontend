@@ -101,7 +101,11 @@ const Recommender = (props) => {
   };
   const searchRecommendation = (movie) => {
     console.log(preferredMovies);
-    if (preferredMovies.length !== 0) {
+    if (
+      preferredMovies?.length !== 0 &&
+      preferredMovies &&
+      typeof preferredMovies !== "undefined"
+    ) {
       Axios.post(
         RECOMMEND_API_ADDRESS,
         {

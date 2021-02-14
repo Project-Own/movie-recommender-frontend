@@ -56,7 +56,7 @@ const LikeButton = (props) => {
   }, []);
 
   useEffect(() => {
-    if (preferredMovies.includes(index)) {
+    if (preferredMovies?.includes(index)) {
       setLoaded(true);
       setLiked(true);
     }
