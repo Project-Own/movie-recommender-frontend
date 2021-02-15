@@ -6,6 +6,7 @@ import {
   Toolbar,
   Card,
   Typography,
+  makeStyles,
 } from "@material-ui/core";
 import DraggableComponent from "../../components/Draggable/Draggable";
 // import DraggableComponent from "../../components/Draggable/Draggable";
@@ -19,8 +20,14 @@ import OscarList from "../../components/frontPage/oscar_data";
 import ImdbList from "../../components/frontPage/imdbList";
 // import ReactScrollableList from '../../dist/index'
 import ScrollFollow from "../../components/ScrollFollow/ScrollFollow";
-import ScrollTop from "../../components/ScrollTop/ScrollTop";
+import ScrollTopIcon from "../../components/ScrollTop/ScrollTopIcon";
+import MovieCard from "../../components/SearchComponent/MovieCard";
 
+const useStyles = makeStyles((theme) => ({
+  genreTitle: {
+    paddingLeft: theme.spacing() * 4,
+  },
+}));
 export default function Layout(props) {
   const dispatch = useDispatch();
 
@@ -28,90 +35,122 @@ export default function Layout(props) {
   const oscTitle = OscarList.map((t) => t.title);
   const oscDate = OscarList.map((d) => d.date);
 
+  const classes = useStyles();
   const [movie, setMovie] = useState("");
 
   return (
     <>
       <Toolbar />
+      <Grid container>
+        <Grid item> {movie ? <MovieCard movie={movie} /> : null}</Grid>
+      </Grid>
 
-      {/* <Grid container>
+      <Grid container direction="row" justify="center">
+        <Grid item container md={10} sm={12}>
           <Grid item>
-            <MovieCard movie={movie} />
+            <Typography className={classes.genreTitle}>Action</Typography>
           </Grid>
-          <Grid item>
+          <Grid item xs={12}>
             <Recommender
+              genre="action"
               movie={movie}
               setMovie={setMovie}
-              cols={{ lg: 8, md: 6, sm: 4, xs: 2 }}
+              colSize={{ lg: 6, md: 3, sm: 3, xs: 1 }}
             />
           </Grid>
-        </Grid> */}
-      <Grid container direction="column" spacing={4}>
-        <Grid item container>
-          <Grid item container direction="row" spacing={4}>
-            <Grid item md={10} sm={12}>
-              <Grid item container direction="column" spacing={4}>
-                <Grid item>
-                  <Recommender
-                    movie={movie}
-                    setMovie={setMovie}
-                    colSize={{ lg: 6, md: 3, sm: 3, xs: 1 }}
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item container spacing={2} md={2} sm={12}>
-              <Grid item sm={4} md={12}>
-                <MovieSearchCard movie={movie} setMovie={setMovie} />
-              </Grid>
-              <Grid item sm={4} md={12}>
-                <ImdbList />
-              </Grid>
-              <Grid item sm={4} md={12}>
-                <Card>
-                  <ImageSlider
-                    imgList={imgList}
-                    title={oscTitle}
-                    date={oscDate}
-                  />
-                </Card>
-              </Grid>
-            </Grid>
+          <Grid item>
+            <Typography className={classes.genreTitle}>Comedy</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Recommender
+              genre="comedy"
+              movie={movie}
+              setMovie={setMovie}
+              colSize={{ lg: 6, md: 3, sm: 3, xs: 1 }}
+            />
+          </Grid>
+
+          <Grid item>
+            <Typography className={classes.genreTitle}>Drama</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Recommender
+              genre="drama"
+              movie={movie}
+              setMovie={setMovie}
+              colSize={{ lg: 6, md: 3, sm: 3, xs: 1 }}
+            />
+          </Grid>
+
+          <Grid item>
+            <Typography className={classes.genreTitle}>Thriller</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Recommender
+              genre="thriller"
+              movie={movie}
+              setMovie={setMovie}
+              colSize={{ lg: 6, md: 3, sm: 3, xs: 1 }}
+            />
+          </Grid>
+
+          <Grid item>
+            <Typography className={classes.genreTitle}>Crime</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Recommender
+              genre="crime"
+              movie={movie}
+              setMovie={setMovie}
+              colSize={{ lg: 6, md: 3, sm: 3, xs: 1 }}
+            />
+          </Grid>
+
+          <Grid item>
+            <Typography className={classes.genreTitle}>Sci-Fi</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Recommender
+              genre="sci-fi"
+              movie={movie}
+              setMovie={setMovie}
+              colSize={{ lg: 6, md: 3, sm: 3, xs: 1 }}
+            />
+          </Grid>
+
+          <Grid item>
+            <Typography className={classes.genreTitle}>Adventure</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Recommender
+              genre="adventure"
+              movie={movie}
+              setMovie={setMovie}
+              colSize={{ lg: 6, md: 3, sm: 3, xs: 1 }}
+            />
           </Grid>
         </Grid>
-        <Grid item container>
-          <Grid item container direction="row" spacing={4}>
-            <Grid item md={8} sm={12}>
-              <Grid item container direction="column">
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                      dispatch(
-                        setSnackbar({
-                          snackbarOpen: true,
-                          snackbarType: "success",
-                          snackbarMessage: "Snackbar launched",
-                        })
-                      );
-                    }}
-                  >
-                    Launch Snackbar
-                  </Button>
-                </Grid>
-              </Grid>
-            </Grid>
+        <Grid item container md={2} sm={12} spacing={2}>
+          <Grid item sm={4} md={12}>
+            <MovieSearchCard movie={movie} setMovie={setMovie} />
+          </Grid>
+          <Grid item sm={4} md={12}>
+            <ImdbList />
+          </Grid>
+          <Grid item sm={4} md={12}>
+            <Card>
+              <ImageSlider imgList={imgList} title={oscTitle} date={oscDate} />
+            </Card>
           </Grid>
         </Grid>
       </Grid>
 
-      <ScrollTop {...props}>
+      <ScrollTopIcon {...props}>
         {/* <Fab color="secondary" size="small" aria-label="scroll back to top">
               <KeyboardArrowUpIcon />
             </Fab> */}
         <ScrollFollow style={{ width: 50 }} />
-      </ScrollTop>
+      </ScrollTopIcon>
     </>
   );
 }

@@ -16,6 +16,7 @@ import {
   selectToken,
 } from "../../features/Auth/registerSlice";
 import { Redirect } from "react-router";
+import { Skeleton } from "@material-ui/lab";
 
 const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
 
@@ -43,6 +44,7 @@ const Contents = () => {
   const [movieList, setMovieList] = useState([]);
   const [selectedMovieList, setSelectedMovieList] = useState([]);
   const [movieIndex, setMovieIndex] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [selectButtonClicked, setSelectButtonClicked] = useState(false);
   const token = useSelector(selectToken);
@@ -89,6 +91,8 @@ const Contents = () => {
               return movie.index;
             })
           );
+
+          setLoading(false);
           // console.log(res.data);
         })
         .catch((error) => alert(error.message));
@@ -264,8 +268,10 @@ const Contents = () => {
 
   // console.log("Movie List" + movieList);
   // console.log("Movie Index" + movieIndex);
+
   return (
     <Grid
+      container
       direction="row"
       item
       justify="center"
@@ -273,7 +279,19 @@ const Contents = () => {
       container
       spacing={2}
     >
-      {movieList.map((movieObj) => getMovieCard(movieObj))}
+      {loading
+        ? new Array(50).fill(0).map(() => (
+            <Grid item>
+              <Skeleton
+                animation="wave"
+                variant="circle"
+                height={200}
+                width={200}
+                style={{ margin: 4 }}
+              />
+            </Grid>
+          ))
+        : movieList.map((movieObj) => getMovieCard(movieObj))}
 
       <Footer check={check} onClickFinished={addToPreference} />
     </Grid>

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import lottie from "lottie-web/build/player/lottie_light";
-import starDarkAniamtion from "../../assets/lottie/star-dark.json";
+import likeAnimation from "../../assets/lottie/like.json";
 import { IconButton } from "@material-ui/core";
 import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,7 +47,7 @@ const LikeButton = (props) => {
       lottie.loadAnimation({
         container: container.current,
         name: index,
-        animationData: starDarkAniamtion,
+        animationData: likeAnimation,
         renderer: "svg",
         loop: false,
         autoplay: false,

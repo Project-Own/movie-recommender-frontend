@@ -1,58 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
-import {
-  Container,
-  GridList,
-  GridListTile,
-  GridListTileBar,
-  Paper,
-  Typography,
-} from "@material-ui/core";
+import withWidth from "@material-ui/core/withWidth";
+import { Card, CardContent } from "@material-ui/core";
 import Axios from "axios";
 import { Skeleton } from "@material-ui/lab";
-import FloatCard from "../FloatCard/FloatCard";
-import CustomGrid from "../Grid/CustomGrid";
 
-import data from "./data";
-import { config } from "react-spring/renderprops";
 import Cell from "./Cell";
-import FlipCard from "../FlipCard/FlipCard";
+
 import { useSelector } from "react-redux";
 import { selectPreferredMovies } from "../../features/Auth/registerSlice";
+
+import HorizonalScroll from "../HorizonalScroll/HorizontalScroll";
+
 const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
-const RECOMMEND_API_ADDRESS =
-  "https://vae-movie-recommender.herokuapp.com/predict/10";
 
+const recommendAPIAddressGenerator = (genre, items) => {
+  return (
+    "https://vae-movie-recommender.herokuapp.com/predict/" + genre + "/" + items
+  );
+};
 const useStyles = makeStyles((theme) => ({
-  bar: {
-    borderRadius: "0px 0px 10px 10px",
-  },
-  image: {
-    borderRadius: "10px",
-    width: 200,
-  },
-
-  buttonbasestyle: {
-    // maxWidth: "200px",
-    maxHeight: "20px",
-    minWidth: "150px",
-    minHeight: "30px",
-    borderRadius: 5,
-    "&:hover": {
-      color: "pink",
-    },
-    marginBottom: 10,
-    marginTop: 10,
-  },
-  textStyle: {
-    position: "absolute",
-    top: 104,
-    fontSize: 16,
-    fontFamily: "Lato",
-  },
   root: {
-    padding: theme.spacing() * 2,
+    margin: theme.spacing() * 2,
   },
 }));
 
@@ -61,25 +30,16 @@ const Recommender = (props) => {
   const [loading, setLoading] = useState(true);
   const preferredMovies = useSelector(selectPreferredMovies);
 
-  const { movie, setMovie, colSize = {}, height = 300, breadth = 200 } = props;
+  const {
+    movie,
+    setMovie,
+    genre = "action",
+    items = 10,
+    colSize = {},
+    height = 300,
+    breadth = 200,
+  } = props;
   const classes = useStyles();
-
-  function getCols(screenWidth) {
-    if (isWidthUp("lg", screenWidth)) {
-      return colSize?.lg ?? 6;
-    }
-
-    if (isWidthUp("md", screenWidth)) {
-      return colSize?.md ?? 4;
-    }
-    if (isWidthUp("sm", screenWidth)) {
-      return colSize?.sm ?? 3;
-    }
-
-    return colSize?.xs ?? 2;
-  }
-
-  const cols = getCols(props.width); // width is associated when using withWidth()
 
   const searchMovie = (data) => {
     if (data) {
@@ -107,7 +67,7 @@ const Recommender = (props) => {
       typeof preferredMovies !== "undefined"
     ) {
       Axios.post(
-        RECOMMEND_API_ADDRESS,
+        recommendAPIAddressGenerator(genre, items),
         {
           preferred_movies: preferredMovies,
         },
@@ -152,7 +112,7 @@ const Recommender = (props) => {
         })
         .catch((error) => alert(error.message));
     } else {
-      Axios.get(RECOMMEND_API_ADDRESS)
+      Axios.get(recommendAPIAddressGenerator(genre, items))
         .then(async (response) => {
           console.log(response);
           // setState({ ...state, movie: json });
@@ -193,168 +153,36 @@ const Recommender = (props) => {
   useEffect(() => {
     setLoading(true);
     searchRecommendation();
-  }, [preferredMovies]);
+  }, []);
 
   return (
     <>
-      <Container>
-        {/* <FloatCard>
-        <FlipCard
-          height={height}
-          width={breadth}
-          front={<p>Front</p>}
-          back={<p>Back</p>}
-        />z
-      </FloatCard> */}
-
-        {loading ? (
-          <GridList cols={cols} height={height} spacing={32}>
-            {new Array(10).fill(0).map((value, index) => (
-              <GridListTile key={index}>
-                <Skeleton
-                  animation="wave"
-                  height={height}
-                  width="100%"
-                  variant="rect"
-                />
-                <GridListTileBar
-                  title={
+      <Card className={classes.root}>
+        <CardContent>
+          <HorizonalScroll>
+            {loading
+              ? new Array(5)
+                  .fill(0)
+                  .map((value, index) => (
                     <Skeleton
                       animation="wave"
-                      height={10}
-                      width="80%"
-                      style={{ marginBottom: 6 }}
-                    />
-                  }
-                  actionIcon={
-                    <Skeleton
-                      animation="wave"
-                      variant="circle"
-                      height={20}
-                      width={20}
+                      height={height}
+                      width={breadth}
+                      variant="rect"
                       style={{ margin: 20 }}
                     />
-                  }
-                />
-              </GridListTile>
-            ))}
-          </GridList>
-        ) : (
-          <CustomGrid
-            style={{ width: "100%" }}
-            // Arbitrary data, should contain keys, possibly heights, etc.
-            data={recommendedMovieList}
-            // Key accessor, instructs grid on how to fet individual keys from the data set
-            keys={(d) => d.index}
-            // Can be a fixed value or an individual data accessor
-            heights={height}
-            // Number of columns
-            columns={cols}
-            // Space between elements
-            margin={100}
-            // Removes the possibility to scroll away from a maximized element
-            lockScroll={false}
-            // Delay when active elements (blown up) are minimized again
-            closeDelay={500}
-            // Regular react-spring configs
-            config={config.slow}
-          >
-            {(data, active, toggle) => (
-              <Cell
-                active={active}
-                toggle={toggle}
-                data={data}
-                height={height}
-                width={breadth}
-                searchMovie={searchMovie}
-              />
-            )}
-          </CustomGrid>
-        )}
-        {/* <GridList
-        cellHeight={height}
-        cols={cols}
-        spacing={32}
-        className={classes.root}
-      >
-        {loading
-          ? new Array(10).fill(0).map((value, index) => (
-              <GridListTile cols={movie?.cols || 1}>
-                <Skeleton
-                  animation="wave"
-                  height={height}
-                  width={breadth}
-                  variant="rect"
-                />
-                <GridListTileBar
-                  title={
-                    <Skeleton
-                      animation="wave"
-                      height={10}
-                      width="80%"
-                      style={{ marginBottom: 6 }}
-                    />
-                  }
-                  actionIcon={
-                    <Skeleton
-                      animation="wave"
-                      variant="circle"
-                      height={20}
-                      width={20}
-                      style={{ margin: 20 }}
-                    />
-                  }
-                />
-              </GridListTile>
-            ))
-          : recommendedMovieList.map((movie, index) => (
-              <GridListTile
-                key={index}
-                cols={movie?.cols ?? 1}
-                // component={FloatCard}
-              >
-                <FlipCard
-                  height={height}
-                  width={breadth}
-                  front={
-                    <img
-                      onClick={() => {
-                        searchMovie(movie);
-                      }}
-                      style={{ height: height, width: breadth }}
-                      src={movie?.posterPath}
-                      alt="Poster"
-                    />
-                  }
-                  back={
-                    <div style={{ height: height, width: breadth }}>
-                      <Typography>{movie?.title}</Typography>
-                    </div>
-                  }
-                />
-
-                <GridListTileBar
-                  className={classes.bar}
-                  title={
-                    loading ? (
-                      <Skeleton
-                        animation="wave"
-                        height={10}
-                        width="80%"
-                        style={{ marginBottom: 6 }}
-                      />
-                    ) : (
-                      movie?.title ?? "Unknown"
-                    )
-                  }
-                  actionIcon={
-                    <LikeButton data={movie} index={movie?.index ?? 69} />
-                  }
-                />
-              </GridListTile>
-            ))}
-      </GridList> */}
-      </Container>
+                  ))
+              : recommendedMovieList.map((movie, index) => (
+                  <Cell
+                    data={movie}
+                    height={height}
+                    width={breadth}
+                    searchMovie={searchMovie}
+                  />
+                ))}
+          </HorizonalScroll>
+        </CardContent>
+      </Card>
     </>
   );
 };

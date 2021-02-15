@@ -1,27 +1,21 @@
 import {
-  Button,
   Card,
-  CardActions,
   CardContent,
-  CardHeader,
   Grid,
   Link,
   Typography,
   useTheme,
 } from "@material-ui/core";
-import Close from "@material-ui/icons/Close";
-import Axios from "axios";
 import React, { Component, lazy } from "react";
-import { Slug, Fade } from "../../components/Grid/Primitives";
 import FlipCard from "../FlipCard/FlipCard";
-import FloatCard from "../FloatCard/FloatCard";
 import LikeButton from "../LikeButton/LikeButton";
+import ScrollTop from "../ScrollTop/ScrollTop";
 
 const Cell = (props) => {
   const { data, height, width, searchMovie } = props;
   const theme = useTheme();
   return (
-    <FloatCard height={height} width={width}>
+    <div style={{ marginLeft: 10, marginRight: 10 }}>
       <FlipCard
         height={height}
         width={width}
@@ -43,11 +37,11 @@ const Cell = (props) => {
           </>
         }
         back={
-          <Card style={{ height: height, width: width - 20 }}>
+          <Card style={{ height: height, width: width }}>
             <CardContent>
               <Grid container>
                 <Grid item xs={12}>
-                  {data?.genres.split("|").map((value, key) => (
+                  {data?.genres?.split("|").map((value, key) => (
                     <Typography key={key}> {value}</Typography>
                   ))}
                 </Grid>
@@ -78,30 +72,29 @@ const Cell = (props) => {
       <Grid
         container
         style={{
-          width: width + 20,
+          width: width,
           background: theme.palette.primary.main,
-          position: "absolute",
-          marginTop: -50,
-          marginLeft: -5,
 
           borderRadius: "0px 0px 10px 10px",
         }}
       >
         <Grid item xs={8}>
-          <Typography
-            onClick={() => {
-              searchMovie(data);
-            }}
-            style={{ padding: 20, cursor: "pointer" }}
-          >
-            <Link color="textPrimary">{data?.title ?? "Unknown"}</Link>
-          </Typography>
+          <ScrollTop>
+            <Typography
+              onClick={() => {
+                searchMovie(data);
+              }}
+              style={{ padding: 20, cursor: "pointer", overflow: "hidden" }}
+            >
+              {data?.title ?? "Unknown"}
+            </Typography>
+          </ScrollTop>
         </Grid>
         <Grid item xs={4}>
           <LikeButton index={data?.index ?? 70000} />
         </Grid>
       </Grid>
-    </FloatCard>
+    </div>
   );
 };
 

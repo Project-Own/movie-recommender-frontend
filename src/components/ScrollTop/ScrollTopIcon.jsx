@@ -2,8 +2,18 @@ import React from "react";
 import { Zoom, useScrollTrigger, makeStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
 
-const ScrollTop = (props) => {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    position: "fixed",
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+    cursor: "pointer",
+  },
+}));
+
+const ScrollTopIcon = (props) => {
   const { children } = props;
+  const classes = useStyles();
   // Note that you normally won't need to set the window ref as useScrollTrigger
   // will default to window.
   // This is only being set here because the demo is in an iframe.
@@ -19,14 +29,14 @@ const ScrollTop = (props) => {
 
   return (
     <Zoom in={trigger}>
-      <div onClick={handleClick} role="presentation">
+      <div onClick={handleClick} role="presentation" className={classes.root}>
         {children}
       </div>
     </Zoom>
   );
 };
 
-ScrollTop.propTypes = {
+ScrollTopIcon.propTypes = {
   children: PropTypes.element.isRequired,
   /**
    * Injected by the documentation to work in an iframe.
@@ -35,4 +45,4 @@ ScrollTop.propTypes = {
   window: PropTypes.func,
 };
 
-export default ScrollTop;
+export default ScrollTopIcon;
