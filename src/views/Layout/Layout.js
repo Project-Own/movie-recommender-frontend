@@ -1,20 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Toolbar, Card, Typography, makeStyles } from "@material-ui/core";
-import Recommender from "../../components/Recommender/Recommender";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ImageSlider from "../../components/frontPage/ImageSlider";
 import OscarList from "../../components/frontPage/oscar_data";
 import ImdbList from "../../components/frontPage/imdbList";
 import ScrollFollow from "../../components/ScrollFollow/ScrollFollow";
 import ScrollTopIcon from "../../components/ScrollTop/ScrollTopIcon";
 import MovieDetail from "../../components/MovieDetail/MovieDetail";
+import { selectUser } from "../../features/Auth/registerSlice";
+import Axios from "axios";
+import Recommender from "../../components/Recommender/Recommender";
+
+const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
+
+const recommendAPIAddressGenerator = (items) => {
+  return "https://vae-movie-recommender.herokuapp.com/predict/genre/" + items;
+};
 
 const useStyles = makeStyles((theme) => ({
   genreTitle: {
     paddingLeft: theme.spacing() * 4,
+    paddingTop: theme.spacing(),
   },
   margin: { margin: theme.spacing() * 2 },
 }));
+
 export default function Layout(props) {
   const dispatch = useDispatch();
 
@@ -58,6 +68,51 @@ export default function Layout(props) {
     Response: "True",
   });
 
+  const [recommendedMovieList, setRecommendedMovieList] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  const user = useSelector(selectUser);
+  const name = user?.name;
+  const preferredMovies = user?.preferredMovies || undefined;
+  let genres = ["action", "adventure", "sci-fi", "comedy"];
+  const items = 10;
+
+  const searchRecommendation = (genres) => {
+    console.log(preferredMovies);
+    if (
+      preferredMovies?.length !== 0 &&
+      preferredMovies &&
+      typeof preferredMovies !== "undefined"
+    ) {
+      Axios.post(
+        recommendAPIAddressGenerator(items),
+        {
+          preferred_movies: preferredMovies,
+          genres: genres,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then(async (response) => {
+          console.log(response);
+          // setState({ ...state, movie: json });
+
+          setRecommendedMovieList(response?.data);
+
+          setLoading(false);
+        })
+        .catch((error) => alert(error.message));
+    }
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    searchRecommendation(genres);
+  }, [name]);
+
   return (
     <>
       <Toolbar />
@@ -69,88 +124,36 @@ export default function Layout(props) {
 
       <Grid container direction="row" alignItems="flex-start" justify="center">
         <Grid item container md={10} sm={12}>
-          <Grid item>
+          {genres.map((genre) => {
+            return (
+              <Grid item container key={genre}>
+                <Grid item>
+                  <Typography className={classes.genreTitle} variant="h6">
+                    {genre.charAt(0).toUpperCase() + genre.slice(1)}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Recommender
+                    loading={loading}
+                    recommendedMovieList={recommendedMovieList[genre]}
+                    movie={movie}
+                    setMovie={setMovie}
+                  />
+                </Grid>
+              </Grid>
+            );
+          })}
+          {/* <Grid item>
             <Typography className={classes.genreTitle}>Action</Typography>
-          </Grid>
-          <Grid item xs={12}>
+          </Grid> */}
+          {/* <Grid item xs={12}>
             <Recommender
               genre="action"
               movie={movie}
               setMovie={setMovie}
               colSize={{ lg: 6, md: 3, sm: 3, xs: 1 }}
             />
-          </Grid>
-          <Grid item>
-            <Typography className={classes.genreTitle}>Comedy</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Recommender
-              genre="comedy"
-              movie={movie}
-              setMovie={setMovie}
-              colSize={{ lg: 6, md: 3, sm: 3, xs: 1 }}
-            />
-          </Grid>
-
-          <Grid item>
-            <Typography className={classes.genreTitle}>Drama</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Recommender
-              genre="drama"
-              movie={movie}
-              setMovie={setMovie}
-              colSize={{ lg: 6, md: 3, sm: 3, xs: 1 }}
-            />
-          </Grid>
-
-          <Grid item>
-            <Typography className={classes.genreTitle}>Thriller</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Recommender
-              genre="thriller"
-              movie={movie}
-              setMovie={setMovie}
-              colSize={{ lg: 6, md: 3, sm: 3, xs: 1 }}
-            />
-          </Grid>
-
-          <Grid item>
-            <Typography className={classes.genreTitle}>Crime</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Recommender
-              genre="crime"
-              movie={movie}
-              setMovie={setMovie}
-              colSize={{ lg: 6, md: 3, sm: 3, xs: 1 }}
-            />
-          </Grid>
-
-          <Grid item>
-            <Typography className={classes.genreTitle}>Sci-Fi</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Recommender
-              genre="sci-fi"
-              movie={movie}
-              setMovie={setMovie}
-              colSize={{ lg: 6, md: 3, sm: 3, xs: 1 }}
-            />
-          </Grid>
-
-          <Grid item>
-            <Typography className={classes.genreTitle}>Adventure</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Recommender
-              genre="adventure"
-              movie={movie}
-              setMovie={setMovie}
-              colSize={{ lg: 6, md: 3, sm: 3, xs: 1 }}
-            />
-          </Grid>
+          </Grid> */}
         </Grid>
         <Grid item container md={2} sm={12} style={{ paddingTop: 20 }}>
           <Grid item sm={6} md={12} className={classes.margin}>

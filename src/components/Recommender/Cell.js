@@ -39,29 +39,28 @@ const Cell = (props) => {
         back={
           <Card style={{ height: height, width: width }}>
             <CardContent>
-              <Grid container>
+              <Grid container spacing={1}>
                 <Grid item xs={12}>
+                  <Typography>Genres:</Typography>
                   {data?.genres?.split("|").map((value, key) => (
-                    <Typography key={key}> {value}</Typography>
+                    <Typography key={key} variant="body2">
+                      {value}
+                    </Typography>
                   ))}
                 </Grid>
+
+                {/* <Grid item xs={12}>
+                  <Typography>Popularity</Typography>
+                  <Typography variant="body2">{data?.popularity}</Typography>
+                </Grid> */}
                 <Grid item xs={12}>
-                  <Typography>{data?.voteAverage}</Typography>
+                  <Typography>IMDB:</Typography>
+                  <Typography variant="body2">{data?.imdbRating}</Typography>
                 </Grid>
+
                 <Grid item xs={12}>
-                  <Typography>{data?.voteCount}</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography>{data?.popularity}</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography>{data?.imdbRating}</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography>{data?.Genre}</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography>{data?.Director}</Typography>
+                  <Typography>Director:</Typography>
+                  <Typography variant="body2">{data?.Director}</Typography>
                 </Grid>
               </Grid>
             </CardContent>
@@ -81,6 +80,7 @@ const Cell = (props) => {
         <Grid item xs={8}>
           <ScrollTop>
             <Typography
+              variant="body1"
               onClick={() => {
                 searchMovie(data);
               }}
@@ -90,19 +90,8 @@ const Cell = (props) => {
             </Typography>
           </ScrollTop>
         </Grid>
-        <Grid
-          item
-          xs={4}
-          justify="center"
-          alignItems="center"
-          alignContent="center"
-          style={{ padding: 10 }}
-        >
-          <LikeButton
-            index={data?.index ?? 9999999999}
-            height={20}
-            width={20}
-          />
+        <Grid item xs={4} style={{ padding: 10 }}>
+          <LikeButton index={data?.index ?? 0} height={20} width={20} />
         </Grid>
       </Grid>
     </div>

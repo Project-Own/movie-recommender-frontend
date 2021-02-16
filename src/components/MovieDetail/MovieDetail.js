@@ -105,11 +105,8 @@ const MovieDetail = (props) => {
                   <Typography variant="h6">Ratings:</Typography>
                   {movie?.Ratings?.map((Ratings, index) => {
                     return (
-                      <Grid item xs={12}>
-                        <Typography
-                          key={Ratings?.Source ?? index}
-                          variant="body2"
-                        >
+                      <Grid item xs={12} key={Ratings?.Source ?? index}>
+                        <Typography variant="body2">
                           {Ratings?.Source ?? "Unknown"}:{" "}
                           {Ratings?.Value ?? index}
                         </Typography>
@@ -152,7 +149,7 @@ const MovieDetail = (props) => {
                   </Grid>
                   <Grid item>
                     <LikeButton
-                      index={movie?.index ?? 9999999999}
+                      index={movie?.index ?? 0}
                       height={40}
                       width={40}
                     />

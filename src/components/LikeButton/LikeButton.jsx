@@ -37,7 +37,7 @@ const LikeButton = (props) => {
   const [loaded, setLoaded] = useState(false);
   const [clicked, setClicked] = useState(false);
 
-  const { index, height = 50, width = 50 } = props;
+  const { index = 0, height = 50, width = 50 } = props;
 
   const [animation, setAnimation] = useState(null);
   const token = useSelector(selectToken);
