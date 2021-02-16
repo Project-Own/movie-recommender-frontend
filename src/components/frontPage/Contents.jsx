@@ -42,8 +42,8 @@ const addToPreferenceAPI = async (index, token = "", add = true) => {
 
 const Contents = () => {
   const [movieList, setMovieList] = useState([]);
-  const [selectedMovieList, setSelectedMovieList] = useState([]);
   const [movieIndex, setMovieIndex] = useState([]);
+  const [selectedMovieList, setSelectedMovieList] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [selectButtonClicked, setSelectButtonClicked] = useState(false);

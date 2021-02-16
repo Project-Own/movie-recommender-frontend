@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Grid, Toolbar, Card, Typography, makeStyles } from "@material-ui/core";
 import Recommender from "../../components/Recommender/Recommender";
 import { useDispatch } from "react-redux";
-import MovieSearchCard from "../../components/SearchComponent/MovieSearchCard";
 import ImageSlider from "../../components/frontPage/ImageSlider";
 import OscarList from "../../components/frontPage/oscar_data";
 import ImdbList from "../../components/frontPage/imdbList";
@@ -14,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
   genreTitle: {
     paddingLeft: theme.spacing() * 4,
   },
+  margin: { margin: theme.spacing() * 2 },
 }));
 export default function Layout(props) {
   const dispatch = useDispatch();
@@ -23,7 +23,40 @@ export default function Layout(props) {
   const oscDate = OscarList.map((d) => d.date);
 
   const classes = useStyles();
-  const [movie, setMovie] = useState("");
+  const [movie, setMovie] = useState({
+    Title: "The Shape of Water",
+    Year: "2017",
+    Rated: "R",
+    Released: "22 Dec 2017",
+    Runtime: "123 min",
+    Genre: "Adventure, Drama, Fantasy, Romance, Sci-Fi, Thriller",
+    Director: "Guillermo del Toro",
+    Writer:
+      "Guillermo del Toro (screenplay by), Vanessa Taylor (screenplay by), Guillermo del Toro (story by)",
+    Actors: "Sally Hawkins, Michael Shannon, Richard Jenkins, Octavia Spencer",
+    Plot:
+      "At a top secret research facility in the 1960s, a lonely janitor forms a unique relationship with an amphibious creature that is being held in captivity.",
+    Language: "English, American Sign Language, Russian, French",
+    Country: "USA, Canada, Mexico",
+    Awards: "Won 4 Oscars. Another 133 wins & 345 nominations.",
+    Poster:
+      "https://m.media-amazon.com/images/M/MV5BNGNiNWQ5M2MtNGI0OC00MDA2LWI5NzEtMmZiYjVjMDEyOWYzXkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_SX300.jpg",
+    Ratings: [
+      { Source: "Internet Movie Database", Value: "7.3/10" },
+      { Source: "Rotten Tomatoes", Value: "92%" },
+      { Source: "Metacritic", Value: "87/100" },
+    ],
+    Metascore: "87",
+    imdbRating: "7.3",
+    imdbVotes: "372,534",
+    imdbID: "tt5580390",
+    Type: "movie",
+    DVD: "N/A",
+    BoxOffice: "$63,859,435",
+    Production: "Double Dare You, TSG Entertainment",
+    Website: "N/A",
+    Response: "True",
+  });
 
   return (
     <>
@@ -34,7 +67,7 @@ export default function Layout(props) {
         </Grid>
       </Grid>
 
-      <Grid container direction="row" justify="center">
+      <Grid container direction="row" alignItems="flex-start" justify="center">
         <Grid item container md={10} sm={12}>
           <Grid item>
             <Typography className={classes.genreTitle}>Action</Typography>
@@ -119,14 +152,12 @@ export default function Layout(props) {
             />
           </Grid>
         </Grid>
-        <Grid item container md={2} sm={12} spacing={2}>
-          <Grid item sm={4} md={12}>
-            <MovieSearchCard movie={movie} setMovie={setMovie} />
-          </Grid>
-          <Grid item sm={4} md={12}>
+        <Grid item container md={2} sm={12} style={{ paddingTop: 20 }}>
+          <Grid item sm={6} md={12} className={classes.margin}>
             <ImdbList />
           </Grid>
-          <Grid item sm={4} md={12}>
+          <Grid item sm={6} md={12} className={classes.margin}>
+            <Typography variant="h5">Best Picture Oscar Winners</Typography>
             <Card>
               <ImageSlider imgList={imgList} title={oscTitle} date={oscDate} />
             </Card>

@@ -23,6 +23,49 @@ const recommendAPIAddressGenerator = (genre, items) => {
     "https://vae-movie-recommender.herokuapp.com/predict/" + genre + "/" + items
   );
 };
+
+function getRandom(arr, n) {
+  var result = new Array(n),
+    len = arr.length,
+    taken = new Array(len);
+  if (n > len) {
+    throw new RangeError("getRandom: more elements taken than available");
+  }
+  while (n--) {
+    var x = Math.floor(Math.random() * len);
+    result[n] = arr[x in taken ? taken[x] : x];
+    taken[x] = --len in taken ? taken[len] : len;
+  }
+  return result;
+}
+async function getAllDetails(detailsList) {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ title: detailsList }),
+  };
+
+  return fetch(
+    "https://movie-database-server.herokuapp.com/api/items/singleItem",
+    requestOptions
+  )
+    .then(async (response) => {
+      const data = await response.json();
+      // check for error response
+      if (!response.ok) {
+        // get error message from body or default to response status
+        const error = (data && data.message) || response.status;
+        return Promise.reject(error);
+      }
+      // console.log(data);
+      return data;
+    })
+
+    .catch((error) => {
+      console.error("There was an error!", error);
+    });
+}
+
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing() * 2,
@@ -32,6 +75,9 @@ const useStyles = makeStyles((theme) => ({
 const Recommender = (props) => {
   const [recommendedMovieList, setRecommendedMovieList] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [movieIndex, setMovieIndex] = useState([]);
+
   const user = useSelector(selectUser);
   const name = user?.name;
   const preferredMovies = user?.preferredMovies || undefined;
@@ -44,6 +90,85 @@ const Recommender = (props) => {
     breadth = 200,
   } = props;
   const classes = useStyles();
+
+  async function getDetails(data, index) {
+    console.log("DATA");
+    console.log(data);
+    try {
+      var detailsList = [];
+      await Promise.all(
+        data.map((Details) =>
+          (async function () {
+            let data = await getAllDetails(Details);
+            // console.log(data)
+            if (data[0] !== undefined) {
+              detailsList.push(data[0]);
+            }
+          })()
+        )
+      );
+
+      // console.log(det);
+      // console.log(detailsList);
+
+      // console.log("DETAILS LIST");
+      // console.log(detailsList);
+      var fourRndom = getRandom(detailsList, 4);
+      // console.log(fourRndom);
+
+      const movies = await Promise.all(
+        fourRndom.map(async (movie, index) => {
+          let omdbRes;
+          try {
+            omdbRes = await Axios.get(`${API_ADDRESS}${movie.imdbId}`);
+          } catch (err) {
+            console.log(err);
+          }
+
+          try {
+            const res = await Axios.get(
+              "https://image.tmdb.org/t/p/w185" + movie.posterPath
+            );
+            if (res.data === "<h1>File not Found</h1>") throw Error;
+            movie.posterPath =
+              "https://image.tmdb.org/t/p/w185" + movie.posterPath;
+          } catch (err) {
+            // console.log(res);
+            movie.posterPath = omdbRes?.data?.Poster ?? "Unknown";
+          }
+          movie = { ...movie, ...omdbRes.data };
+
+          return movie;
+        })
+      );
+
+      const movieListFront = recommendedMovieList.slice(
+        0,
+        movieIndex.indexOf(index) + 1
+      );
+      const movieListBack = recommendedMovieList.slice(
+        movieIndex.indexOf(index) + 1
+      );
+
+      let updatedMovieList = [];
+      updatedMovieList = movieListFront.concat(fourRndom);
+      updatedMovieList = updatedMovieList.concat(movieListBack);
+
+      // console.log("Updated Movie List");
+      // console.log(updatedMovieList);
+      // updatedMovieList.splice(movieIndex.indexOf(index) + 1, 4, ...fourRndom);
+
+      setRecommendedMovieList(updatedMovieList);
+
+      setMovieIndex(
+        updatedMovieList.map((movie) => {
+          return movie.index;
+        })
+      );
+    } catch (error) {
+      alert(error);
+    }
+  }
 
   const searchMovie = (data) => {
     if (data) {
@@ -111,6 +236,11 @@ const Recommender = (props) => {
           );
 
           setRecommendedMovieList(movies);
+          setMovieIndex(
+            movies.map((movie) => {
+              return movie.index;
+            })
+          );
           setLoading(false);
           // setQuery("");
         })

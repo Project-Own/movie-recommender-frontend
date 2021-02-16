@@ -98,7 +98,11 @@ const Cell = (props) => {
           alignContent="center"
           style={{ padding: 10 }}
         >
-          <LikeButton index={data?.index ?? 70000} height={20} width={20} />
+          <LikeButton
+            index={data?.index ?? 9999999999}
+            height={20}
+            width={20}
+          />
         </Grid>
       </Grid>
     </div>
