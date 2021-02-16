@@ -10,6 +10,7 @@ import {
   selectPreferredMovies,
   selectToken,
 } from "../../features/Auth/registerSlice";
+import { Favorite, FavoriteBorder } from "@material-ui/icons";
 
 const addToPreference = async (index, token = "", add = true) => {
   const operation = add ? "add" : "remove";
@@ -34,6 +35,8 @@ const addToPreference = async (index, token = "", add = true) => {
 const LikeButton = (props) => {
   const [liked, setLiked] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [clicked, setClicked] = useState(false);
+
   const { index, height = 50, width = 50 } = props;
 
   const [animation, setAnimation] = useState(null);
@@ -43,50 +46,40 @@ const LikeButton = (props) => {
   const preferredMovies = useSelector(selectPreferredMovies);
 
   useEffect(() => {
-    const loadAnimation = () =>
-      lottie.loadAnimation({
-        container: container.current,
-        name: index,
-        animationData: likeAnimation,
-        renderer: "svg",
-        loop: false,
-        autoplay: false,
-      });
-    setAnimation(loadAnimation());
-  }, []);
-
-  useEffect(() => {
     if (preferredMovies?.includes(index)) {
-      setLoaded(true);
       setLiked(true);
+    } else {
+      setLiked(false);
     }
   }, [preferredMovies, index]);
+
   useEffect(() => {
-    console.log(liked);
-    if (!animation) return;
-    if (!loaded) return;
-    if (liked) {
-      lottie.setSpeed(1);
-      lottie.setDirection(1);
-      lottie.play(index);
-      dispatch(addMovie({ index: index }));
-    } else {
-      lottie.setDirection(-1);
-      lottie.setSpeed(2);
-      lottie.play(index);
-      dispatch(removeMovie({ index: index }));
+    if (clicked) {
+      liked
+        ? dispatch(addMovie({ index: index }))
+        : dispatch(removeMovie({ index: index }));
+
+      addToPreference(index, token, liked);
     }
-    addToPreference(index, token, liked);
-  }, [liked, token]);
+    setClicked(false);
+  }, [liked]);
   const handleLike = () => {
-    setLoaded(true);
+    setClicked(true);
+
     setLiked(!liked);
   };
 
   return (
     <IconButton onClick={handleLike}>
-      <div ref={container} style={{ height: height, width: width }} />
+      {liked ? (
+        <Favorite color="secondary" style={{ height: height, width: width }} />
+      ) : (
+        <FavoriteBorder
+          color="secondary"
+          style={{ height: height, width: width }}
+        />
+      )}
     </IconButton>
   );
 };
-export default React.memo(LikeButton);
+export default LikeButton;

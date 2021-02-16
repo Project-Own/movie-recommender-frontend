@@ -8,7 +8,11 @@ import { Skeleton } from "@material-ui/lab";
 import Cell from "./Cell";
 
 import { useSelector } from "react-redux";
-import { selectPreferredMovies } from "../../features/Auth/registerSlice";
+import {
+  selectIsAuthenticated,
+  selectPreferredMovies,
+  selectUser,
+} from "../../features/Auth/registerSlice";
 
 import HorizonalScroll from "../HorizonalScroll/HorizontalScroll";
 
@@ -28,14 +32,14 @@ const useStyles = makeStyles((theme) => ({
 const Recommender = (props) => {
   const [recommendedMovieList, setRecommendedMovieList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const preferredMovies = useSelector(selectPreferredMovies);
-
+  const user = useSelector(selectUser);
+  const name = user?.name;
+  const preferredMovies = user?.preferredMovies || undefined;
   const {
     movie,
     setMovie,
     genre = "action",
     items = 10,
-    colSize = {},
     height = 300,
     breadth = 200,
   } = props;
@@ -81,43 +85,7 @@ const Recommender = (props) => {
           console.log(response);
           // setState({ ...state, movie: json });
           const movies = await Promise.all(
-            response.data.movie.map(async (movie, index) => {
-              let omdbRes;
-              try {
-                omdbRes = await Axios.get(`${API_ADDRESS}${movie.imdbId}`);
-              } catch (err) {
-                console.log(err);
-              }
-
-              try {
-                const res = await Axios.get(
-                  "https://image.tmdb.org/t/p/w185" + movie.posterPath
-                );
-                if (res.data === "<h1>File not Found</h1>") throw Error;
-                movie.posterPath =
-                  "https://image.tmdb.org/t/p/w185" + movie.posterPath;
-              } catch (err) {
-                // console.log(res);
-                movie.posterPath = omdbRes?.data?.Poster ?? "Unknown";
-              }
-              movie = { ...movie, ...omdbRes.data };
-
-              return movie;
-            })
-          );
-
-          setRecommendedMovieList(movies);
-          setLoading(false);
-          // setQuery("");
-        })
-        .catch((error) => alert(error.message));
-    } else {
-      Axios.get(recommendAPIAddressGenerator(genre, items))
-        .then(async (response) => {
-          console.log(response);
-          // setState({ ...state, movie: json });
-          const movies = await Promise.all(
-            response.data.movies.map(async (movie, index) => {
+            response?.data?.movie?.map(async (movie, index) => {
               let omdbRes;
               try {
                 omdbRes = await Axios.get(`${API_ADDRESS}${movie.imdbId}`);
@@ -148,12 +116,49 @@ const Recommender = (props) => {
         })
         .catch((error) => alert(error.message));
     }
+    // else {
+    //   Axios.get(recommendAPIAddressGenerator(genre, items))
+    //     .then(async (response) => {
+    //       console.log(response);
+    //       // setState({ ...state, movie: json });
+    //       const movies = await Promise.all(
+    //         response?.data?.movies?.map(async (movie, index) => {
+    //           let omdbRes;
+    //           try {
+    //             omdbRes = await Axios.get(`${API_ADDRESS}${movie.imdbId}`);
+    //           } catch (err) {
+    //             console.log(err);
+    //           }
+
+    //           try {
+    //             const res = await Axios.get(
+    //               "https://image.tmdb.org/t/p/w185" + movie.posterPath
+    //             );
+    //             if (res.data === "<h1>File not Found</h1>") throw Error;
+    //             movie.posterPath =
+    //               "https://image.tmdb.org/t/p/w185" + movie.posterPath;
+    //           } catch (err) {
+    //             // console.log(res);
+    //             movie.posterPath = omdbRes?.data?.Poster ?? "Unknown";
+    //           }
+    //           movie = { ...movie, ...omdbRes.data };
+
+    //           return movie;
+    //         })
+    //       );
+
+    //       setRecommendedMovieList(movies);
+    //       setLoading(false);
+    //       // setQuery("");
+    //     })
+    //     .catch((error) => alert(error.message));
+    // }
   };
 
   useEffect(() => {
     setLoading(true);
     searchRecommendation();
-  }, []);
+  }, [name]);
 
   return (
     <>
@@ -187,4 +192,4 @@ const Recommender = (props) => {
   );
 };
 
-export default withWidth()(Recommender);
+export default Recommender;

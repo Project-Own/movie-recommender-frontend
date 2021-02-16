@@ -90,8 +90,15 @@ const Cell = (props) => {
             </Typography>
           </ScrollTop>
         </Grid>
-        <Grid item xs={4}>
-          <LikeButton index={data?.index ?? 70000} />
+        <Grid
+          item
+          xs={4}
+          justify="center"
+          alignItems="center"
+          alignContent="center"
+          style={{ padding: 10 }}
+        >
+          <LikeButton index={data?.index ?? 70000} height={20} width={20} />
         </Grid>
       </Grid>
     </div>

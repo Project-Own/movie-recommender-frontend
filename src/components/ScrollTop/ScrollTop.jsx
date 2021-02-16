@@ -18,11 +18,9 @@ const ScrollTop = (props) => {
   };
 
   return (
-    <Zoom in={trigger}>
-      <div onClick={handleClick} role="presentation">
-        {children}
-      </div>
-    </Zoom>
+    <div onClick={handleClick} role="presentation">
+      {children}
+    </div>
   );
 };
 
