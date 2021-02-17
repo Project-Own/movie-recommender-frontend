@@ -6,7 +6,6 @@ import {
   useScrollTrigger,
   Switch,
   Button,
-  Slide,
   makeStyles,
   IconButton,
   Hidden,
@@ -17,15 +16,9 @@ import {
   ListItemIcon,
   ListItemText,
   useTheme,
-  Zoom,
-  Fab,
-  Link as LinkMUI,
   Grid,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import MailIcon from "@material-ui/icons/Mail";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import PropTypes from "prop-types";
 import { CustomThemeContext } from "../../CustomThemeProvider";
@@ -101,7 +94,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TopNavBar(props) {
-  const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
   const { currentTheme, setTheme } = useContext(CustomThemeContext);

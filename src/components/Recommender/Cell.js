@@ -2,11 +2,10 @@ import {
   Card,
   CardContent,
   Grid,
-  Link,
   Typography,
   useTheme,
 } from "@material-ui/core";
-import React, { Component, lazy } from "react";
+import React from "react";
 import FlipCard from "../FlipCard/FlipCard";
 import LikeButton from "../LikeButton/LikeButton";
 import ScrollTop from "../ScrollTop/ScrollTop";

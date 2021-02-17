@@ -1,7 +1,5 @@
-import setAuthToken from "./utils/setAuthToken";
-import { userLoaded, failure, selectToken } from "./registerSlice";
+import { userLoaded, failure } from "./registerSlice";
 import axios from "axios";
-import { useSelector } from "react-redux";
 
 //Load User
 export const loadUser = async (dispatch) => {

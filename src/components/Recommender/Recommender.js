@@ -1,28 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import withWidth from "@material-ui/core/withWidth";
 import { Card, CardContent } from "@material-ui/core";
 import Axios from "axios";
 import { Skeleton } from "@material-ui/lab";
 
 import Cell from "./Cell";
 
-import { useSelector } from "react-redux";
-import {
-  selectIsAuthenticated,
-  selectPreferredMovies,
-  selectUser,
-} from "../../features/Auth/registerSlice";
-
 import HorizonalScroll from "../HorizonalScroll/HorizontalScroll";
 
 const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
-
-const recommendAPIAddressGenerator = (genre, items) => {
-  return (
-    "https://vae-movie-recommender.herokuapp.com/predict/" + genre + "/" + items
-  );
-};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +20,7 @@ const Recommender = (props) => {
   const {
     loading,
     recommendedMovieList,
-    movie,
+
     setMovie,
     height = 300,
     breadth = 200,
@@ -95,6 +81,7 @@ const Recommender = (props) => {
 
   console.log("MOvieLIST");
   console.log(movieList);
+  console.log(typeof movieList == "undefined");
   return (
     <>
       <Card className={classes.root}>

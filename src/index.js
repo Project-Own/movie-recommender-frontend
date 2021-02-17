@@ -1,7 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import UserProfileUi from "./components/frontPage/userProfileUi";
-// import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import App from "./views/App/App";
 

@@ -1,7 +1,8 @@
-import React, { useRef } from "react";
+import React from "react";
 
-import { Button, makeStyles } from "@material-ui/core";
+import { Button, Fab, Grid, makeStyles } from "@material-ui/core";
 import "../HorizonalScroll/horizontalScroll.css";
+import { AddIcCallOutlined, ArrowBack, ArrowForward } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   menuContainer: {
     display: "flex",
@@ -23,11 +24,23 @@ const HorizonalScroll = (props) => {
 
   return (
     <div className={classes.menuContainer}>
-      <Button onClick={() => handleNav("left")}>Prev</Button>
+      {/* <Grid container direction="row" justify="center" alignItems="center">
+        <Grid item xs={1}>
+          <Fab onClick={() => handleNav("left")}>
+            <ArrowBack />
+          </Fab>
+        </Grid>
+        <Grid item xs={10}> */}
       <div className="navItems" ref={navRef}>
         {props.children}
       </div>
-      <Button onClick={() => handleNav("right")}>Next</Button>
+      {/* </Grid>
+        <Grid item xs={1}>
+          <Fab onClick={() => handleNav("right")}>
+            <ArrowForward />
+          </Fab>
+        </Grid>
+      </Grid> */}
     </div>
   );
 };

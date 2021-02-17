@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 import "../../App/App.css";
@@ -7,9 +7,7 @@ import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
 import {
   failure,
   success,
-  userLoaded,
   selectIsAuthenticated,
-  selectUser,
 } from "../../../features/Auth/registerSlice";
 import { loadUser } from "../../../features/Auth/loadUser";
 
@@ -20,7 +18,6 @@ export const Login = () => {
   });
 
   const authenticated = useSelector(selectIsAuthenticated);
-  const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const { email, password } = formData;
 

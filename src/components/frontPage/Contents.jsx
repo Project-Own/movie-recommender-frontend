@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import MovieCard from "./MovieCard";
 import Footer from "./Footer";
 // import movieList from './data'
@@ -10,11 +10,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addMovie,
-  selectIsAuthenticated,
-  selectToken,
-} from "../../features/Auth/registerSlice";
+import { addMovie, selectToken } from "../../features/Auth/registerSlice";
 import { Redirect } from "react-router";
 import { Skeleton } from "@material-ui/lab";
 
@@ -48,7 +44,6 @@ const Contents = () => {
 
   const [selectButtonClicked, setSelectButtonClicked] = useState(false);
   const token = useSelector(selectToken);
-  const isAuthenticated = useSelector(selectIsAuthenticated);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -170,31 +165,31 @@ const Contents = () => {
       var fourRndom = getRandom(detailsList, 4);
       // console.log(fourRndom);
 
-      const movies = await Promise.all(
-        fourRndom.map(async (movie, index) => {
-          let omdbRes;
-          try {
-            omdbRes = await Axios.get(`${API_ADDRESS}${movie.imdbId}`);
-          } catch (err) {
-            console.log(err);
-          }
+      // const movies = await Promise.all(
+      //   fourRndom.map(async (movie, index) => {
+      //     let omdbRes;
+      //     try {
+      //       omdbRes = await Axios.get(`${API_ADDRESS}${movie.imdbId}`);
+      //     } catch (err) {
+      //       console.log(err);
+      //     }
 
-          try {
-            const res = await Axios.get(
-              "https://image.tmdb.org/t/p/w185" + movie.posterPath
-            );
-            if (res.data === "<h1>File not Found</h1>") throw Error;
-            movie.posterPath =
-              "https://image.tmdb.org/t/p/w185" + movie.posterPath;
-          } catch (err) {
-            // console.log(res);
-            movie.posterPath = omdbRes?.data?.Poster ?? "Unknown";
-          }
-          movie = { ...movie, ...omdbRes.data };
+      //     try {
+      //       const res = await Axios.get(
+      //         "https://image.tmdb.org/t/p/w185" + movie.posterPath
+      //       );
+      //       if (res.data === "<h1>File not Found</h1>") throw Error;
+      //       movie.posterPath =
+      //         "https://image.tmdb.org/t/p/w185" + movie.posterPath;
+      //     } catch (err) {
+      //       // console.log(res);
+      //       movie.posterPath = omdbRes?.data?.Poster ?? "Unknown";
+      //     }
+      //     movie = { ...movie, ...omdbRes.data };
 
-          return movie;
-        })
-      );
+      //     return movie;
+      //   })
+      // );
 
       const movieListFront = movieList.slice(0, movieIndex.indexOf(index) + 1);
       const movieListBack = movieList.slice(movieIndex.indexOf(index) + 1);
@@ -271,7 +266,6 @@ const Contents = () => {
 
   return (
     <Grid
-      container
       direction="row"
       item
       justify="center"

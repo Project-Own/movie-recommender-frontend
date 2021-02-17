@@ -1,5 +1,5 @@
-import { makeStyles, useScrollTrigger, useTheme } from "@material-ui/core";
-import React, { useCallback, useEffect } from "react";
+import { useTheme } from "@material-ui/core";
+import React, {  useEffect } from "react";
 
 import { useSpring, animated as a, interpolate } from "react-spring";
 

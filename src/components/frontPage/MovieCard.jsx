@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
@@ -10,7 +10,6 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 // import defaultMoviePoster from '../../assets/images/defaultMoviePoster.png';
 import { useEffect } from "react";
 import FloatCard from "../FloatCard/FloatCard";
-import defaultImage from "../../assets/images/defaultMoviePoster.png";
 async function getMovieTitle(selectedTitle) {
   //recommendation
 
@@ -45,9 +44,6 @@ const MovieCard = (props) => {
   const [icon, setIcon] = useState(true);
   const [posterOpacity, setposterOpacity] = useState(true);
   const [iconOpacity, setIconOpacity] = useState(true);
-  const [posterUrl, setPosterUrl] = useState("");
-
-  const imageRef = useRef(null);
 
   let selectedList = props.selectedList;
 

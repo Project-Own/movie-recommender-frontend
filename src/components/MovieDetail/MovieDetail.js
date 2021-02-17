@@ -1,5 +1,5 @@
-import { Card, Typography, makeStyles, Grid, Paper } from "@material-ui/core";
-import React, { useState } from "react";
+import { Typography, makeStyles, Grid, Paper } from "@material-ui/core";
+import React from "react";
 import Skeleton from "@material-ui/lab/Skeleton";
 import LikeButton from "../LikeButton/LikeButton";
 
@@ -12,13 +12,8 @@ import LikeButton from "../LikeButton/LikeButton";
 const useStyles = makeStyles((theme) => ({}));
 
 const MovieDetail = (props) => {
-  const { movie, index = 69, loading = false } = props;
+  const { movie, loading = false } = props;
   const classes = useStyles();
-  const [expanded, setExpanded] = useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   return (
     <Paper>
@@ -29,6 +24,7 @@ const MovieDetail = (props) => {
           ) : (
             <Grid item>
               <img
+                alt="Movie Poster"
                 className={classes.media}
                 src={movie?.Poster}
                 onError={(e) => {

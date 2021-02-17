@@ -1,6 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import lottie from "lottie-web/build/player/lottie_light";
-import likeAnimation from "../../assets/lottie/like.json";
+import React, { useEffect, useState } from "react";
 import { IconButton } from "@material-ui/core";
 import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,15 +32,12 @@ const addToPreference = async (index, token = "", add = true) => {
 
 const LikeButton = (props) => {
   const [liked, setLiked] = useState(false);
-  const [loaded, setLoaded] = useState(false);
   const [clicked, setClicked] = useState(false);
 
   const { index = 0, height = 50, width = 50 } = props;
 
-  const [animation, setAnimation] = useState(null);
   const token = useSelector(selectToken);
   const dispatch = useDispatch();
-  const container = useRef(null);
   const preferredMovies = useSelector(selectPreferredMovies);
 
   useEffect(() => {

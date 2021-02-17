@@ -6,12 +6,9 @@ import Register from "./auth/Register";
 import Layout from "./Layout";
 import UserPickLayout from "./UserPickLayout";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loadUser } from "../../features/Auth/loadUser";
-import {
-  selectIsAuthenticated,
-  selectToken,
-} from "../../features/Auth/registerSlice";
+
 import Profile from "./Profile";
 const Home = (props) => {
   const dispatch = useDispatch();
