@@ -1,22 +1,21 @@
 {
   "files": {
     "main.css": "/movie-recommender-frontend/static/css/main.2e67aaec.chunk.css",
-    "main.js": "/movie-recommender-frontend/static/js/main.3303fe43.chunk.js",
-    "main.js.map": "/movie-recommender-frontend/static/js/main.3303fe43.chunk.js.map",
+    "main.js": "/movie-recommender-frontend/static/js/main.fd5bbb4d.chunk.js",
+    "main.js.map": "/movie-recommender-frontend/static/js/main.fd5bbb4d.chunk.js.map",
     "runtime-main.js": "/movie-recommender-frontend/static/js/runtime-main.b76199f1.js",
     "runtime-main.js.map": "/movie-recommender-frontend/static/js/runtime-main.b76199f1.js.map",
-    "static/js/2.91f54b06.chunk.js": "/movie-recommender-frontend/static/js/2.91f54b06.chunk.js",
-    "static/js/2.91f54b06.chunk.js.map": "/movie-recommender-frontend/static/js/2.91f54b06.chunk.js.map",
+    "static/js/2.0bb76759.chunk.js": "/movie-recommender-frontend/static/js/2.0bb76759.chunk.js",
+    "static/js/2.0bb76759.chunk.js.map": "/movie-recommender-frontend/static/js/2.0bb76759.chunk.js.map",
     "index.html": "/movie-recommender-frontend/index.html",
     "static/css/main.2e67aaec.chunk.css.map": "/movie-recommender-frontend/static/css/main.2e67aaec.chunk.css.map",
-    "static/js/2.91f54b06.chunk.js.LICENSE.txt": "/movie-recommender-frontend/static/js/2.91f54b06.chunk.js.LICENSE.txt",
-    "static/media/defaultMoviePoster.10443637.png": "/movie-recommender-frontend/static/media/defaultMoviePoster.10443637.png",
+    "static/js/2.0bb76759.chunk.js.LICENSE.txt": "/movie-recommender-frontend/static/js/2.0bb76759.chunk.js.LICENSE.txt",
     "static/media/App.css": "/movie-recommender-frontend/static/media/showcase.33c7a31b.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.b76199f1.js",
-    "static/js/2.91f54b06.chunk.js",
+    "static/js/2.0bb76759.chunk.js",
     "static/css/main.2e67aaec.chunk.css",
-    "static/js/main.3303fe43.chunk.js"
+    "static/js/main.fd5bbb4d.chunk.js"
   ]
 }
