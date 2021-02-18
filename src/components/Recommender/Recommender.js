@@ -37,46 +37,46 @@ const Recommender = (props) => {
 
   useEffect(() => {
     setMovieList(recommendedMovieList);
-    if (
-      !recommendedMovieList ||
-      typeof recommendedMovieList == "undefined" ||
-      recommendedMovieList.length === 0
-    ) {
-    } else {
-      setMovieList(recommendedMovieList);
-      Promise.all(
-        recommendedMovieList?.map(async (movie, index) => {
-          let omdbRes;
-          try {
-            omdbRes = await Axios.get(`${API_ADDRESS}${movie.imdbId}`);
-          } catch (err) {
-            console.log(err);
-          }
+    // if (
+    //   !recommendedMovieList ||
+    //   typeof recommendedMovieList == "undefined" ||
+    //   recommendedMovieList.length === 0
+    // ) {
+    // } else {
+    //   setMovieList(recommendedMovieList);
+    //   Promise.all(
+    //     recommendedMovieList?.map(async (movie, index) => {
+    //       let omdbRes;
+    //       try {
+    //         omdbRes = await Axios.get(`${API_ADDRESS}${movie.imdbId}`);
+    //       } catch (err) {
+    //         console.log(err);
+    //       }
 
-          try {
-            const res = await Axios.get(
-              "https://image.tmdb.org/t/p/w185" + movie.posterPath
-            );
-            if (res.data === "<h1>File not Found</h1>") throw Error;
-            movie.posterPath =
-              "https://image.tmdb.org/t/p/w185" + movie.posterPath;
-          } catch (err) {
-            // console.log(res);
-            movie.posterPath = omdbRes?.data?.Poster ?? "Unknown";
-          }
-          movie = { ...movie, ...omdbRes.data };
+    //       try {
+    //         const res = await Axios.get(
+    //           "https://image.tmdb.org/t/p/w185" + movie.posterPath
+    //         );
+    //         if (res.data === "<h1>File not Found</h1>") throw Error;
+    //         movie.posterPath =
+    //           "https://image.tmdb.org/t/p/w185" + movie.posterPath;
+    //       } catch (err) {
+    //         // console.log(res);
+    //         movie.posterPath = omdbRes?.data?.Poster ?? "Unknown";
+    //       }
+    //       movie = { ...movie, ...omdbRes.data };
 
-          return movie;
-        })
-      ).then((res) => {
-        // console.log("INSIDE THEN");
-        // console.log(res);
-        setMovieList(res);
-      });
+    //       return movie;
+    //     })
+    //   ).then((res) => {
+    //     // console.log("INSIDE THEN");
+    //     // console.log(res);
+    //     setMovieList(res);
+    //   });
 
-      // console.log(movies);
-      // setMovieList(movies);
-    }
+    // console.log(movies);
+    // setMovieList(movies);
+    // }
   }, [recommendedMovieList]);
 
   console.log("MOvieLIST");

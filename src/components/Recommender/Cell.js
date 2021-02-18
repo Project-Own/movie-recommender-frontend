@@ -5,14 +5,51 @@ import {
   Typography,
   useTheme,
 } from "@material-ui/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FlipCard from "../FlipCard/FlipCard";
 import LikeButton from "../LikeButton/LikeButton";
 import ScrollTop from "../ScrollTop/ScrollTop";
+import Axios from "axios";
+
+const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
 
 const Cell = (props) => {
   const { data, height, width, searchMovie } = props;
   const theme = useTheme();
+  const [posterUrl, setPosterUrl] = useState(
+    "https://image.tmdb.org/t/p/w185" + data.posterPath
+  );
+  useEffect(() => {
+    //poster
+
+    (async () => {
+      let omdbRes;
+      let posterPath;
+
+      if (data?.Poster) {
+        posterPath = data?.Poster;
+      } else {
+        try {
+          omdbRes = await Axios.get(`${API_ADDRESS}${data.imdbId}`);
+        } catch (err) {
+          console.log(err);
+        }
+
+        try {
+          const res = await Axios.get(
+            "https://image.tmdb.org/t/p/w185" + data.posterPath
+          );
+          if (res.data === "<h1>File not Found</h1>") throw Error;
+          posterPath = "https://image.tmdb.org/t/p/w185" + data.posterPath;
+        } catch (err) {
+          // console.log(res);
+          posterPath = omdbRes?.data?.Poster ?? "Unknown";
+        }
+      }
+
+      setPosterUrl(posterPath);
+    })();
+  }, [data.posterPath, data.imdbId]);
   return (
     <div
       style={{
@@ -32,7 +69,7 @@ const Cell = (props) => {
                 height: height,
                 width: width,
               }}
-              src={data?.posterPath}
+              src={posterUrl}
               alt="Poster"
               onError={(e) => {
                 e.target.onerror = null;

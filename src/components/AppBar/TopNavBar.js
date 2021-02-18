@@ -143,7 +143,7 @@ export default function TopNavBar(props) {
     <div className={classes.drawerContainer}>
       <Link to="/movie-recommender-frontend/">
         <Typography variant="h5" color="textPrimary" style={{ padding: 20 }}>
-          REC
+          RECSYS
         </Typography>
       </Link>
 
@@ -235,7 +235,7 @@ export default function TopNavBar(props) {
           <Toolbar id="back-to-top-anchor">
             <Link to="/movie-recommender-frontend/" className={classes.title}>
               <Typography variant="h5" className={classes.title}>
-                REC
+                RECSYS
               </Typography>
             </Link>
             <IconButton
