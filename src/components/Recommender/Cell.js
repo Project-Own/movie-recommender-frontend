@@ -97,16 +97,12 @@ const Cell = (props) => {
                   <Typography variant="body2">{data?.popularity}</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography>IMDB:</Typography>
+                  <Typography>Rating:</Typography>
                   <Typography variant="body2">
-                    {data?.imdbRating ?? data?.vote_average ?? 0}
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Typography>Director:</Typography>
-                  <Typography variant="body2">
-                    {data?.Director ?? "Unknown"}
+                    {data?.imdbRating ??
+                      data?.vote_average ??
+                      data?.voteAverage ??
+                      0}
                   </Typography>
                 </Grid>
               </Grid>

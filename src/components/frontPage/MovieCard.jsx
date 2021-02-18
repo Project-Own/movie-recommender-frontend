@@ -110,11 +110,13 @@ const MovieCard = (props) => {
     if (selectedList.includes(props.index)) {
       selectedList.splice(selectedList.indexOf(props.index), 1);
     } else {
-      selectedList.push(props.index);
-      (async function () {
-        let data = await getMovieTitle(props.index);
-        await props.getDetails(data, props.index); //get details of predicted list here data is the predicted top 20
-      })();
+      if (props.index < 62000) {
+        selectedList.push(props.index);
+        (async function () {
+          let data = await getMovieTitle(props.index);
+          await props.getDetails(data, props.index); //get details of predicted list here data is the predicted top 20
+        })();
+      }
     }
 
     props.showHide(selectedList);

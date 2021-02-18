@@ -24,7 +24,7 @@ import {
 import Axios from "axios";
 import Recommender from "../../components/Recommender/Recommender";
 import HorizonalScroll from "../../components/HorizonalScroll/HorizontalScroll";
-import { DeleteOutlineTwoTone } from "@material-ui/icons";
+import { DeleteOutlineTwoTone, RefreshOutlined } from "@material-ui/icons";
 import { Redirect } from "react-router";
 
 const recommendAPIAddressGenerator = (items, genre = "genre") => {
@@ -176,8 +176,9 @@ export default function Layout(props) {
             }}
             color="secondary"
             variant="contained"
+            endIcon={<RefreshOutlined />}
           >
-            Refresh Recommendations
+            Refresh
           </Button>
         </Grid>
       </Grid>

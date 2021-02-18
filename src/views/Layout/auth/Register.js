@@ -88,7 +88,7 @@ export const Register = () => {
           setSnackbar({
             snackbarOpen: true,
             snackbarType: "error",
-            snackbarMessage: "User Register Failed",
+            snackbarMessage: "User Register Failed. Email already exist!",
           })
         );
       }

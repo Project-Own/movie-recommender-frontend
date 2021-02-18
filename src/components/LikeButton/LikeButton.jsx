@@ -12,21 +12,24 @@ import { Favorite, FavoriteBorder } from "@material-ui/icons";
 
 const addToPreference = async (index, token = "", add = true) => {
   const operation = add ? "add" : "remove";
-  try {
-    await Axios.post(
-      `https://vae-login.herokuapp.com/api/${operation}-movie`,
-      {
-        index: index,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "x-auth-token": token,
+
+  if (index >= 0 && index < 62000) {
+    try {
+      await Axios.post(
+        `https://vae-login.herokuapp.com/api/${operation}-movie`,
+        {
+          index: index,
         },
-      }
-    );
-  } catch (e) {
-    console.log(e);
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": token,
+          },
+        }
+      );
+    } catch (e) {
+      console.log(e);
+    }
   }
 };
 

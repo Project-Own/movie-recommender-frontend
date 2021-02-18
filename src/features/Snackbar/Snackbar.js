@@ -38,7 +38,7 @@ const CustomizedSnackbars = () => {
           elevation={6}
           variant="filled"
           onClose={handleClose}
-          color={snackbarType}
+          severity={snackbarType}
         >
           {snackbarMessage}
         </Alert>

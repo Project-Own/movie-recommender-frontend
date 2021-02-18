@@ -17,6 +17,7 @@ import {
 } from "../../features/Auth/registerSlice";
 import { Redirect } from "react-router";
 import { Skeleton } from "@material-ui/lab";
+import { setSnackbar } from "../../features/Snackbar/snackbarSlice";
 
 const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
 
@@ -104,25 +105,37 @@ const Contents = () => {
           console.log("INDEXXX");
           console.log(res.data);
 
-          let response = res?.data["index"][0];
-          response = response["index"];
-          console.log(response);
-          if (response !== 0) {
-            if (selectedMovieList.includes(response)) {
-              selectedMovieList.splice(selectedMovieList.indexOf(res), 1);
-            } else {
-              selectedMovieList.push(response);
-              (async function () {
-                let data = await getMovieTitle(response);
+          if (res.data["index"].length === 0) {
+            dispatch(
+              setSnackbar({
+                snackbarOpen: true,
+                snackbarType: "error",
+                snackbarMessage: `Did not find selected movie in recommender system's database! Please, choose another movie.`,
+              })
+            );
+          } else {
+            let response = res?.data["index"][0];
+            response = response["index"];
 
-                await getDetails(data, response, {
-                  index: response,
-                  ...movieSelected,
-                }); //get details of predicted list here data is the predicted top 20
-              })();
+            console.log(response);
+
+            if (response !== 0 && response < 62000) {
+              if (selectedMovieList.includes(response)) {
+                selectedMovieList.splice(selectedMovieList.indexOf(res), 1);
+              } else {
+                selectedMovieList.push(response);
+                (async function () {
+                  let data = await getMovieTitle(response);
+
+                  await getDetails(data, response, {
+                    index: response,
+                    ...movieSelected,
+                  }); //get details of predicted list here data is the predicted top 20
+                })();
+              }
+
+              showHide(selectedMovieList);
             }
-
-            showHide(selectedMovieList);
           }
         });
       }
