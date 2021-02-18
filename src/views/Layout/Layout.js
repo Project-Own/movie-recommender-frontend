@@ -8,23 +8,24 @@ import {
   Button,
   IconButton,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ImageSlider from "../../components/frontPage/ImageSlider";
 import OscarList from "../../components/frontPage/oscar_data";
 import ImdbList from "../../components/frontPage/imdbList";
 import ScrollFollow from "../../components/ScrollFollow/ScrollFollow";
 import ScrollTopIcon from "../../components/ScrollTop/ScrollTopIcon";
 import MovieDetail from "../../components/MovieDetail/MovieDetail";
-import { selectUser } from "../../features/Auth/registerSlice";
+import {
+  selectIsAuthenticated,
+  selectMovie,
+  selectMovieSelected,
+  selectUser,
+} from "../../features/Auth/registerSlice";
 import Axios from "axios";
 import Recommender from "../../components/Recommender/Recommender";
 import HorizonalScroll from "../../components/HorizonalScroll/HorizontalScroll";
-import {
-  DeleteForeverTwoTone,
-  DeleteOutline,
-  DeleteOutlineTwoTone,
-  RemoveCircleOutline,
-} from "@material-ui/icons";
+import { DeleteOutlineTwoTone } from "@material-ui/icons";
+import { Redirect } from "react-router";
 
 const recommendAPIAddressGenerator = (items, genre = "genre") => {
   return (
@@ -46,41 +47,8 @@ export default function Layout(props) {
   const oscDate = OscarList.map((d) => d.date);
 
   const classes = useStyles();
-  const [movie, setMovie] = useState({
-    Title: "The Shape of Water",
-    Year: "2017",
-    Rated: "R",
-    Released: "22 Dec 2017",
-    Runtime: "123 min",
-    Genre: "Adventure, Drama, Fantasy, Romance, Sci-Fi, Thriller",
-    Director: "Guillermo del Toro",
-    Writer:
-      "Guillermo del Toro (screenplay by), Vanessa Taylor (screenplay by), Guillermo del Toro (story by)",
-    Actors: "Sally Hawkins, Michael Shannon, Richard Jenkins, Octavia Spencer",
-    Plot:
-      "At a top secret research facility in the 1960s, a lonely janitor forms a unique relationship with an amphibious creature that is being held in captivity.",
-    Language: "English, American Sign Language, Russian, French",
-    Country: "USA, Canada, Mexico",
-    Awards: "Won 4 Oscars. Another 133 wins & 345 nominations.",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BNGNiNWQ5M2MtNGI0OC00MDA2LWI5NzEtMmZiYjVjMDEyOWYzXkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_SX300.jpg",
-    Ratings: [
-      { Source: "Internet Movie Database", Value: "7.3/10" },
-      { Source: "Rotten Tomatoes", Value: "92%" },
-      { Source: "Metacritic", Value: "87/100" },
-    ],
-    Metascore: "87",
-    imdbRating: "7.3",
-    imdbVotes: "372,534",
-    imdbID: "tt5580390",
-    Type: "movie",
-    DVD: "N/A",
-    BoxOffice: "$63,859,435",
-    Production: "Double Dare You, TSG Entertainment",
-    Website: "N/A",
-    Response: "True",
-  });
 
+  const isAuthenticated = useSelector(selectIsAuthenticated);
   const [recommendedMovieList, setRecommendedMovieList] = useState({});
   const [loading, setLoading] = useState(true);
   const [genres, setGenres] = useState(["action", "adventure"]);
@@ -98,11 +66,22 @@ export default function Layout(props) {
     "musical",
     "animation",
     "sci-fi",
+    "horror",
   ]);
   const user = useSelector(selectUser);
   const name = user?.name;
   const preferredMovies = user?.preferredMovies || undefined;
 
+  const dispatch = useDispatch();
+
+  const movieSelected = useSelector(selectMovieSelected);
+  const setMovieSelected = (movie) => {
+    dispatch(
+      selectMovie({
+        movieSelected: movie,
+      })
+    );
+  };
   const items = 10;
 
   const searchRecommendation = (genres) => {
@@ -172,12 +151,20 @@ export default function Layout(props) {
     searchRecommendation(genres);
   }, [name]);
 
+  if (!isAuthenticated) {
+    return (
+      <Redirect
+        from="/movie-recommender-frontend/"
+        to="/movie-recommender-frontend/login"
+      />
+    );
+  }
   return (
     <>
       <Toolbar />
       <Grid container>
         <Grid item xs={12}>
-          {movie ? <MovieDetail movie={movie} /> : null}
+          {movieSelected ? <MovieDetail movie={movieSelected} /> : null}
         </Grid>
       </Grid>
 
@@ -237,8 +224,8 @@ export default function Layout(props) {
                   <Recommender
                     loading={loading}
                     recommendedMovieList={recommendedMovieList[genre]}
-                    movie={movie}
-                    setMovie={setMovie}
+                    movie={movieSelected}
+                    setMovie={setMovieSelected}
                   />
                 </Grid>
               </Grid>

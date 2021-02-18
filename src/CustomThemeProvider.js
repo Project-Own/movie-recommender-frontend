@@ -3,7 +3,7 @@ import { ThemeProvider, useMediaQuery } from "@material-ui/core";
 import getTheme from "./themes/base";
 
 export const CustomThemeContext = createContext({
-  currentTheme: "light",
+  currentTheme: "dark",
   setTheme: null,
 });
 

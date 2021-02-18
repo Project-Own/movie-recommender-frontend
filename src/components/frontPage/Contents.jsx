@@ -10,7 +10,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addMovie, selectToken } from "../../features/Auth/registerSlice";
+import {
+  addMovie,
+  selectMovieSelected,
+  selectToken,
+} from "../../features/Auth/registerSlice";
 import { Redirect } from "react-router";
 import { Skeleton } from "@material-ui/lab";
 
@@ -36,6 +40,36 @@ const addToPreferenceAPI = async (index, token = "", add = true) => {
   }
 };
 
+async function getMovieTitle(selectedTitle) {
+  //recommendation
+
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(selectedTitle),
+  };
+
+  return fetch(
+    "https://item-recommendation.herokuapp.com/recom",
+    requestOptions
+  )
+    .then(async (response) => {
+      const data = await response.json();
+      // check for error response
+      if (!response.ok) {
+        // get error message from body or default to response status
+        const error = (data && data.message) || response.status;
+        return Promise.reject(error);
+      }
+      // console.log(data);
+      return data;
+    })
+
+    .catch((error) => {
+      console.error("There was an error!", error);
+    });
+}
+
 const Contents = () => {
   const [movieList, setMovieList] = useState([]);
   const [movieIndex, setMovieIndex] = useState([]);
@@ -45,6 +79,54 @@ const Contents = () => {
   const [selectButtonClicked, setSelectButtonClicked] = useState(false);
   const token = useSelector(selectToken);
   const dispatch = useDispatch();
+
+  const movieSelected = useSelector(selectMovieSelected);
+
+  const FIND_INDEX_API_ADDRESS =
+    "https://vae-movie-recommender.herokuapp.com/findIndex";
+  useEffect(() => {
+    try {
+      if (movieSelected || typeof movieSelected != "undefined") {
+        console.log("MOVIE SELECED");
+        console.log(movieSelected);
+        Axios.post(
+          FIND_INDEX_API_ADDRESS,
+          {
+            title: movieSelected.title,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "x-auth-token": token,
+            },
+          }
+        ).then((res) => {
+          console.log("INDEXXX");
+          console.log(res.data);
+
+          let response = res?.data["index"][0];
+          response = response["index"];
+          console.log(response);
+          if (response !== 0) {
+            if (selectedMovieList.includes(response)) {
+              selectedMovieList.splice(selectedMovieList.indexOf(res), 1);
+            } else {
+              selectedMovieList.push(response);
+              (async function () {
+                let data = await getMovieTitle(response);
+
+                await getDetails(data, response, movieSelected); //get details of predicted list here data is the predicted top 20
+              })();
+            }
+
+            showHide(selectedMovieList);
+          }
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, [movieSelected]);
 
   useEffect(() => {
     async function fetchData() {
@@ -140,7 +222,7 @@ const Contents = () => {
       });
   }
 
-  async function getDetails(data, index) {
+  async function getDetails(data, index, movieSelected = " ") {
     console.log("DATA");
     console.log(data);
     try {
@@ -197,7 +279,9 @@ const Contents = () => {
       let updatedMovieList = [];
       updatedMovieList = movieListFront.concat(fourRndom);
       updatedMovieList = updatedMovieList.concat(movieListBack);
-
+      if (movieSelected !== " ") {
+        updatedMovieList = [movieSelected].concat(updatedMovieList);
+      }
       // console.log("Updated Movie List");
       // console.log(updatedMovieList);
       // updatedMovieList.splice(movieIndex.indexOf(index) + 1, 4, ...fourRndom);
@@ -226,7 +310,7 @@ const Contents = () => {
   };
   const getMovieCard = (movieObj) => {
     return (
-      <Grid item xs={12} sm={4} md={2}>
+      <Grid item xs={12} sm={4} md={2} align="center">
         <MovieCard
           {...movieObj}
           showHide={showHide}
@@ -237,6 +321,7 @@ const Contents = () => {
       </Grid>
     );
   };
+
   const addToPreference = async () => {
     try {
       dispatch(addMovie({ index: selectedMovieList }));
@@ -265,30 +350,31 @@ const Contents = () => {
   // console.log("Movie Index" + movieIndex);
 
   return (
-    <Grid
-      direction="row"
-      item
-      justify="center"
-      alignItems="center"
-      container
-      spacing={2}
-    >
-      {loading
-        ? new Array(50).fill(0).map(() => (
-            <Grid item>
-              <Skeleton
-                animation="wave"
-                variant="circle"
-                height={200}
-                width={200}
-                style={{ margin: 4 }}
-              />
-            </Grid>
-          ))
-        : movieList.map((movieObj) => getMovieCard(movieObj))}
-
+    <>
+      <Grid
+        item
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        container
+      >
+        {loading
+          ? new Array(50).fill(0).map(() => (
+              <Grid item>
+                <Skeleton
+                  animation="wave"
+                  variant="circle"
+                  height={200}
+                  width={200}
+                  style={{ margin: 4 }}
+                />
+              </Grid>
+            ))
+          : movieList?.map((movieObj) => getMovieCard(movieObj))}
+      </Grid>
       <Footer check={check} onClickFinished={addToPreference} />
-    </Grid>
+    </>
   );
 };
 

@@ -28,9 +28,11 @@ import HideOnScroll from "./HideOnScroll";
 import {
   failure,
   selectIsAuthenticated,
+  selectMovie,
   selectUser,
 } from "../../features/Auth/registerSlice";
 import { useDispatch, useSelector } from "react-redux";
+import MovieAutoComplete from "../SearchComponent/MovieAutoComplete";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -81,6 +83,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   appBar: {
     zIndex: 1000,
@@ -102,6 +107,14 @@ export default function TopNavBar(props) {
 
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const user = useSelector(selectUser);
+
+  const setMovieSelected = (movie) => {
+    dispatch(
+      selectMovie({
+        movieSelected: movie,
+      })
+    );
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -207,6 +220,10 @@ export default function TopNavBar(props) {
           </Typography>
         </Grid>
       </Grid>
+
+      {isAuthenticated ? (
+        <MovieAutoComplete setMovieSelected={setMovieSelected} />
+      ) : null}
     </div>
   );
 
@@ -233,6 +250,8 @@ export default function TopNavBar(props) {
             <nav className={classes.navBar}>
               {isAuthenticated ? (
                 <>
+                  <MovieAutoComplete setMovieSelected={setMovieSelected} />
+
                   <Link to="/movie-recommender-frontend/profile">
                     <Button variant="text" className={classes.title}>
                       {typeof user !== "undefined" ? user?.name : "User"}

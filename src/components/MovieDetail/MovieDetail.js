@@ -26,7 +26,7 @@ const MovieDetail = (props) => {
               <img
                 alt="Movie Poster"
                 className={classes.media}
-                src={movie?.Poster}
+                src={movie?.Poster ?? movie?.posterPath}
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src =
@@ -80,7 +80,7 @@ const MovieDetail = (props) => {
                 <Grid item>
                   <Typography variant="h6">Release Date:</Typography>
                   <Typography variant="body2">
-                    {movie?.Year ?? "Unknown"}
+                    {movie?.Year ?? movie.release_date ?? "Unknown"}
                   </Typography>
                   <Grid item>
                     <Typography variant="h6">Runtime:</Typography>
@@ -108,7 +108,17 @@ const MovieDetail = (props) => {
                         </Typography>
                       </Grid>
                     );
-                  })}
+                  }) ?? (
+                      <Grid item xs={12}>
+                        <Typography variant="body2">
+                          {movie?.vote_average}
+                        </Typography>
+                      </Grid>
+                    ) ?? (
+                      <Grid item xs={12}>
+                        <Typography variant="body2">"Unknown"</Typography>
+                      </Grid>
+                    )}
                 </Grid>
               </Grid>
             )}
@@ -141,7 +151,9 @@ const MovieDetail = (props) => {
               <Grid item container>
                 <Grid item container xs={12}>
                   <Grid item>
-                    <Typography variant="h3">{movie?.Title}</Typography>
+                    <Typography variant="h3">
+                      {movie?.Title ?? movie?.title ?? "Unknown"}
+                    </Typography>
                   </Grid>
                   <Grid item>
                     <LikeButton
@@ -169,7 +181,7 @@ const MovieDetail = (props) => {
                 <Grid item xs={12}>
                   <Typography variant="h6">Plot:</Typography>
                   <Typography variant="body2" align="justify">
-                    {movie?.Plot ?? "Unknown"}
+                    {movie?.Plot ?? movie?.overview ?? "Unknown"}
                   </Typography>
                 </Grid>
               </Grid>

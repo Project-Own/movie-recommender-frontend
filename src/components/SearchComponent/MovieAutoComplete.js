@@ -6,11 +6,14 @@ import {
   Grid,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
+import Axios from "axios";
 
 const AUTOCOMPLETE_API_ADDRESS =
   "https://api.themoviedb.org/3/search/movie?api_key=ea575fa4bf65c424e93e0c032ab5c5f2&language=en-US&query=";
 const AUTOCOMPLETE_TOP_API_ADDRESS =
   "https://api.themoviedb.org/3/movie/top_rated?api_key=ea575fa4bf65c424e93e0c032ab5c5f2&language=en-US&page=1";
+
+const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&t=";
 
 const sleep = (delay = 0) => {
   return new Promise((resolve) => {
@@ -21,7 +24,7 @@ const sleep = (delay = 0) => {
 const MovieAutoComplete = ({ setMovieSelected }) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState();
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -53,9 +56,39 @@ const MovieAutoComplete = ({ setMovieSelected }) => {
   }, [query]);
 
   useEffect(() => {
-    if (selected !== null) {
-      console.log(selected);
-      setMovieSelected(selected);
+    if (selected || typeof selected != "undefined") {
+      // console.log(selected);
+
+      Promise.all(
+        [selected]?.map(async (movie, index) => {
+          let omdbRes;
+          try {
+            omdbRes = await Axios.get(`${API_ADDRESS}${movie.title}`);
+          } catch (err) {
+            console.log(err);
+          }
+
+          try {
+            const res = await Axios.get(
+              "https://image.tmdb.org/t/p/w185" + movie.poster_path
+            );
+            if (res.data === "<h1>File not Found</h1>") throw Error;
+            movie.posterPath =
+              "https://image.tmdb.org/t/p/w185" + movie.poster_path;
+          } catch (err) {
+            // console.log(res);
+            movie.posterPath = omdbRes?.data?.Poster ?? "Unknown";
+          }
+          movie = { ...movie, ...omdbRes.data };
+
+          return movie;
+        })
+      ).then((res) => {
+        // console.log("INSIDE THEN");
+        // console.log(res);
+
+        setMovieSelected(res[0]);
+      });
     }
   }, [selected, setMovieSelected]);
 
@@ -78,6 +111,7 @@ const MovieAutoComplete = ({ setMovieSelected }) => {
   return (
     <Autocomplete
       freeSolo
+      style={{ padding: 10, minWidth: 200 }}
       id="autocomplete"
       open={open}
       onOpen={() => {

@@ -69,8 +69,8 @@ const Recommender = (props) => {
           return movie;
         })
       ).then((res) => {
-        console.log("INSIDE THEN");
-        console.log(res);
+        // console.log("INSIDE THEN");
+        // console.log(res);
         setMovieList(res);
       });
 
@@ -106,6 +106,7 @@ const Recommender = (props) => {
                     data={movie}
                     height={height}
                     width={breadth}
+                    style={{ margin: 10 }}
                     searchMovie={searchMovie}
                   />
                 ))}

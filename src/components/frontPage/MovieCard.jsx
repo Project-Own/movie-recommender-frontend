@@ -10,6 +10,10 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 // import defaultMoviePoster from '../../assets/images/defaultMoviePoster.png';
 import { useEffect } from "react";
 import FloatCard from "../FloatCard/FloatCard";
+import Axios from "axios";
+
+const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
+
 async function getMovieTitle(selectedTitle) {
   //recommendation
 
@@ -39,11 +43,13 @@ async function getMovieTitle(selectedTitle) {
       console.error("There was an error!", error);
     });
 }
+
 const MovieCard = (props) => {
   // console.log(props);
   const [icon, setIcon] = useState(true);
   const [posterOpacity, setposterOpacity] = useState(true);
   const [iconOpacity, setIconOpacity] = useState(true);
+  const [posterUrl, setPosterUrl] = useState(props.posterPath);
 
   let selectedList = props.selectedList;
 
@@ -114,30 +120,37 @@ const MovieCard = (props) => {
     props.showHide(selectedList);
   }
 
-  // useEffect(() => {
-  //   //poster
-  //   const getImage = (path) => {
-  //     let ppath = "https://image.tmdb.org/t/p/w185" + path;
-  //     if (path === "") {
-  //       setPosterUrl(
-  //         "https://img.omdbapi.com/?apikey=e4c29baa&i=" + props.imdbId
-  //       );
-  //     }
+  useEffect(() => {
+    //poster
 
-  //     fetch(ppath, { method: "HEAD" })
-  //       .then((res) => {
-  //         if (res.ok) {
-  //           setPosterUrl(res.url);
-  //         } else {
-  //           setPosterUrl(
-  //             "https://img.omdbapi.com/?apikey=e4c29baa&i=" + props.imdbId
-  //           );
-  //         }
-  //       })
-  //       .catch((err) => console.log("Error:", err));
-  //   };
-  //   getImage(props.posterPath);
-  // }, [props.posterPath, props.imdbId]);
+    (async () => {
+      let omdbRes;
+      let posterPath;
+
+      if (props?.Poster) {
+        posterPath = props?.Poster;
+      } else {
+        try {
+          omdbRes = await Axios.get(`${API_ADDRESS}${props.imdbId}`);
+        } catch (err) {
+          console.log(err);
+        }
+
+        try {
+          const res = await Axios.get(
+            "https://image.tmdb.org/t/p/w185" + props.posterPath
+          );
+          if (res.data === "<h1>File not Found</h1>") throw Error;
+          posterPath = "https://image.tmdb.org/t/p/w185" + props.posterPath;
+        } catch (err) {
+          // console.log(res);
+          posterPath = omdbRes?.data?.Poster ?? "Unknown";
+        }
+      }
+
+      setPosterUrl(posterPath);
+    })();
+  }, [props.posterPath, props.imdbId]);
 
   useEffect(() => {
     if (selectedList.includes(props.index)) {
@@ -149,7 +162,7 @@ const MovieCard = (props) => {
       setposterOpacity(true);
       setIconOpacity(true);
     }
-  }, [props.index]);
+  }, [props.index, selectedList]);
   return (
     <ThemeProvider theme={theme}>
       <ButtonBase className={classes.buttonbasestyle} onClick={onButtonClicked}>
@@ -157,7 +170,7 @@ const MovieCard = (props) => {
           <Box className={classes.divStyle} textAlign="center">
             <img
               className={classes.image}
-              src={props.posterPath}
+              src={posterUrl}
               alt=""
               onError={(e) => {
                 e.target.onerror = null;

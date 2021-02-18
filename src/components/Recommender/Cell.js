@@ -14,7 +14,11 @@ const Cell = (props) => {
   const { data, height, width, searchMovie } = props;
   const theme = useTheme();
   return (
-    <div style={{ marginLeft: 10, marginRight: 10 }}>
+    <div
+      style={{
+        margin: 20,
+      }}
+    >
       <FlipCard
         height={height}
         width={width}
@@ -24,7 +28,10 @@ const Cell = (props) => {
               // onClick={() => {
               //   searchMovie(movie);
               // }}
-              style={{ height: height, width: width }}
+              style={{
+                height: height,
+                width: width,
+              }}
               src={data?.posterPath}
               alt="Poster"
               onError={(e) => {
@@ -45,21 +52,25 @@ const Cell = (props) => {
                     <Typography key={key} variant="body2">
                       {value}
                     </Typography>
-                  ))}
+                  )) ?? "Unknown"}
                 </Grid>
 
-                {/* <Grid item xs={12}>
+                <Grid item xs={12}>
                   <Typography>Popularity</Typography>
                   <Typography variant="body2">{data?.popularity}</Typography>
-                </Grid> */}
+                </Grid>
                 <Grid item xs={12}>
                   <Typography>IMDB:</Typography>
-                  <Typography variant="body2">{data?.imdbRating}</Typography>
+                  <Typography variant="body2">
+                    {data?.imdbRating ?? data?.vote_average ?? 0}
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={12}>
                   <Typography>Director:</Typography>
-                  <Typography variant="body2">{data?.Director}</Typography>
+                  <Typography variant="body2">
+                    {data?.Director ?? "Unknown"}
+                  </Typography>
                 </Grid>
               </Grid>
             </CardContent>
@@ -71,7 +82,8 @@ const Cell = (props) => {
         container
         style={{
           width: width,
-          background: theme.palette.primary.main,
+          background: theme.palette.primary.light,
+          boxShadow: "10px -10px 15px -12px rgba(0, 0, 0, 0.3)",
 
           borderRadius: "0px 0px 10px 10px",
         }}
@@ -83,7 +95,11 @@ const Cell = (props) => {
               onClick={() => {
                 searchMovie(data);
               }}
-              style={{ padding: 20, cursor: "pointer", overflow: "hidden" }}
+              style={{
+                padding: 20,
+                cursor: "pointer",
+                overflow: "hidden",
+              }}
             >
               {data?.title ?? "Unknown"}
             </Typography>
