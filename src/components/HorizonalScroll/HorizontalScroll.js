@@ -1,8 +1,7 @@
 import React from "react";
 
-import { Button, Fab, Grid, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import "../HorizonalScroll/horizontalScroll.css";
-import { AddIcCallOutlined, ArrowBack, ArrowForward } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   menuContainer: {
     display: "flex",
@@ -14,13 +13,13 @@ const HorizonalScroll = (props) => {
   const classes = useStyles();
 
   const navRef = React.createRef();
-  const handleNav = (direction) => {
-    if (direction === "left") {
-      navRef.current.scrollLeft -= 200;
-    } else {
-      navRef.current.scrollLeft += 200;
-    }
-  };
+  // const handleNav = (direction) => {
+  //   if (direction === "left") {
+  //     navRef.current.scrollLeft -= 200;
+  //   } else {
+  //     navRef.current.scrollLeft += 200;
+  //   }
+  // };
 
   return (
     <div className={classes.menuContainer}>

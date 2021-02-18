@@ -115,7 +115,10 @@ const Contents = () => {
               (async function () {
                 let data = await getMovieTitle(response);
 
-                await getDetails(data, response, movieSelected); //get details of predicted list here data is the predicted top 20
+                await getDetails(data, response, {
+                  index: response,
+                  ...movieSelected,
+                }); //get details of predicted list here data is the predicted top 20
               })();
             }
 

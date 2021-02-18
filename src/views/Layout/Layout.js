@@ -166,6 +166,20 @@ export default function Layout(props) {
         <Grid item xs={12}>
           {movieSelected ? <MovieDetail movie={movieSelected} /> : null}
         </Grid>
+
+        <Grid item>
+          <Button
+            style={{ margin: 10 }}
+            onClick={() => {
+              setLoading(true);
+              searchRecommendation(genres);
+            }}
+            color="secondary"
+            variant="contained"
+          >
+            Refresh Recommendations
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container direction="row" alignItems="flex-start" justify="center">

@@ -1,8 +1,7 @@
 import React from "react";
-import { Container, Grid, Toolbar } from "@material-ui/core";
+import { Grid, Toolbar } from "@material-ui/core";
 import Header from "../../components/frontPage/Header";
 import Contents from "../../components/frontPage/Contents";
-import MovieSearch from "../../components/SearchComponent/MovieSearch";
 // import axios from 'axios';
 // import {useState,useEffect} from 'react';
 
