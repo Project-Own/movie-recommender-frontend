@@ -7,8 +7,12 @@ const theme = createMuiTheme({
         hoverOpacity: 0.5,
         
        
-       }
- },
+       },
+    },
+    typography:{
+        fontFamily:'Lato',
+        
+    }
 
    
 });

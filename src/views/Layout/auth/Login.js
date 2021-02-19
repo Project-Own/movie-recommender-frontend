@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
+import {ThemeProvider } from '@material-ui/core/styles';
+import theme from "../../../themes/theme";
 import "../../App/App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
@@ -10,9 +12,20 @@ import {
   selectIsAuthenticated,
 } from "../../../features/Auth/registerSlice";
 import { loadUser } from "../../../features/Auth/loadUser";
-import { CircularProgress, Grid } from "@material-ui/core";
+import {CircularProgress,Grid} from "@material-ui/core";
 
-export const Login = () => {
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+
+import Paper from '@material-ui/core/Paper';
+
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+
+const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,25 +34,8 @@ export const Login = () => {
   const authenticated = useSelector(selectIsAuthenticated);
   const dispatch = useDispatch();
 
-  //Redirect if logged in
-  if (authenticated) {
-    // console.log("Inside if");
-
-    loadUser(dispatch);
-    dispatch(
-      setSnackbar({
-        snackbarOpen: true,
-        snackbarType: "success",
-        snackbarMessage: ` Welcome Back `,
-      })
-    );
-    return (
-      <Redirect
-        from="/movie-recommender-frontend/login"
-        to="/movie-recommender-frontend/"
-      />
-    );
-  }
+  
+ 
 
   const { email, password } = formData;
 
@@ -97,38 +93,140 @@ export const Login = () => {
     }
   };
 
+
+
+
+
+  const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '100vh',
+    backgroundColor: '#F5F5DC',    
+  },
+  image: {
+    backgroundImage: 'url(https://source.unsplash.com/random/?movie)',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor:
+      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
+  title:{
+    margin:theme.spacing(8,0,-2,0),
+    fontSize:'56px',
+    fontFamily:'Noto Sans, sans-serif',
+  },
+  title2:{
+    margin:theme.spacing(0,0,3,0),
+    fontSize:'40px',
+    fontFamily:'Noto Sans, sans-serif',
+    fontWeight:'Bold',
+    
+  },
+  paper: {
+    margin: theme.spacing(6,5),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '64%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+
+const classes = useStyles();
+
+//Redirect if logged in
+if (authenticated) {
+  // console.log("Inside if");
+
+  loadUser(dispatch);
+  dispatch(
+    setSnackbar({
+      snackbarOpen: true,
+      snackbarType: "success",
+      snackbarMessage: ` Welcome Back `,
+    })
+  );
   return (
-    <div className="container">
-      <h1 className="large text-primary"> Sign In </h1>
-      <p className="lead">
-        <i className="fas fa-user"> </i> Sign into Your Account
-      </p>
-      <form className="form" onSubmit={(e) => onSubmit(e)}>
-        <div className="form-group">
-          <input
-            type="email"
-            placeholder="Email Address"
-            name="email"
-            value={email}
-            onChange={(e) => onChange(e)}
+    <Redirect
+      from="/movie-recommender-frontend/login"
+      to="/movie-recommender-frontend/"
+    />
+  );
+}
+
+
+  return (
+    <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      <Grid item xs={false} sm={7} md={8} className={classes.image} />
+      <Grid item xs={12} sm={5} md={4} component={Paper} className={classes.root} elevation={6} square>
+        <div className={classes.paper}>
+     
+
+      <ThemeProvider theme={theme}>
+      <Typography className={classes.title}>
+          'चलचित्र'
+      </Typography>
+      <Typography className={classes.title2}>
+          Movie Recommender
+      </Typography>
+      
+     
+      <Typography component="h1" variant="h5">
+            Sign in
+          </Typography> 
+      
+          <form className={classes.form} onSubmit={(e) => onSubmit(e)} noValidate>
+
+            <TextField
+              size='small'
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              onChange={(e) => onChange(e)}
+              autoFocus
+              />
+            <TextField
+            size='small'
+            variant="outlined"
+            margin="normal"
             required
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => onChange(e)}
+            fullWidth
             name="password"
-            minLength="6"
-          />
-        </div>
-        <Grid container alignItem="center">
-          <Grid item>
-            <input type="submit" className="btn btn-primary" value="Login" />
-          </Grid>
-          <Grid item>
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={(e) => onChange(e)}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+              />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              >
+              Sign In
+            </Button>
+            <Grid item>
             {loading ? (
               <CircularProgress
                 color="secondary"
@@ -137,13 +235,19 @@ export const Login = () => {
               />
             ) : null}
           </Grid>
-        </Grid>
-      </form>
-      <p className="my-1">
-        Don 't have an account?
-        <Link to="/movie-recommender-frontend/register"> Sign Up </Link>
-      </p>
-    </div>
+            <Grid container>
+              <Grid item>
+                <Link  to="/movie-recommender-frontend/register" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+         </ThemeProvider> 
+        </div>
+      </Grid>
+    </Grid>
   );
-};
+}
+
 export default Login;
