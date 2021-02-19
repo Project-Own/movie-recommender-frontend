@@ -25,6 +25,10 @@ const theme = createMuiTheme({
       main: red.A400,
     },
   },
+  typography:{
+    fontFamily:'Lato',
+    
+}
 });
 
 export default theme;

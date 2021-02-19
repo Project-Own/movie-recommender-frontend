@@ -7,8 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { failure, success } from "../../../features/Auth/registerSlice";
 import { selectIsAuthenticated } from "../../../features/Auth/registerSlice";
 import { loadUser } from "../../../features/Auth/loadUser";
-import {ThemeProvider } from '@material-ui/core/styles';
-import theme from "../../../themes/theme";
+
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -171,18 +170,19 @@ export const Register = () => {
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={7} md={8} className={classes.image} />
-      <Grid item xs={12} sm={5} md={4} className={classes.root} component={Paper} elevation={6} square>
+      <Grid item xs={12} sm={5} md={4} className={classes.root} elevation={6} square>
         <div className={classes.paper}>
-        <ThemeProvider theme={theme}>
       <Typography className={classes.title}>
           'चलचित्र'
       </Typography>
       <Typography className={classes.title2}>
           Movie Recommender
       </Typography>
+      
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
+            
           <form className={classes.form} onSubmit={(e) => onSubmit(e)} noValidate>
           <TextField
               size = 'small'
@@ -209,7 +209,7 @@ export const Register = () => {
               autoComplete="email"
               autoFocus
               onChange={(e) => onChange(e)}
-            />
+              />
             <TextField
               size = 'small'
               variant="outlined"
@@ -256,7 +256,6 @@ export const Register = () => {
               </Grid>
             </Grid>
           </form>
-          </ThemeProvider> 
         </div>
       </Grid>
     </Grid>
