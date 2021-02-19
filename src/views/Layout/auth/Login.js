@@ -100,7 +100,7 @@ const Login = () => {
   const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
-    backgroundColor: '#F5F5DC',    
+       
   },
   image: {
     backgroundImage: 'url(https://source.unsplash.com/random/?movie)',
