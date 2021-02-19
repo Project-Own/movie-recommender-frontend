@@ -173,8 +173,7 @@ export const Register = () => {
       <Grid item xs={false} sm={7} md={8} className={classes.image} />
       <Grid item xs={12} sm={5} md={4} className={classes.root} component={Paper} elevation={6} square>
         <div className={classes.paper}>
-        <ThemeProvider theme={theme}>
-      <Typography className={classes.title}>
+        <Typography className={classes.title}>
           'चलचित्र'
       </Typography>
       <Typography className={classes.title2}>
@@ -256,7 +255,6 @@ export const Register = () => {
               </Grid>
             </Grid>
           </form>
-          </ThemeProvider> 
         </div>
       </Grid>
     </Grid>
