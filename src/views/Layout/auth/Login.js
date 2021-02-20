@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
-import { ThemeProvider } from "@material-ui/core/styles";
-import theme from "../../../themes/theme";
 import "../../App/App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
@@ -159,16 +157,7 @@ const Login = () => {
   return (
     <Grid container component="main" className={classes.root}>
       <Grid item xs={false} sm={7} md={8} className={classes.image} />
-      <Grid
-        item
-        xs={12}
-        sm={5}
-        md={4}
-        component={Paper}
-        className={classes.root}
-        elevation={6}
-        square
-      >
+      <Grid item xs={12} sm={5} md={4} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Typography className={classes.title}>'चलचित्र'</Typography>
           <Typography className={classes.title2}>Movie Recommender</Typography>
