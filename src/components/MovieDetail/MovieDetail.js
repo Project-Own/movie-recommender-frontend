@@ -28,6 +28,7 @@ const MovieDetail = (props) => {
       let omdbRes;
       let posterPath;
       let updatedMovie;
+      updatedMovie = movie;
       if (movie?.Poster) {
         posterPath = movie?.Poster;
       } else {
