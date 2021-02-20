@@ -50,7 +50,7 @@ const MovieDetail = (props) => {
         }
       }
       // console.log("updated movie");
-      updatedMovie.posterPath = posterPath;
+      // updatedMovie.posterPath = posterPath;
       // console.log(updatedMovie);
       setMovieDetail(updatedMovie);
     })();
@@ -121,7 +121,9 @@ const MovieDetail = (props) => {
                 <Grid item>
                   <Typography variant="h6">Release Date:</Typography>
                   <Typography variant="body2">
-                    {movieDetail?.Year ?? movieDetail.release_date ?? "Unknown"}
+                    {movieDetail?.Year ??
+                      movieDetail?.release_date ??
+                      "Unknown"}
                   </Typography>
                   <Grid item>
                     <Typography variant="h6">Runtime:</Typography>
