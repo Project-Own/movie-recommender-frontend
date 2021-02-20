@@ -8,17 +8,16 @@ import { failure, success } from "../../../features/Auth/registerSlice";
 import { selectIsAuthenticated } from "../../../features/Auth/registerSlice";
 import { loadUser } from "../../../features/Auth/loadUser";
 
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 
 export const Register = () => {
   const [formData, setFormData] = useState({
@@ -109,53 +108,49 @@ export const Register = () => {
     }
   };
 
-
-  
   const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '100vh',
-   
+    root: {
+      height: "100vh",
     },
-  image: {
-    backgroundImage: 'url(https://source.unsplash.com/random/?movie)',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
-  title:{
-    margin:theme.spacing(8,0,-2,0),
-    fontSize:'56px',
-    fontFamily:'Noto Sans, sans-serif',
-  },
-  title2:{
-    margin:theme.spacing(0,0,3,0),
-    fontSize:'40px',
-    fontFamily:'Noto Sans, sans-serif',
-    fontWeight:'Bold',
-  },
-  paper: {
-    margin: theme.spacing(6,5),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    
-    
-  },
-  form: {
-    width: '64%', // Fix IE 11 issue
-    marginTop: theme.spacing(2),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-
+    image: {
+      backgroundImage: "url(https://source.unsplash.com/random/?movie)",
+      backgroundRepeat: "no-repeat",
+      backgroundColor:
+        theme.palette.type === "light"
+          ? theme.palette.grey[50]
+          : theme.palette.grey[900],
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    },
+    title: {
+      margin: theme.spacing(8, 0, -2, 0),
+      fontSize: "56px",
+      fontFamily: "Noto Sans, sans-serif",
+    },
+    title2: {
+      margin: theme.spacing(0, 0, 3, 0),
+      fontSize: "40px",
+      fontFamily: "Noto Sans, sans-serif",
+      fontWeight: "Bold",
+    },
+    paper: {
+      margin: theme.spacing(6, 5),
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    form: {
+      width: "64%", // Fix IE 11 issue
+      marginTop: theme.spacing(2),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  }));
 
   const classes = useStyles();
 
-    //Redirect if logged in
+  //Redirect if logged in
   if (authenticated) {
     console.log("Inside if");
 
@@ -170,22 +165,30 @@ export const Register = () => {
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={7} md={8} className={classes.image} />
-      <Grid item xs={12} sm={5} md={4} className={classes.root} elevation={6} square>
+      <Grid
+        item
+        xs={12}
+        sm={5}
+        md={4}
+        className={classes.root}
+        elevation={6}
+        square
+      >
         <div className={classes.paper}>
-      <Typography className={classes.title}>
-          'चलचित्र'
-      </Typography>
-      <Typography className={classes.title2}>
-          Movie Recommender
-      </Typography>
-      
+          <Typography className={classes.title}>'चलचित्र'</Typography>
+          <Typography className={classes.title2}>Movie Recommender</Typography>
+
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-            
-          <form className={classes.form} onSubmit={(e) => onSubmit(e)} noValidate>
-          <TextField
-              size = 'small'
+
+          <form
+            className={classes.form}
+            onSubmit={(e) => onSubmit(e)}
+            noValidate
+          >
+            <TextField
+              size="small"
               variant="outlined"
               margin="normal"
               required
@@ -198,7 +201,7 @@ export const Register = () => {
               onChange={(e) => onChange(e)}
             />
             <TextField
-              size = 'small'
+              size="small"
               variant="outlined"
               margin="normal"
               required
@@ -209,9 +212,9 @@ export const Register = () => {
               autoComplete="email"
               autoFocus
               onChange={(e) => onChange(e)}
-              />
+            />
             <TextField
-              size = 'small'
+              size="small"
               variant="outlined"
               margin="normal"
               required
@@ -224,7 +227,7 @@ export const Register = () => {
               onChange={(e) => onChange(e)}
             />
             <TextField
-              size = 'small'
+              size="small"
               variant="outlined"
               margin="normal"
               required
@@ -251,8 +254,8 @@ export const Register = () => {
             </Button>
             <Grid container>
               <Grid item>
-                  "Already have an account? <Link to="/movie-recommender-frontend/login">Sign In"
-                </Link>
+                "Already have an account?{" "}
+                <Link to="/movie-recommender-frontend/login">Sign In"</Link>
               </Grid>
             </Grid>
           </form>
@@ -260,8 +263,6 @@ export const Register = () => {
       </Grid>
     </Grid>
   );
-}
+};
 
 export default Register;
-
-

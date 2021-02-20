@@ -30,9 +30,7 @@ const Recommender = (props) => {
   const [movieList, setMovieList] = useState(recommendedMovieList);
 
   const searchMovie = (data) => {
-    if (data) {
-      setMovie(data);
-    }
+    setMovie(data);
   };
 
   useEffect(() => {
