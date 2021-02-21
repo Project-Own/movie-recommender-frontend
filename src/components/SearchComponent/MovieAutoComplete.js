@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import Axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
 
 const AUTOCOMPLETE_API_ADDRESS =
   "https://api.themoviedb.org/3/search/movie?api_key=ea575fa4bf65c424e93e0c032ab5c5f2&language=en-US&query=";
@@ -107,11 +108,36 @@ const MovieAutoComplete = ({ setMovieSelected }) => {
   //     setOptions(top);
   //   }
   // }, [open, top]);
+  const useStyles = makeStyles((theme) => ({
+    searchBarStyle: {
+      borderRadius: "24px",
+      height: 48,
+      alignItems: "center",
+      margin: "16px",
+      display: "flex",
+      "&:hover": {
+        boxShadow: "0px 0px 8px 1px rgba(0,0,0,0.2)",
+      },
+      boxShadow: "0px 0px 0px 1px rgba(0,0,0,0.2)",
+      fontFamily: "Roboto Mono",
+
+      "& .MuiOutlinedInput-notchedOutline": {
+        borderColor: "rgba(1,0,0,0)",
+      },
+      "&:hover .MuiOutlinedInput-notchedOutline": {
+        borderColor: "rgba(1,0,0,0)",
+      },
+      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+        borderColor: "rgba(1,0,0,0)",
+      },
+    },
+  }));
+  const classes = useStyles();
 
   return (
     <Autocomplete
+      className={classes.searchBarStyle}
       freeSolo
-      style={{ padding: 10, minWidth: 200 }}
       id="autocomplete"
       open={open}
       onOpen={() => {
@@ -154,7 +180,7 @@ const MovieAutoComplete = ({ setMovieSelected }) => {
               </Grid>
               <Grid item xs={4}>
                 <img
-                  style={{ objectFit: "cover" }}
+                  style={{ objectFit: "cover", maxHeight: 200 }}
                   src={"https://image.tmdb.org/t/p/w200" + option.poster_path}
                   width="100%"
                   alt={options.title}

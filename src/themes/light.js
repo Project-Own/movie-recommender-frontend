@@ -30,10 +30,9 @@ const theme = createMuiTheme({
       contrastText: "#222222",
     },
   },
-  typography:{
-    fontFamily:'Lato',
-    
-}
+  typography: {
+    fontFamily: "Lato",
+  },
 });
 
 export default theme;
