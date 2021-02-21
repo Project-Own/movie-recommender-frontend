@@ -258,11 +258,11 @@ export default function Layout(props) {
             />
           </Grid> */}
         </Grid>
-        <Grid item container md={2} sm={12} style={{ paddingTop: 20 }}>
-          <Grid item sm={6} md={12} className={classes.margin}>
+        <Grid item container md={6} sm={12} style={{ paddingTop: 20 }}>
+          <Grid item sm={6} md={10} className={classes.margin}>
             <ImdbList />
           </Grid>
-          <Grid item sm={6} md={12} className={classes.margin}>
+          <Grid item sm={6} md={10} className={classes.margin}>
             <Typography variant="h5">Best Picture Oscar Winners</Typography>
             <Card>
               <ImageSlider imgList={imgList} title={oscTitle} date={oscDate} />
