@@ -8,6 +8,13 @@ const useStyles = makeStyles((theme) => ({
   slider: {
     padding: theme.spacing() * 2,
   },
+  imge : {
+    height: "210px",
+    
+  },
+  sliderWidth: {
+    width: "100%"
+  }
 }));
 
 const ImageSlider = ({ imgList, title, date }) => {
@@ -33,6 +40,7 @@ const ImageSlider = ({ imgList, title, date }) => {
             onChange={handleSliderChange}
             aria-labelledby="input-slider"
             max={92}
+            className={classes.sliderWidth}
           />
         </div>
       </div>

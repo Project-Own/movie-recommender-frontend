@@ -78,7 +78,7 @@ useEffect(() => {
     let url;
     try {
 
-      fetch(`${API2_ADDRESS}${movie.imdbId}`).
+      fetch(`${API2_ADDRESS}${movie?.imdbId ?? movie?.imdbID}`).
       then(response => response.json()).
       then(data => {
         setYoutubeURL(data.videoUrl);
@@ -100,7 +100,21 @@ useEffect(() => {
 
   return (
     <Paper>
-      <Grid container>
+      <Grid container justify="center" alignItems="center">
+      <Grid item container xs={12} justify="center" alignItems="center" style={{marginTop:10}}>
+                  <Grid item>
+                    <Typography variant="h3">
+                      {movieDetail?.Title ?? movieDetail?.title ?? "Unknown"}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <LikeButton
+                      index={movieDetail?.index ?? 0}
+                      height={40}
+                      width={40}
+                    />
+                  </Grid>
+                </Grid>
         <Grid item container md={4} lg={2} alignItems="center" justify="center">
           {loading ? (
             <Skeleton animation="wave" variant="rect" />
@@ -213,7 +227,7 @@ useEffect(() => {
             container
             item
             sm={7}
-            md={9}
+            md={6}
             alignItems="center"
             justify="center"
             spacing={8}
@@ -234,20 +248,7 @@ useEffect(() => {
               </Grid>
             ) : (
               <Grid item container>
-                <Grid item container xs={12}>
-                  <Grid item>
-                    <Typography variant="h3">
-                      {movieDetail?.Title ?? movieDetail?.title ?? "Unknown"}
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <LikeButton
-                      index={movieDetail?.index ?? 0}
-                      height={40}
-                      width={40}
-                    />
-                  </Grid>
-                </Grid>
+               
                 <Grid item xs={6}>
                   <Typography variant="h6">Actors:</Typography>
                   <Typography variant="body2">
@@ -272,7 +273,8 @@ useEffect(() => {
             )}
           </Grid>
 
-          <Grid container>
+          <Grid container  sm={12} alignItems="center" justify="center"
+            md={3} >
             <Grid item> 
              <ReactPlayer
                 url= {youtubeURL}

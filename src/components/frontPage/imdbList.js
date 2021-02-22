@@ -11,6 +11,7 @@ import {
   CardContent,
   CardHeader,
   Grid,
+  Hidden,
   Typography,
 } from "@material-ui/core";
 import HorizontalScroll from "../HorizonalScroll/HorizontalScroll.js";
@@ -40,23 +41,24 @@ export default function ImdbList() {
 
   return (
     <Card>
-      <CardHeader title="Top 10 IMDB" />
+      <CardHeader title="Top IMDB Movies" />
       <CardContent>
         <HorizontalScroll>
           {/* <List dense className={classes.root}> */}
           {data.map((value, index) => {
             return (
-              <Grid container item direction="row">
-                <Grid item>
+              <Grid container item alignItems="center" justify="center" direction="row" style={{width:200, margin:10}}>
+                <Grid item >
                   <Avatar
+                    style={{height:200, width:200}}
                     alt={`Avatar n°${value + 1}`}
                     src={`https://image.tmdb.org/t/p/w185${value.poster_path}`}
                   />
                 </Grid>
 
-                <Grid item>
+                <Grid item style={{width:200,overflow:"hidden", align: "center"}} >
                   <Typography>{value.title}</Typography>
-                  <Typography varian="body2">{value.vote_average}</Typography>
+                  <Typography variant="body2">{value.vote_average}</Typography>
                 </Grid>
               </Grid>
             );

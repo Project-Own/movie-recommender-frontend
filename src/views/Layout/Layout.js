@@ -162,7 +162,7 @@ export default function Layout(props) {
   return (
     <>
       <Toolbar />
-      <Grid container>
+      <Grid container style={{marginTop:10}}>
         <Grid item xs={12}>
           {movieSelected ? <MovieDetail movie={movieSelected} /> : null}
         </Grid>
@@ -205,7 +205,7 @@ export default function Layout(props) {
             ))}
           </HorizonalScroll>
         </Grid>
-        <Grid item container md={10} sm={12}>
+        <Grid item container  sm={12}>
           {genres.map((genre) => {
             return (
               <Grid item container key={genre}>
@@ -257,12 +257,12 @@ export default function Layout(props) {
             />
           </Grid> */}
         </Grid>
-        <Grid item container md={6} sm={12} style={{ paddingTop: 20 }}>
-          <Grid item sm={6} md={10} className={classes.margin}>
+        <Grid item container sm={12} style={{ paddingTop: 20 }} spacing={4}>
+          <Grid item sm={8} md={10} >
             <ImdbList />
           </Grid>
-          <Grid item sm={6} md={10} className={classes.margin}>
-            <Typography variant="h5">Best Picture Oscar Winners</Typography>
+          <Grid item sm={4} md={2} >
+            <Typography variant="h5">Oscar Winners</Typography>
             <Card>
               <ImageSlider imgList={imgList} title={oscTitle} date={oscDate} />
             </Card>
