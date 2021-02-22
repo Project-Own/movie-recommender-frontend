@@ -200,7 +200,7 @@ const Login = () => {
               id="password"
               autoComplete="current-password"
               onChange={(e) => onChange(e)}
-            />a
+            />
             <Button
               type="submit"
               fullWidth
