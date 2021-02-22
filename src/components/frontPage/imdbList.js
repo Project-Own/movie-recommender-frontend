@@ -41,12 +41,7 @@ export default function ImdbList() {
 
   return (
     <Card>
-<<<<<<< HEAD
       <CardHeader title="Top IMDB Movies" />
-=======
-      <CardHeader title="Top 10 IMDB" />
-
->>>>>>> 07473238518f78f4e9385c437407529f95f87b6c
       <CardContent>
         {/* <List dense className={classes.root}> */}
         <HorizontalScroll>
@@ -61,11 +56,7 @@ export default function ImdbList() {
                   />
                 </Grid>
 
-<<<<<<< HEAD
                 <Grid item style={{width:200,overflow:"hidden", align: "center"}} >
-=======
-                <Grid item spacing={1}>
->>>>>>> 07473238518f78f4e9385c437407529f95f87b6c
                   <Typography>{value.title}</Typography>
                   <Typography variant="body2">{value.vote_average}</Typography>
                 </Grid>
