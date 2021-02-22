@@ -6,7 +6,14 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
-import { Card, CardContent, CardHeader } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Grid,
+  Typography,
+} from "@material-ui/core";
+import HorizontalScroll from "../HorizonalScroll/HorizontalScroll.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,25 +42,27 @@ export default function ImdbList() {
     <Card>
       <CardHeader title="Top 10 IMDB" />
       <CardContent>
-        <List dense className={classes.root}>
+        <HorizontalScroll>
+          {/* <List dense className={classes.root}> */}
           {data.map((value, index) => {
             return (
-              <ListItem key={index} button>
-                <ListItemAvatar>
+              <Grid container item direction="row">
+                <Grid item>
                   <Avatar
                     alt={`Avatar n°${value + 1}`}
                     src={`https://image.tmdb.org/t/p/w185${value.poster_path}`}
                   />
-                </ListItemAvatar>
+                </Grid>
 
-                <ListItemText primary={value.title} />
-                <ListItemSecondaryAction>
-                  <ListItemText primary={value.vote_average} />
-                </ListItemSecondaryAction>
-              </ListItem>
+                <Grid item>
+                  <Typography>{value.title}</Typography>
+                  <Typography varian="body2">{value.vote_average}</Typography>
+                </Grid>
+              </Grid>
             );
           })}
-        </List>
+          {/* </List> */}
+        </HorizontalScroll>
       </CardContent>
     </Card>
   );
