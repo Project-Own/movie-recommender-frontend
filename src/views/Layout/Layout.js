@@ -103,7 +103,7 @@ export default function Layout(props) {
         }
       )
         .then(async (response) => {
-          console.log(response);
+          // console.log(response);
           // setState({ ...state, movie: json });
 
           setRecommendedMovieList(response?.data);
@@ -138,7 +138,9 @@ export default function Layout(props) {
           let data = {};
           data[genre] = response.data.movie;
 
-          setRecommendedMovieList({ ...data, ...recommendedMovieList });
+          // console.log("WHARTTT");
+          // console.log({ ...recommendedMovieList, ...data });
+          setRecommendedMovieList({ ...recommendedMovieList, ...data });
 
           setLoading(false);
         })
@@ -151,6 +153,16 @@ export default function Layout(props) {
     searchRecommendation(genres);
   }, [name]);
 
+  useEffect(() => {
+    genres.map((genre) => {
+      // console.log("RECOMMENDED LIST");
+      // console.log(recommendedMovieList);
+      if (recommendedMovieList[genre]?.length === 0) {
+        searchRecommendationForSingleGenre(genre);
+      }
+    });
+  }, [recommendedMovieList]);
+
   if (!isAuthenticated) {
     return (
       <Redirect
@@ -159,6 +171,9 @@ export default function Layout(props) {
       />
     );
   }
+
+  console.log("RECOMMENDED LIST AGAIN");
+  console.log(recommendedMovieList);
   return (
     <>
       <Toolbar />

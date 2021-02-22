@@ -85,7 +85,10 @@ const Recommender = (props) => {
       <Card className={classes.root}>
         <CardContent>
           <HorizonalScroll>
-            {loading || typeof movieList == "undefined" || !movieList
+            {loading ||
+            typeof movieList == "undefined" ||
+            !movieList ||
+            movieList.length === 0
               ? new Array(5)
                   .fill(0)
                   .map((value, index) => (

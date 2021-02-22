@@ -46,47 +46,46 @@ const Login = () => {
       password,
     };
 
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-      const body = JSON.stringify(User);
-      const res = await axios.post(
-        "https://vae-login.herokuapp.com/api/auth",
-        body,
-        config
-      );
+    const body = JSON.stringify(User);
+    const res = await axios
+      .post("https://vae-login.herokuapp.com/api/auth", body, config)
+      .then((res) => {
+        loadUser(dispatch);
 
-      loadUser(dispatch);
+        dispatch(success(res.data));
+        dispatch(
+          setSnackbar({
+            snackbarOpen: true,
+            snackbarType: "success",
+            snackbarMessage: ` Welcome `,
+          })
+        );
+        console.log(res.data);
+      })
+      .catch((error) => {
+        setLoading(false);
+        // console.error(error?.response?.data?.errors[0]?.msg);
 
-      dispatch(success(res.data));
-      dispatch(
-        setSnackbar({
-          snackbarOpen: true,
-          snackbarType: "success",
-          snackbarMessage: ` Welcome `,
-        })
-      );
-      console.log(res.data);
-    } catch (err) {
-      setLoading(false);
-      console.error(err.response);
-      dispatch(
-        setSnackbar({
-          snackbarOpen: true,
-          snackbarType: "error",
-          snackbarMessage: "Invalid Credentials",
-        })
-      );
-      dispatch(
-        failure({
-          type: "LOGIN_FAIL",
-        })
-      );
-    }
+        dispatch(
+          setSnackbar({
+            snackbarOpen: true,
+            snackbarType: "error",
+            snackbarMessage:
+              error?.response?.data?.errors[0]?.msg ?? "Error Occured!",
+          })
+        );
+        dispatch(
+          failure({
+            type: "LOGIN_FAIL",
+          })
+        );
+      });
   };
 
   const useStyles = makeStyles((theme) => ({
