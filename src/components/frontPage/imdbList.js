@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+// import List from "@material-ui/core/List";
+// import ListItem from "@material-ui/core/ListItem";
+// import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+// import ListItemText from "@material-ui/core/ListItemText";
+// import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import {
   Card,
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ImdbList() {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const [data, setData] = useState([]);
 
@@ -41,10 +41,15 @@ export default function ImdbList() {
 
   return (
     <Card>
+<<<<<<< HEAD
       <CardHeader title="Top IMDB Movies" />
+=======
+      <CardHeader title="Top 10 IMDB" />
+
+>>>>>>> 07473238518f78f4e9385c437407529f95f87b6c
       <CardContent>
+        {/* <List dense className={classes.root}> */}
         <HorizontalScroll>
-          {/* <List dense className={classes.root}> */}
           {data.map((value, index) => {
             return (
               <Grid container item alignItems="center" justify="center" direction="row" style={{width:200, margin:10}}>
@@ -56,7 +61,11 @@ export default function ImdbList() {
                   />
                 </Grid>
 
+<<<<<<< HEAD
                 <Grid item style={{width:200,overflow:"hidden", align: "center"}} >
+=======
+                <Grid item spacing={1}>
+>>>>>>> 07473238518f78f4e9385c437407529f95f87b6c
                   <Typography>{value.title}</Typography>
                   <Typography variant="body2">{value.vote_average}</Typography>
                 </Grid>

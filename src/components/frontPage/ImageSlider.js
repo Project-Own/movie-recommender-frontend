@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
   slider: {
     padding: theme.spacing() * 2,
   },
+<<<<<<< HEAD
   imge : {
     height: "210px",
     
@@ -15,6 +16,11 @@ const useStyles = makeStyles((theme) => ({
   sliderWidth: {
     width: "100%"
   }
+=======
+  imge: {
+    height: 500,
+  },
+>>>>>>> 07473238518f78f4e9385c437407529f95f87b6c
 }));
 
 const ImageSlider = ({ imgList, title, date }) => {
