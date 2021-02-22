@@ -230,8 +230,7 @@ export default function Layout(props) {
                   }}
                 >
                   <DeleteOutlineTwoTone
-                    style={{ height: 20 }}
-                    color="secondary"
+                    style={{ height: 20, color: "#960018" }}
                   />
                 </IconButton>
 
