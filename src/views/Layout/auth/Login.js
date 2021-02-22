@@ -200,11 +200,7 @@ const Login = () => {
               id="password"
               autoComplete="current-password"
               onChange={(e) => onChange(e)}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            />a
             <Button
               type="submit"
               fullWidth

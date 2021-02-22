@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Skeleton from "@material-ui/lab/Skeleton";
 import LikeButton from "../LikeButton/LikeButton";
 import Axios from "axios";
+import ReactPlayer from "react-player";
 // const style = {
 //     width: 200,
 //     height: 200,
@@ -12,18 +13,30 @@ import Axios from "axios";
 const useStyles = makeStyles((theme) => ({}));
 
 const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
-
+const API2_ADDRESS = "https://imdb-api.com/en/API/YouTubeTrailer/k_dspqpo2c/";
 const MovieDetail = (props) => {
   const { movie, loading = false } = props;
   const classes = useStyles();
   const [movieDetail, setMovieDetail] = useState(movie);
+  const [youtubeURL, setYoutubeURL] = useState(null);
 
   console.log("MOVIEEE");
   console.log(movieDetail);
+  console.log(movie.imdbId);
+ 
+
+
+  
+
+
+
+    
+  
+
 
   useEffect(() => {
     //poster
-
+   
     (async () => {
       let omdbRes;
       let posterPath;
@@ -55,7 +68,35 @@ const MovieDetail = (props) => {
       // console.log(updatedMovie);
       setMovieDetail(updatedMovie);
     })();
+
+
   }, [movie]);
+
+
+useEffect(() => {
+  (async () => {
+    let url;
+    try {
+
+      fetch(`${API2_ADDRESS}${movie.imdbId}`).
+      then(response => response.json()).
+      then(data => {
+        setYoutubeURL(data.videoUrl);
+        console.log(data.videoUrl);
+      });
+
+      // const youtube = Axios.get(`${API2_ADDRESS}${movie.imdbId}`);
+      // url = youtube.data.videoUrl;
+      // console.log(url);
+    } catch (err) {
+      console.log(err);
+    }
+    console.log(url);
+    setYoutubeURL(url);
+  })();
+},[movie]);
+
+
 
   return (
     <Paper>
@@ -207,22 +248,21 @@ const MovieDetail = (props) => {
                     />
                   </Grid>
                 </Grid>
-
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Typography variant="h6">Actors:</Typography>
                   <Typography variant="body2">
                     {movieDetail?.Actors ?? "Unknown"}
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={7}>
                   <Typography variant="h6">Box Office:</Typography>
                   <Typography variant="body2">
                     {movieDetail?.BoxOffice ?? "Unknown"}
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Typography variant="h6">Plot:</Typography>
                   <Typography variant="body2" align="justify">
                     {movieDetail?.Plot ?? movieDetail?.overview ?? "Unknown"}
@@ -231,6 +271,20 @@ const MovieDetail = (props) => {
               </Grid>
             )}
           </Grid>
+
+          <Grid container>
+            <Grid item> 
+             <ReactPlayer
+                url= {youtubeURL}
+                controls
+                playbackRate = {1}
+                width = "500px"
+                height = "300px"
+              />
+
+            </Grid>
+          </Grid>
+
         </Grid>
       </Grid>
     </Paper>
