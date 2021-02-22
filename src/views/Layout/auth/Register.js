@@ -8,6 +8,17 @@ import { failure, success } from "../../../features/Auth/registerSlice";
 import { selectIsAuthenticated } from "../../../features/Auth/registerSlice";
 import { loadUser } from "../../../features/Auth/loadUser";
 
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+
 export const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -97,6 +108,49 @@ export const Register = () => {
     }
   };
 
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      height: "100vh",
+    },
+    image: {
+      backgroundImage:
+        "url(https://source.unsplash.com/random/?movie,superhero)",
+      backgroundRepeat: "no-repeat",
+      backgroundColor:
+        theme.palette.type === "light"
+          ? theme.palette.grey[50]
+          : theme.palette.grey[900],
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    },
+    title: {
+      margin: theme.spacing(8, 0, -2, 0),
+      fontSize: "56px",
+      fontFamily: "Noto Sans, sans-serif",
+    },
+    title2: {
+      margin: theme.spacing(0, 0, 3, 0),
+      fontSize: "40px",
+      fontFamily: "Noto Sans, sans-serif",
+      fontWeight: "Bold",
+    },
+    paper: {
+      margin: theme.spacing(6, 5),
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    form: {
+      width: "64%", // Fix IE 11 issue
+      marginTop: theme.spacing(2),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  }));
+
+  const classes = useStyles();
+
   //Redirect if logged in
   if (authenticated) {
     console.log("Inside if");
@@ -108,66 +162,104 @@ export const Register = () => {
       />
     );
   }
-
   return (
-    <div className="container">
-      <h1 className="large text-primary">Sign Up</h1>
-      <p className="lead">
-        <i className="fas fa-user"></i> Create Your Account
-      </p>
-      <form className="form" onSubmit={(e) => onSubmit(e)}>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Name"
-            name="name"
-            value={name}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
+    <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      <Grid item xs={false} sm={7} md={8} className={classes.image} />
+      <Grid
+        item
+        xs={12}
+        sm={5}
+        md={4}
+        className={classes.root}
+        elevation={6}
+        square
+      >
+        <div className={classes.paper}>
+          <Typography className={classes.title}>'चलचित्र'</Typography>
+          <Typography className={classes.title2}>Movie Recommender</Typography>
 
-        <div className="form-group">
-          <input
-            type="email"
-            placeholder="Email Address"
-            name="email"
-            value={email}
-            onChange={(e) => onChange(e)}
-            required
-          />
-          <small className="form-text">
-            This site uses Gravatar so if you want a profile image, use a
-            Gravatar email
-          </small>
+          <Typography component="h1" variant="h5">
+            Sign Up
+          </Typography>
+
+          <form
+            className={classes.form}
+            onSubmit={(e) => onSubmit(e)}
+            noValidate
+          >
+            <TextField
+              size="small"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Username"
+              name="name"
+              autoComplete="name"
+              autoFocus
+              onChange={(e) => onChange(e)}
+            />
+            <TextField
+              size="small"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={(e) => onChange(e)}
+            />
+            <TextField
+              size="small"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => onChange(e)}
+            />
+            <TextField
+              size="small"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password2"
+              label="Confirm Password"
+              type="password"
+              id="password1"
+              autoComplete="current-password"
+              onChange={(e) => onChange(e)}
+            />
+            
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Register
+            </Button>
+            <Grid container>
+              <Grid item>
+                "Already have an account?{" "}
+                <Link to="/movie-recommender-frontend/login">Sign In"</Link>
+              </Grid>
+            </Grid>
+          </form>
         </div>
-        <div className="form-group">
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={password}
-            onChange={(e) => onChange(e)}
-            minLength="6"
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            name="password2"
-            value={password2}
-            onChange={(e) => onChange(e)}
-            minLength="6"
-          />
-        </div>
-        <input type="submit" className="btn btn-primary" value="Register" />
-      </form>
-      <p className="my-1">
-        Already have an account?{" "}
-        <Link to="/movie-recommender-frontend/login">Sign In</Link>
-      </p>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 

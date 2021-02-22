@@ -6,13 +6,13 @@ const theme = createMuiTheme({
   palette: {
     type: "light",
     primary: {
-      main: "#4915eb",
-      light: "#6055fa",
+      main: "#00688B",
+      light: "#B0E2FF",
       dark: "#5300e8",
       contrastText: "",
     },
     secondary: {
-      main: "#cc0000",
+      main: "#699864",
       light: "",
       dark: "",
       contrastText: "",
@@ -29,6 +29,9 @@ const theme = createMuiTheme({
       main: "#b6ccfe",
       contrastText: "#222222",
     },
+  },
+  typography: {
+    fontFamily: "Lato",
   },
 });
 

@@ -48,6 +48,7 @@ const Profile = (props) => {
   return (
     <>
       <Toolbar />
+      <Toolbar />
       <Container>
         <Avatar alt="Name" src={user?.avatar ?? "Unknown"} />
         <Typography>{user?.name ?? "Unknown"}</Typography>

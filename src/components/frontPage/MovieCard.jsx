@@ -165,6 +165,7 @@ const MovieCard = (props) => {
       setIconOpacity(true);
     }
   }, [props.index, selectedList]);
+  
   return (
     <ThemeProvider theme={theme}>
       <ButtonBase className={classes.buttonbasestyle} onClick={onButtonClicked}>

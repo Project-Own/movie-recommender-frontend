@@ -1,8 +1,9 @@
 import { Typography, makeStyles, Grid, Paper } from "@material-ui/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Skeleton from "@material-ui/lab/Skeleton";
 import LikeButton from "../LikeButton/LikeButton";
-
+import Axios from "axios";
+import ReactPlayer from "react-player";
 // const style = {
 //     width: 200,
 //     height: 200,
@@ -11,9 +12,91 @@ import LikeButton from "../LikeButton/LikeButton";
 // }
 const useStyles = makeStyles((theme) => ({}));
 
+const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
+const API2_ADDRESS = "https://imdb-api.com/en/API/YouTubeTrailer/k_dspqpo2c/";
 const MovieDetail = (props) => {
   const { movie, loading = false } = props;
   const classes = useStyles();
+  const [movieDetail, setMovieDetail] = useState(movie);
+  const [youtubeURL, setYoutubeURL] = useState(null);
+
+  console.log("MOVIEEE");
+  console.log(movieDetail);
+  console.log(movie.imdbId);
+ 
+
+
+  
+
+
+
+    
+  
+
+
+  useEffect(() => {
+    //poster
+   
+    (async () => {
+      let omdbRes;
+      let posterPath;
+      let updatedMovie;
+      updatedMovie = movie;
+      if (movie?.Poster) {
+        posterPath = movie?.Poster;
+      } else {
+        try {
+          omdbRes = await Axios.get(`${API_ADDRESS}${movie.imdbId}`);
+        } catch (err) {
+          console.log(err);
+        }
+        updatedMovie = { ...movie, ...omdbRes.data };
+
+        try {
+          const res = await Axios.get(
+            "https://image.tmdb.org/t/p/w185" + movie.posterPath
+          );
+          if (res.data === "<h1>File not Found</h1>") throw Error;
+          posterPath = "https://image.tmdb.org/t/p/w185" + movie.posterPath;
+        } catch (err) {
+          // console.log(res);
+          posterPath = omdbRes?.data?.Poster ?? "Unknown";
+        }
+      }
+      // console.log("updated movie");
+      // updatedMovie.posterPath = posterPath;
+      // console.log(updatedMovie);
+      setMovieDetail(updatedMovie);
+    })();
+
+
+  }, [movie]);
+
+
+useEffect(() => {
+  (async () => {
+    let url;
+    try {
+
+      fetch(`${API2_ADDRESS}${movie.imdbId}`).
+      then(response => response.json()).
+      then(data => {
+        setYoutubeURL(data.videoUrl);
+        console.log(data.videoUrl);
+      });
+
+      // const youtube = Axios.get(`${API2_ADDRESS}${movie.imdbId}`);
+      // url = youtube.data.videoUrl;
+      // console.log(url);
+    } catch (err) {
+      console.log(err);
+    }
+    console.log(url);
+    setYoutubeURL(url);
+  })();
+},[movie]);
+
+
 
   return (
     <Paper>
@@ -26,7 +109,7 @@ const MovieDetail = (props) => {
               <img
                 alt="Movie Poster"
                 className={classes.media}
-                src={movie?.Poster ?? movie?.posterPath}
+                src={movieDetail?.Poster ?? movieDetail?.posterPath}
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src =
@@ -80,26 +163,28 @@ const MovieDetail = (props) => {
                 <Grid item>
                   <Typography variant="h6">Release Date:</Typography>
                   <Typography variant="body2">
-                    {movie?.Year ?? movie.release_date ?? "Unknown"}
+                    {movieDetail?.Year ??
+                      movieDetail?.release_date ??
+                      "Unknown"}
                   </Typography>
                   <Grid item>
                     <Typography variant="h6">Runtime:</Typography>
 
                     <Typography variant="body2">
-                      {movie?.Runtime ?? "Unknown"}
+                      {movieDetail?.Runtime ?? "Unknown"}
                     </Typography>
                   </Grid>
 
                   <Grid item>
                     <Typography variant="h6">Genre:</Typography>
                     <Typography variant="body2">
-                      {movie?.Genre ?? "Unknown"}
+                      {movieDetail?.Genre ?? "Unknown"}
                     </Typography>
                   </Grid>
                 </Grid>
                 <Grid item container>
                   <Typography variant="h6">Ratings:</Typography>
-                  {movie?.Ratings?.map((Ratings, index) => {
+                  {movieDetail?.Ratings?.map((Ratings, index) => {
                     return (
                       <Grid item xs={12} key={Ratings?.Source ?? index}>
                         <Typography variant="body2">
@@ -111,7 +196,7 @@ const MovieDetail = (props) => {
                   }) ?? (
                       <Grid item xs={12}>
                         <Typography variant="body2">
-                          {movie?.vote_average}
+                          {movieDetail?.vote_average}
                         </Typography>
                       </Grid>
                     ) ?? (
@@ -152,45 +237,58 @@ const MovieDetail = (props) => {
                 <Grid item container xs={12}>
                   <Grid item>
                     <Typography variant="h3">
-                      {movie?.Title ?? movie?.title ?? "Unknown"}
+                      {movieDetail?.Title ?? movieDetail?.title ?? "Unknown"}
                     </Typography>
                   </Grid>
                   <Grid item>
                     <LikeButton
-                      index={movie?.index ?? 0}
+                      index={movieDetail?.index ?? 0}
                       height={40}
                       width={40}
                     />
                   </Grid>
                 </Grid>
-
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Typography variant="h6">Actors:</Typography>
                   <Typography variant="body2">
-                    {movie?.Actors ?? "Unknown"}
+                    {movieDetail?.Actors ?? "Unknown"}
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={7}>
                   <Typography variant="h6">Box Office:</Typography>
                   <Typography variant="body2">
-                    {movie?.BoxOffice ?? "Unknown"}
+                    {movieDetail?.BoxOffice ?? "Unknown"}
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Typography variant="h6">Plot:</Typography>
                   <Typography variant="body2" align="justify">
-                    {movie?.Plot ?? movie?.overview ?? "Unknown"}
+                    {movieDetail?.Plot ?? movieDetail?.overview ?? "Unknown"}
                   </Typography>
                 </Grid>
               </Grid>
             )}
           </Grid>
+
+          <Grid container>
+            <Grid item> 
+             <ReactPlayer
+                url= {youtubeURL}
+                controls
+                playbackRate = {1}
+                width = "500px"
+                height = "300px"
+              />
+
+            </Grid>
+          </Grid>
+
         </Grid>
       </Grid>
     </Paper>
   );
 };
 
-export default React.memo(MovieDetail);
+export default MovieDetail;

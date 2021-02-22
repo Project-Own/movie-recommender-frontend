@@ -79,13 +79,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   navBar: {
-    marginRight: theme.spacing(2),
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
   },
   appBar: {
     zIndex: 1000,
@@ -95,6 +91,21 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerContainer: {
     overflow: "auto",
+  },
+
+  searchBarStyle: {
+    width: 800,
+    borderRadius: "24px",
+
+    alignItems: "center",
+    padding: "2px 4px",
+    marginTop: 16,
+    marginBottom: 8,
+    display: "flex",
+    "&:hover": {
+      boxShadow: "0px 0px 8px 1px rgba(0,0,0,0.2)",
+    },
+    boxShadow: "0px 0px 0px 1px rgba(0,0,0,0.2)",
   },
 }));
 
@@ -143,7 +154,7 @@ export default function TopNavBar(props) {
     <div className={classes.drawerContainer}>
       <Link to="/movie-recommender-frontend/">
         <Typography variant="h5" color="textPrimary" style={{ padding: 20 }}>
-          RECSYS
+          चलचित्र
         </Typography>
       </Link>
 
@@ -222,6 +233,7 @@ export default function TopNavBar(props) {
       </Grid>
 
       {isAuthenticated ? (
+        // drawer's search bar
         <MovieAutoComplete setMovieSelected={setMovieSelected} />
       ) : null}
     </div>
@@ -233,57 +245,95 @@ export default function TopNavBar(props) {
       <HideOnScroll {...props}>
         <AppBar>
           <Toolbar id="back-to-top-anchor">
-            <Link to="/movie-recommender-frontend/" className={classes.title}>
-              <Typography variant="h5" className={classes.title}>
-                RECSYS
-              </Typography>
-            </Link>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="end"
-              onClick={handleDrawerToggle}
-              className={classes.menuButton}
-            >
-              <MenuIcon />
-            </IconButton>
-            <nav className={classes.navBar}>
-              {isAuthenticated ? (
-                <>
-                  <MovieAutoComplete setMovieSelected={setMovieSelected} />
+            <Grid container direction="row" alignItems="center">
+              <Grid item xs={1}>
+                <Link
+                  to="/movie-recommender-frontend/"
+                  className={classes.title}
+                >
+                  <Typography variant="h5" className={classes.title}>
+                    चलचित्र
+                  </Typography>
+                </Link>
+              </Grid>
 
-                  <Link to="/movie-recommender-frontend/profile">
-                    <Button variant="text" className={classes.title}>
-                      {typeof user !== "undefined" ? user?.name : "User"}
-                    </Button>
-                  </Link>
+              <Grid
+                item
+                container
+                xs={10}
+                className={classes.navBar}
+                alignItems="center"
+                justify="flex-end"
+              >
+                {isAuthenticated ? (
+                  <>
+                    <Grid item xs={9}>
+                      <MovieAutoComplete setMovieSelected={setMovieSelected} />
+                    </Grid>
 
-                  <Link to="/movie-recommender-frontend/">
-                    <Button
-                      variant="text"
-                      className={classes.title}
-                      onClick={logout}
-                    >
-                      Logout
-                    </Button>
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link to="/movie-recommender-frontend/login">
-                    <Button variant="text" className={classes.title}>
-                      Login
-                    </Button>
-                  </Link>
-                  <Link to="/movie-recommender-frontend/register">
-                    <Button variant="text" className={classes.title}>
-                      Register
-                    </Button>
-                  </Link>
-                </>
-              )}
-              <Switch checked={isDark} onChange={handleThemeChange} />
-            </nav>
+                    <Grid item xs={1}>
+                      <Link to="/movie-recommender-frontend/profile">
+                        <Button variant="text" className={classes.title}>
+                          {typeof user !== "undefined" ? user?.name : "User"}
+                        </Button>
+                      </Link>
+                    </Grid>
+
+                    <Grid item xs={1}>
+                      <Link to="/movie-recommender-frontend/">
+                        <Button
+                          variant="text"
+                          className={classes.title}
+                          onClick={logout}
+                        >
+                          Logout
+                        </Button>
+                      </Link>
+                    </Grid>
+                  </>
+                ) : (
+                  <>
+                    <Grid item xs={1}>
+                      <Link to="/movie-recommender-frontend/login">
+                        <Button variant="text" className={classes.title}>
+                          Login
+                        </Button>
+                      </Link>
+                    </Grid>
+
+                    <Grid item xs={1}>
+                      <Link to="/movie-recommender-frontend/register">
+                        <Button variant="text" className={classes.title}>
+                          Register
+                        </Button>
+                      </Link>
+                    </Grid>
+                  </>
+                )}
+
+                <Switch checked={isDark} onChange={handleThemeChange} />
+              </Grid>
+
+              <Grid
+                container
+                item
+                xs={11}
+                justify="flex-end"
+                alignItems="flex-end"
+              >
+                <Grid item>
+                  <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="end"
+                    onClick={handleDrawerToggle}
+                    className={classes.menuButton}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </Grid>
           </Toolbar>
         </AppBar>
       </HideOnScroll>
