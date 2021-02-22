@@ -70,11 +70,10 @@ const LikeButton = (props) => {
   return (
     <IconButton onClick={handleLike}>
       {liked ? (
-        <Favorite color="secondary" style={{ height: height, width: width }} />
+        <Favorite style={{ height: height, width: width, color: "#960018" }} />
       ) : (
         <FavoriteBorder
-          color="secondary"
-          style={{ height: height, width: width }}
+          style={{ height: height, width: width, color: "#960018" }}
         />
       )}
     </IconButton>

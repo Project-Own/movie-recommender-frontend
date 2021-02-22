@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
+
 import "../../App/App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setSnackbar } from "../../../features/Snackbar/snackbarSlice";
@@ -93,7 +94,9 @@ const Login = () => {
       height: "100vh",
     },
     image: {
-      backgroundImage: "url(https://source.unsplash.com/random/?movie)",
+      backgroundImage:
+        "url(https://source.unsplash.com/random/?movie,superhero)",
+      // https://www.omdbapi.com/?apikey=e4c29baa&i=
       backgroundRepeat: "no-repeat",
       backgroundColor:
         theme.palette.type === "light"
@@ -156,6 +159,7 @@ const Login = () => {
 
   return (
     <Grid container component="main" className={classes.root}>
+      <CssBaseline />
       <Grid item xs={false} sm={7} md={8} className={classes.image} />
       <Grid item xs={12} sm={5} md={4} component={Paper} elevation={6} square>
         <div className={classes.paper}>
@@ -197,15 +201,11 @@ const Login = () => {
               autoComplete="current-password"
               onChange={(e) => onChange(e)}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              color="secondary"
+              color="primary"
               className={classes.submit}
             >
               Sign In

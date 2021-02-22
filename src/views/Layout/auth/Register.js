@@ -113,7 +113,8 @@ export const Register = () => {
       height: "100vh",
     },
     image: {
-      backgroundImage: "url(https://source.unsplash.com/random/?movie)",
+      backgroundImage:
+        "url(https://source.unsplash.com/random/?movie,superhero)",
       backgroundRepeat: "no-repeat",
       backgroundColor:
         theme.palette.type === "light"
@@ -239,10 +240,7 @@ export const Register = () => {
               autoComplete="current-password"
               onChange={(e) => onChange(e)}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            
             <Button
               type="submit"
               fullWidth

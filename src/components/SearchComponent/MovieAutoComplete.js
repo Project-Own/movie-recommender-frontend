@@ -118,6 +118,9 @@ const MovieAutoComplete = ({ setMovieSelected }) => {
       "&:hover": {
         boxShadow: "0px 0px 8px 1px rgba(0,0,0,0.2)",
       },
+      "&.MuiAutocomplete-input": {
+        color: "white",
+      },
       boxShadow: "0px 0px 0px 1px rgba(0,0,0,0.2)",
       fontFamily: "Roboto Mono",
 
@@ -198,8 +201,15 @@ const MovieAutoComplete = ({ setMovieSelected }) => {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           // onKeyPress={handleKeyPress}
+
           placeholder="Search Movie"
           InputProps={{
+            style: {
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              color: "white",
+            },
             ...params.InputProps,
             type: "search",
             endAdornment: (

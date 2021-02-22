@@ -267,7 +267,7 @@ export default function TopNavBar(props) {
               >
                 {isAuthenticated ? (
                   <>
-                    <Grid item xs={9}>
+                    <Grid item xs={4}>
                       <MovieAutoComplete setMovieSelected={setMovieSelected} />
                     </Grid>
 
