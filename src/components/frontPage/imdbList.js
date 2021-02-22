@@ -47,16 +47,26 @@ export default function ImdbList() {
         <HorizontalScroll>
           {data.map((value, index) => {
             return (
-              <Grid container item alignItems="center" justify="center" direction="row" style={{width:200, margin:10}}>
-                <Grid item >
+              <Grid
+                container
+                item
+                alignItems="center"
+                justify="center"
+                direction="row"
+                style={{ width: 200, margin: 10 }}
+              >
+                <Grid item>
                   <Avatar
-                    style={{height:200, width:200}}
+                    style={{ height: 200, width: 200 }}
                     alt={`Avatar n°${value + 1}`}
                     src={`https://image.tmdb.org/t/p/w185${value.poster_path}`}
                   />
                 </Grid>
 
-                <Grid item style={{width:200,overflow:"hidden", align: "center"}} >
+                <Grid
+                  item
+                  style={{ width: 200, overflow: "hidden", align: "center" }}
+                >
                   <Typography>{value.title}</Typography>
                   <Typography variant="body2">{value.vote_average}</Typography>
                 </Grid>

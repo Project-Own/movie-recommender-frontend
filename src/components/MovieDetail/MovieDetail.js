@@ -23,20 +23,10 @@ const MovieDetail = (props) => {
   console.log("MOVIEEE");
   console.log(movieDetail);
   console.log(movie.imdbId);
- 
-
-
-  
-
-
-
-    
-  
-
 
   useEffect(() => {
     //poster
-   
+
     (async () => {
       let omdbRes;
       let posterPath;
@@ -68,58 +58,59 @@ const MovieDetail = (props) => {
       // console.log(updatedMovie);
       setMovieDetail(updatedMovie);
     })();
-
-
   }, [movie]);
 
+  useEffect(() => {
+    (async () => {
+      let url;
+      try {
+        fetch(`${API2_ADDRESS}${movie?.imdbId ?? movie?.imdbID}`)
+          .then((response) => response.json())
+          .then((data) => {
+            setYoutubeURL(data.videoUrl);
+            console.log(data.videoUrl);
+          });
 
-useEffect(() => {
-  (async () => {
-    let url;
-    try {
-
-      fetch(`${API2_ADDRESS}${movie?.imdbId ?? movie?.imdbID}`).
-      then(response => response.json()).
-      then(data => {
-        setYoutubeURL(data.videoUrl);
-        console.log(data.videoUrl);
-      });
-
-      // const youtube = Axios.get(`${API2_ADDRESS}${movie.imdbId}`);
-      // url = youtube.data.videoUrl;
-      // console.log(url);
-    } catch (err) {
-      console.log(err);
-    }
-    console.log(url);
-    setYoutubeURL(url);
-  })();
-},[movie]);
-
-
+        // const youtube = Axios.get(`${API2_ADDRESS}${movie.imdbId}`);
+        // url = youtube.data.videoUrl;
+        // console.log(url);
+      } catch (err) {
+        console.log(err);
+      }
+      console.log(url);
+      setYoutubeURL(url);
+    })();
+  }, [movie]);
 
   return (
     <Paper>
       <Grid container justify="center" alignItems="center">
-      <Grid item container xs={12} justify="center" alignItems="center" style={{marginTop:10}}>
-                  <Grid item>
-                    <Typography variant="h3">
-                      {movieDetail?.Title ?? movieDetail?.title ?? "Unknown"}
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <LikeButton
-                      index={movieDetail?.index ?? 0}
-                      height={40}
-                      width={40}
-                    />
-                  </Grid>
-                </Grid>
+        <Grid
+          item
+          container
+          xs={12}
+          justify="center"
+          alignItems="center"
+          style={{ marginTop: 10 }}
+        >
+          <Grid item>
+            <Typography variant="h3">
+              {movieDetail?.Title ?? movieDetail?.title ?? "Unknown"}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <LikeButton
+              index={movieDetail?.index ?? 0}
+              height={40}
+              width={40}
+            />
+          </Grid>
+        </Grid>
         <Grid item container md={4} lg={2} alignItems="center" justify="center">
           {loading ? (
             <Skeleton animation="wave" variant="rect" />
           ) : (
-            <Grid item>
+            <Grid item style={{ padding: 20 }}>
               <img
                 alt="Movie Poster"
                 className={classes.media}
@@ -140,7 +131,7 @@ useEffect(() => {
           item
           md={8}
           lg={10}
-          style={{ padding: 20 }}
+          style={{ padding: 10 }}
         >
           <Grid
             container
@@ -150,8 +141,7 @@ useEffect(() => {
             alignItems="center"
             justify="center"
             direction="row"
-            spacing={8}
-            style={{ padding: 20 }}
+            style={{ padding: 10 }}
           >
             {loading ? (
               <>
@@ -227,10 +217,10 @@ useEffect(() => {
             container
             item
             sm={7}
-            md={6}
+            md={4}
             alignItems="center"
             justify="center"
-            spacing={8}
+            style={{ padding: 10 }}
           >
             {loading ? (
               <Grid item>
@@ -248,22 +238,21 @@ useEffect(() => {
               </Grid>
             ) : (
               <Grid item container>
-               
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                   <Typography variant="h6">Actors:</Typography>
                   <Typography variant="body2">
                     {movieDetail?.Actors ?? "Unknown"}
                   </Typography>
                 </Grid>
 
-                <Grid item xs={7}>
+                <Grid item xs={12}>
                   <Typography variant="h6">Box Office:</Typography>
                   <Typography variant="body2">
                     {movieDetail?.BoxOffice ?? "Unknown"}
                   </Typography>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                   <Typography variant="h6">Plot:</Typography>
                   <Typography variant="body2" align="justify">
                     {movieDetail?.Plot ?? movieDetail?.overview ?? "Unknown"}
@@ -273,20 +262,16 @@ useEffect(() => {
             )}
           </Grid>
 
-          <Grid container  sm={12} alignItems="center" justify="center"
-            md={3} >
-            <Grid item> 
-             <ReactPlayer
-                url= {youtubeURL}
+          <Grid container alignItems="center" justify="center" xs={12} md={5}>
+            <Grid item xs={10}>
+              <ReactPlayer
+                url={youtubeURL}
                 controls
-                playbackRate = {1}
-                width = "500px"
-                height = "300px"
+                playbackRate={1}
+                width="100%"
               />
-
             </Grid>
           </Grid>
-
         </Grid>
       </Grid>
     </Paper>
