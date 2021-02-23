@@ -26,15 +26,13 @@ const MovieDetail = (props) => {
   // console.log(movie.imdbId);
 
   const generateApiAddressForTrailer = async (i = 0) => {
-    apiKeys = apiKeys.sort(() => Math.random() - 0.5);
-
     let API2_ADDRESS;
 
     if (i >= apiKeys.length) {
       return -1;
     }
 
-    console.log(apiKeys[i]);
+    // console.log(apiKeys[i]);
     API2_ADDRESS =
       "https://imdb-api.com/en/API/YouTubeTrailer/" + apiKeys[i] + "/";
 
@@ -90,6 +88,8 @@ const MovieDetail = (props) => {
   }, [movie]);
 
   useEffect(() => {
+    apiKeys = apiKeys.sort(() => Math.random() - 0.5);
+
     // (async () => {
     // let url;
     generateApiAddressForTrailer(0);
