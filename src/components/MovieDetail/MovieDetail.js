@@ -12,17 +12,46 @@ import ReactPlayer from "react-player";
 // }
 const useStyles = makeStyles((theme) => ({}));
 
+let apiKeys = ["k_tj93gztj", "k_dspqpo2c", "k_r51rig8u"];
+
 const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
-const API2_ADDRESS = "https://imdb-api.com/en/API/YouTubeTrailer/k_dspqpo2c/";
 const MovieDetail = (props) => {
   const { movie, loading = false } = props;
   const classes = useStyles();
   const [movieDetail, setMovieDetail] = useState(movie);
   const [youtubeURL, setYoutubeURL] = useState(null);
 
-  console.log("MOVIEEE");
-  console.log(movieDetail);
-  console.log(movie.imdbId);
+  // console.log("MOVIEEE");
+  // console.log(movieDetail);
+  // console.log(movie.imdbId);
+
+  const generateApiAddressForTrailer = async (i = 0) => {
+    apiKeys = apiKeys.sort(() => Math.random() - 0.5);
+
+    let API2_ADDRESS;
+
+    if (i >= apiKeys.length) {
+      return -1;
+    }
+
+    console.log(apiKeys[i]);
+    API2_ADDRESS =
+      "https://imdb-api.com/en/API/YouTubeTrailer/" + apiKeys[i] + "/";
+
+    try {
+      let res = await fetch(`${API2_ADDRESS}${movie?.imdbId ?? movie?.imdbID}`);
+
+      const data = await res.json();
+
+      if (data?.errorMessage === "") {
+        setYoutubeURL(data?.videoUrl);
+      } else {
+        generateApiAddressForTrailer(i + 1);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     //poster
@@ -61,25 +90,26 @@ const MovieDetail = (props) => {
   }, [movie]);
 
   useEffect(() => {
-    (async () => {
-      let url;
-      try {
-        fetch(`${API2_ADDRESS}${movie?.imdbId ?? movie?.imdbID}`)
-          .then((response) => response.json())
-          .then((data) => {
-            setYoutubeURL(data.videoUrl);
-            console.log(data.videoUrl);
-          });
+    // (async () => {
+    // let url;
+    generateApiAddressForTrailer(0);
+    // try {
+    //   fetch(`${API2_ADDRESS}${movie?.imdbId ?? movie?.imdbID}`)
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       setYoutubeURL(data.videoUrl);
+    //       console.log(data.videoUrl);
+    //     });
 
-        // const youtube = Axios.get(`${API2_ADDRESS}${movie.imdbId}`);
-        // url = youtube.data.videoUrl;
-        // console.log(url);
-      } catch (err) {
-        console.log(err);
-      }
-      console.log(url);
-      setYoutubeURL(url);
-    })();
+    //   // const youtube = Axios.get(`${API2_ADDRESS}${movie.imdbId}`);
+    //   // url = youtube.data.videoUrl;
+    //   // console.log(url);
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    // console.log(url);
+    // setYoutubeURL(url);
+    // })();
   }, [movie]);
 
   return (
