@@ -257,6 +257,16 @@ export default function Layout(props) {
             />
           </Grid> */}
         </Grid>
+        <Grid container sm = {12} style = {{padding:20}} spacing={4} >
+          <Grid item > 
+            <Card>
+              <Typography variant="h3" style = {{padding:20}} >
+                Cinema is the ultimate pervert art. It doesn't give you what you desire - it tells you how to desire.
+              </Typography>
+            </Card>
+          </Grid>
+        </Grid>
+
         <Grid item container sm={12} style={{ paddingTop: 20 }} spacing={4}>
           <Grid item sm={8} md={10} >
             <ImdbList />
