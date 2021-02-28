@@ -98,7 +98,7 @@ const Login = () => {
     },
     image: {
       backgroundImage:
-        "url(https://source.unsplash.com/Lq6rcifGjOU/1600x900)",
+        "url(https://source.unsplash.com/Lq6rcifGjOU)",
       // https://www.omdbapi.com/?apikey=e4c29baa&i=
       backgroundRepeat: "no-repeat",
       backgroundColor:

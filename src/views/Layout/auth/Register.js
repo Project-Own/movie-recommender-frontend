@@ -114,7 +114,7 @@ export const Register = () => {
     },
     image: {
       backgroundImage:
-        "url(https://source.unsplash.com/random/?movie,superhero)",
+        "url(https://source.unsplash.com/Lq6rcifGjOU)",
       backgroundRepeat: "no-repeat",
       backgroundColor:
         theme.palette.type === "light"
@@ -126,7 +126,7 @@ export const Register = () => {
     title: {
       margin: theme.spacing(8, 0, -2, 0),
       fontSize: "56px",
-      fontFamily: "Noto Sans, sans-serif",
+      fontFamily:  "Chilanka,cursive",
     },
     title2: {
       margin: theme.spacing(0, 0, 3, 0),
@@ -176,10 +176,12 @@ export const Register = () => {
         square
       >
         <div className={classes.paper}>
-          <Typography className={classes.title}>'चलचित्र'</Typography>
+        <Toolbar/>
+          
           <Typography className={classes.title2}>Movie Recommender</Typography>
-
-          <Typography component="h1" variant="h5">
+          <Typography className={classes.title}>"You Search,We Serve"</Typography>
+          <Toolbar />
+          <Typography component="h1" variant="h5" fontWeight = "bold">
             Sign Up
           </Typography>
 
