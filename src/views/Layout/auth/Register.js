@@ -120,7 +120,6 @@ export const Register = () => {
       backgroundPosition: "center",
     },
     title: {
-      margin: theme.spacing(0, -27, -2, 0),
       fontSize: "18px",
       fontFamily:  "Chilanka,cursive",
     },
@@ -174,7 +173,7 @@ export const Register = () => {
         <Toolbar/>
           
           <Typography className={classes.title2}>Movie Recommender</Typography>
-          <Typography className={classes.title}>"You Search,We Serve"</Typography>
+          <Typography className={classes.title}  style = {{marginLeft:180}}>"You Search,We Serve"</Typography>
           <Toolbar />
           <Typography component="h1" variant="h5" fontWeight = "bold">
             Sign Up
