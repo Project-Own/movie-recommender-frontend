@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Card, CardContent } from "@material-ui/core";
-import Axios from "axios";
 import { Skeleton } from "@material-ui/lab";
 
 import Cell from "./Cell";
 
 import HorizonalScroll from "../HorizonalScroll/HorizontalScroll";
 
-const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
+// const API_ADDRESS = "https://www.omdbapi.com/?apikey=e4c29baa&i=";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -85,7 +84,10 @@ const Recommender = (props) => {
       <Card className={classes.root}>
         <CardContent>
           <HorizonalScroll>
-            {loading || typeof movieList == "undefined" || !movieList
+            {loading ||
+            typeof movieList == "undefined" ||
+            !movieList ||
+            movieList.length === 0
               ? new Array(5)
                   .fill(0)
                   .map((value, index) => (

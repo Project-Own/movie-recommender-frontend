@@ -12,13 +12,12 @@ import { CircularProgress, Grid, Toolbar } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 
 import Paper from "@material-ui/core/Paper";
 
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+
 
 export const Register = () => {
   const [formData, setFormData] = useState({
@@ -28,6 +27,7 @@ export const Register = () => {
     password2: "",
   });
 
+  const [loading, setLoading] = useState(false);
   const authenticated = useSelector(selectIsAuthenticated);
   const dispatch = useDispatch();
   const { name, email, password, password2 } = formData;
@@ -36,6 +36,7 @@ export const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     if (password !== password2) {
       dispatch(
@@ -57,55 +58,49 @@ export const Register = () => {
         password,
       };
 
-      try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
-        const body = JSON.stringify(newUser);
+      const body = JSON.stringify(newUser);
 
-        const res = await axios.post(
-          "https://vae-login.herokuapp.com/api/users",
-          body,
-          config
-        );
+      axios
+        .post("https://vae-login.herokuapp.com/api/users", body, config)
+        .then((res) => {
+          dispatch(
+            success({
+              token: res.data.token,
+            })
+          );
+          dispatch(
+            setSnackbar({
+              snackbarOpen: true,
+              snackbarType: "success",
+              snackbarMessage: "User Registered",
+            })
+          );
+          loadUser(dispatch);
+        })
+        .catch((error) => {
+          setLoading(false);
+          // console.log("ERROR");
 
-        dispatch(
-          success({
-            token: res.data.token,
-          })
-        );
-        dispatch(
-          setSnackbar({
-            snackbarOpen: true,
-            snackbarType: "success",
-            snackbarMessage: "User Registered",
-          })
-        );
-
-        loadUser(dispatch);
-
-        console.log(res.data);
-        console.log(authenticated);
-      } catch (err) {
-        console.log(err);
-        dispatch(
-          failure({
-            type: "REGISTER_FAIL",
-          })
-        );
-        dispatch(
-          setSnackbar({
-            snackbarOpen: true,
-            snackbarType: "error",
-            snackbarMessage: "User Register Failed. Email already exist!",
-          })
-        );
-      }
-
-      console.log("Hi");
+          dispatch(
+            failure({
+              type: "REGISTER_FAIL",
+            })
+          );
+          dispatch(
+            setSnackbar({
+              snackbarOpen: true,
+              snackbarType: "error",
+              snackbarMessage:
+                error?.response?.data?.errors[0]?.msg ?? "Error Occured!",
+            })
+          );
+        });
     }
   };
 
@@ -242,7 +237,7 @@ export const Register = () => {
               autoComplete="current-password"
               onChange={(e) => onChange(e)}
             />
-            
+
             <Button
               type="submit"
               fullWidth
@@ -252,6 +247,16 @@ export const Register = () => {
             >
               Register
             </Button>
+
+            <Grid item>
+              {loading ? (
+                <CircularProgress
+                  color="secondary"
+                  size={20}
+                  style={{ margin: 10 }}
+                />
+              ) : null}
+            </Grid>
             <Grid container>
               <Grid item>
                 "Already have an account?{" "}
