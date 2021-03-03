@@ -8,14 +8,16 @@ import { failure, success } from "../../../features/Auth/registerSlice";
 import { selectIsAuthenticated } from "../../../features/Auth/registerSlice";
 import { loadUser } from "../../../features/Auth/loadUser";
 
+import { CircularProgress, Grid, Toolbar } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 
-import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { CircularProgress } from "@material-ui/core";
+
 
 export const Register = () => {
   const [formData, setFormData] = useState({
@@ -108,7 +110,7 @@ export const Register = () => {
     },
     image: {
       backgroundImage:
-        "url(https://source.unsplash.com/random/?movie,superhero)",
+        "url(https://source.unsplash.com/Lq6rcifGjOU)",
       backgroundRepeat: "no-repeat",
       backgroundColor:
         theme.palette.type === "light"
@@ -118,14 +120,12 @@ export const Register = () => {
       backgroundPosition: "center",
     },
     title: {
-      margin: theme.spacing(8, 0, -2, 0),
-      fontSize: "56px",
-      fontFamily: "Noto Sans, sans-serif",
+      fontSize: "18px",
+      fontFamily:  "Chilanka,cursive",
     },
     title2: {
-      margin: theme.spacing(0, 0, 3, 0),
       fontSize: "40px",
-      fontFamily: "Noto Sans, sans-serif",
+      fontFamily: "Chilanka,cursive",
       fontWeight: "Bold",
     },
     paper: {
@@ -170,10 +170,12 @@ export const Register = () => {
         square
       >
         <div className={classes.paper}>
-          <Typography className={classes.title}>'चलचित्र'</Typography>
+        <Toolbar/>
+          
           <Typography className={classes.title2}>Movie Recommender</Typography>
-
-          <Typography component="h1" variant="h5">
+          <Typography className={classes.title}  style = {{marginLeft:180}}>"You Search,We Serve"</Typography>
+          <Toolbar />
+          <Typography component="h1" variant="h5" fontWeight = "bold">
             Sign Up
           </Typography>
 

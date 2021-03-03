@@ -11,7 +11,7 @@ import {
   selectIsAuthenticated,
 } from "../../../features/Auth/registerSlice";
 import { loadUser } from "../../../features/Auth/loadUser";
-import { CircularProgress, Grid } from "@material-ui/core";
+import { CircularProgress, Grid, Toolbar } from "@material-ui/core";
 
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -23,6 +23,9 @@ import Paper from "@material-ui/core/Paper";
 
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+
+
+
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -94,7 +97,7 @@ const Login = () => {
     },
     image: {
       backgroundImage:
-        "url(https://source.unsplash.com/random/?movie,superhero)",
+        "url(https://source.unsplash.com/Lq6rcifGjOU)",
       // https://www.omdbapi.com/?apikey=e4c29baa&i=
       backgroundRepeat: "no-repeat",
       backgroundColor:
@@ -105,14 +108,14 @@ const Login = () => {
       backgroundPosition: "center",
     },
     title: {
-      margin: theme.spacing(8, 0, -2, 0),
-      fontSize: "56px",
-      fontFamily: "Noto Sans, sans-serif",
+      //margin: theme.spacing(0, -27, -2, 0),
+      fontSize: "18px",
+      fontFamily: "Chilanka,cursive",
     },
     title2: {
-      margin: theme.spacing(0, 0, 3, 0),
+     // margin: theme.spacing(0, 0, 3, 0),
       fontSize: "40px",
-      fontFamily: "Noto Sans, sans-serif",
+      fontFamily: "Chilanka,cursive",
       fontWeight: "Bold",
     },
     paper: {
@@ -120,6 +123,7 @@ const Login = () => {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
+ 
     },
     avatar: {
       margin: theme.spacing(1),
@@ -162,11 +166,13 @@ const Login = () => {
       <Grid item xs={false} sm={7} md={8} className={classes.image} />
       <Grid item xs={12} sm={5} md={4} component={Paper} elevation={6} square>
         <div className={classes.paper}>
-          <Typography className={classes.title}>'चलचित्र'</Typography>
+          <Toolbar/>
+          
           <Typography className={classes.title2}>Movie Recommender</Typography>
-
-          <Typography component="h1" variant="h5">
-            Sign in
+          <Typography className={classes.title} style = {{marginLeft:180}}>"You Search,We Serve"</Typography>
+          <Toolbar />
+          <Typography component="h1" variant="h5" fontWeight = "bold">
+            Sign In
           </Typography>
 
           <form

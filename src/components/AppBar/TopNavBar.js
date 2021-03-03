@@ -154,7 +154,7 @@ export default function TopNavBar(props) {
     <div className={classes.drawerContainer}>
       <Link to="/movie-recommender-frontend/">
         <Typography variant="h5" color="textPrimary" style={{ padding: 20 }}>
-          चलचित्र
+          Movie Recommender
         </Typography>
       </Link>
 
@@ -246,13 +246,13 @@ export default function TopNavBar(props) {
         <AppBar>
           <Toolbar id="back-to-top-anchor">
             <Grid container direction="row" alignItems="center">
-              <Grid item xs={1}>
+              <Grid item xs={4}>
                 <Link
                   to="/movie-recommender-frontend/"
                   className={classes.title}
                 >
-                  <Typography variant="h5" className={classes.title}>
-                    चलचित्र
+                  <Typography variant="h5" className={classes.title} >
+                    Movie Recommender
                   </Typography>
                 </Link>
               </Grid>
@@ -260,7 +260,7 @@ export default function TopNavBar(props) {
               <Grid
                 item
                 container
-                xs={10}
+                xs={8}
                 className={classes.navBar}
                 alignItems="center"
                 justify="flex-end"
