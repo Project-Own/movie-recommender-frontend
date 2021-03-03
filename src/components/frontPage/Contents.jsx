@@ -87,7 +87,10 @@ const Contents = () => {
     "https://vae-movie-recommender.herokuapp.com/findIndex";
   useEffect(() => {
     try {
-      if (movieSelected || typeof movieSelected != "undefined") {
+      if (
+        movieList.length !== 0 &&
+        (movieSelected || typeof movieSelected != "undefined")
+      ) {
         console.log("MOVIE SELECED");
         console.log(movieSelected);
         Axios.post(
@@ -121,7 +124,7 @@ const Contents = () => {
 
             if (response !== 0 && response < 62000) {
               if (selectedMovieList.includes(response)) {
-                selectedMovieList.splice(selectedMovieList.indexOf(res), 1);
+                // selectedMovieList.splice(selectedMovieList.indexOf(res), 1);
               } else {
                 selectedMovieList.push(response);
                 (async function () {
@@ -367,15 +370,7 @@ const Contents = () => {
 
   return (
     <>
-    
-      <Grid
-        item
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        container
-      >
+      <Grid item container direction="row" justify="center" alignItems="center">
         {loading
           ? new Array(50).fill(0).map(() => (
               <Grid item>
