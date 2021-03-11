@@ -1,0 +1,10 @@
+.title20 {
+    font-size: 40px;
+    font-family: Chilanka,cursive;
+    font-weight: Bold;
+    background-image: url(https://source.unsplash.com/k8apfKm-Md4);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+
+ }

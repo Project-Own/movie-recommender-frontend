@@ -23,7 +23,7 @@ import Paper from "@material-ui/core/Paper";
 
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-
+import styles from "./mystyle.module.css";
 
 
 
@@ -112,17 +112,17 @@ const Login = () => {
       fontSize: "18px",
       fontFamily: "Chilanka,cursive",
     },
-    title2: {
-     // margin: theme.spacing(0, 0, 3, 0),
-      fontSize: "40px",
-      fontFamily: "Chilanka,cursive",
-      fontWeight: "Bold",
-      backgroundImage: "url(https://source.unsplash.com/k8apfKm-Md4)",
-      backgroundClip: "text",
-      color: "transparent"
+    // title2: {
+    //  // margin: theme.spacing(0, 0, 3, 0),
+    //   //fontSize: "40px",
+    //   //fontFamily: "Chilanka,cursive",
+    //   //fontWeight: "Bold",
+    //  // backgroundImage: "url(https://source.unsplash.com/k8apfKm-Md4)",
+    //   //backgroundClip: "text",
+    //   //color: "transparent"
 
 
-    },
+    // },
     paper: {
       margin: theme.spacing(6, 5),
       display: "flex",
@@ -173,7 +173,7 @@ const Login = () => {
         <div className={classes.paper}>
           <Toolbar/>
           
-          <Typography className={classes.title2}>Movie Recommender</Typography>
+          <Typography className={classes.title2} className={styles.title20}>Movie Recommender</Typography>
           <Typography className={classes.title} style = {{marginLeft:180}}>"You Search,We Serve"</Typography>
           <Toolbar />
           <Typography component="h1" variant="h5" fontWeight = "bold">
