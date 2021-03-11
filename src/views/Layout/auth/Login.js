@@ -117,6 +117,11 @@ const Login = () => {
       fontSize: "40px",
       fontFamily: "Chilanka,cursive",
       fontWeight: "Bold",
+      backgroundImage: "url(https://source.unsplash.com/k8apfKm-Md4)",
+      backgroundClip: "text",
+      color: "transparent"
+
+
     },
     paper: {
       margin: theme.spacing(6, 5),

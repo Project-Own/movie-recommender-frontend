@@ -124,10 +124,16 @@ export const Register = () => {
       fontFamily:  "Chilanka,cursive",
     },
     title2: {
-      fontSize: "40px",
-      fontFamily: "Chilanka,cursive",
-      fontWeight: "Bold",
-    },
+      // margin: theme.spacing(0, 0, 3, 0),
+       fontSize: "40px",
+       fontFamily: "Chilanka,cursive",
+       fontWeight: "Bold",
+       backgroundImage: "url(https://source.unsplash.com/k8apfKm-Md4)",
+       backgroundClip: "text",
+       color: "transparent"
+ 
+ 
+     },
     paper: {
       margin: theme.spacing(6, 5),
       display: "flex",
