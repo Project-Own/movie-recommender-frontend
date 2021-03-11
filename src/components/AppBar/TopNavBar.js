@@ -271,7 +271,7 @@ export default function TopNavBar(props) {
                       <MovieAutoComplete setMovieSelected={setMovieSelected} />
                     </Grid>
 
-                    <Grid item xs={1}>
+                    <Grid item xs={3}>
                       <Link to="/movie-recommender-frontend/profile">
                         <Button variant="text" className={classes.title}>
                           {typeof user !== "undefined" ? user?.name : "User"}
